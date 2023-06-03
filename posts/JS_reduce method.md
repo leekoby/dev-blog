@@ -9,25 +9,25 @@ meta: 자바스크립트 reduce method에 대해 알아보기
 > 해당 포스트는 자바스크립트를 학습한 내용을 일부 정리한 내용입니다. 모든 내용을 정리하기 보다는 간단히 개념을 정리하고 활용할 수 있는 방법을 위주로 작성하였습니다.  
 >  아직 배우는 중으로 잘못된 부분이 있을 수 있습니다. 이에 대해서 무분별한 비난보다는 가르침을 부탁드리겠습니다.
 
-</br>
+<br/>
 
 # 📖 reduce 메서드
 
-</br>
+<br/>
 
 ## 🔎 왜 reduce 메서드?
 
-</br>
+<br/>
 
 `reduce` 메서드는 자바스크립트에서 유용한 함수 중에서 하나라고 생각합니다. `reduce`를 사용하는 것은 배열과 같은 데이터를 처리하는데 있어서 효율적으로 조작하고 코드를 간결하게 작성할 수 있다고 작성할 수 있습니다. 또한 함수형 프로그래밍을 작성하는데 있어서도 중요한 역할을 합니다. 그 동안 알고 있던 `reduce`는 단순히 **배열을 순회하며 하나의 결과 값을 만들어 반환한다.** 정도로 알고 있었습니다.
 
 이번 기회에 `reduce` 메서드를 다양한 방식으로 사용할 수 있는지 알아보았습니다. 일부 예시들은 다른 메서드를 사용하는 것이 훨씬 간단하지만 `reduce` 메서드 만으로 또는 `reduce` 메서드와 다른 메서드들을 결합하여 활용하는 방법들은 어떤 것들이 있는지 참고로 봐주시면 감사하겠습니다.
 
-</br>
+<br/>
 
 ## 🔎 reduce 메서드란?
 
-</br>
+<br/>
 
 > `reduce` 메서드는 배열의 각 요소에 대해 주어진 리듀서 (reducer) 함수를 실행하고, 하나의 결과값을 반환합니다. | [MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)
 
@@ -38,7 +38,7 @@ arr.reduce(함수(acc, cur, [index], [arr]), [초깃값] )
      // reduce 메서드의 기본적이 형식  초깃값은  [ ] 안은 생략 가능.
 ```
 
-</br>
+<br/>
 
 `reduce` 메서드는 배열의 요소를 하나의 값으로 줄이는 기능을 수행합니다. 자신을 호출한 배열의 모든 요소들을 순회하며 이전 반복에서 반환된 결과값과 현재의 요소를 기반으로 계산합니다. 이전 반복에서 반환된 값을 이번 반복에서 초깃값으로 사용됩니다.
 
@@ -54,28 +54,28 @@ arr.reduce(함수(acc, cur, [index], [arr]), [초깃값] )
 
 5. 마지막 요소까지 반복한 후, 최종 결과값을 반환합니다.
 
-</br>
+<br/>
 
 예를 들어, 다음과 같은 배열이 있다고 가정해보겠습니다.
 
-</br>
+<br/>
 
 ```js
 const numbers = [1, 2, 3, 4, 5];
 ```
 
-</br>
+<br/>
 
 이 배열의 값을 모두 더하려면 다음과 같이 `reduce` 메서드를 사용할 수 있습니다.
 
-</br>
+<br/>
 
 ```js
 const sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue);
 console.log(sum); // 15
 ```
 
-</br>
+<br/>
 
 이 코드는 다음과 같은 과정을 거칩니다.
 
@@ -99,11 +99,11 @@ console.log(sum); // 15
 
 ## 🚨 reduce 메서드를 사용할때는 초기값을 전달하는 것이 안전!
 
-</br>
+<br/>
 
 `reduce` 메서드의 초기값을 전달하지 않으면 배열의 첫 번째 요소가 초기값으로 사용됩니다. 하지만 배열이 비어있는 경우, 초기값을 전달하지 않으면 TypeError가 발생합니다. 다음은 초기값을 전달하지 않을 때 발생하는 문제에 대한 예시입니다.
 
-</br>
+<br/>
 
 ```js
 const arr = [];
@@ -115,7 +115,7 @@ console.log(sum); // TypeError: Reduce of empty array with no initial value
 
 위 코드에서, `reduce` 메서드에서 초기값을 전달하지 않았으며, 배열이 비어있습니다. 이 경우, TypeError가 발생합니다. TypeError 메시지는 "Reduce of empty array with no initial value"로, 초기값을 전달하지 않았을 때 발생하는 오류임을 알려줍니다.
 
-</br>
+<br/>
 
 ```js
 const products = [
@@ -133,15 +133,15 @@ console.log(priceSum); // NaN
 
 이러한 문제를 방지하기 위해, `reduce` 메서드를 사용할 때는 항상 초기값을 전달하는 것이 좋습니다. 초기값을 전달하는 것은 코드를 안전하고 예측 가능하게 만들어주며, 가독성과 유지보수성을 향상시킵니다.
 
-</br>
+<br/>
 
 # 📖 reduce 메서드의 다양한 활용
 
-</br>
+<br/>
 
 ## 🔎 요소의 변환/누적/삭제
 
-</br>
+<br/>
 
 ### ✍ 변환
 
@@ -160,7 +160,7 @@ console.log(transformedArr); // [2, 4, 6, 8, 10]
 
 위 코드에서, `reduce` 메서드를 사용하여 배열 요소를 두 배로 변환합니다. 콜백 함수에서는 현재 요소에 2를 곱한 값을 acc 배열에 추가하고, acc 배열을 반환합니다. 이후, 반환된 배열이 다음 요소에 대한 acc로 사용됩니다.
 
-</br>
+<br/>
 
 ### ✍ 누적
 
@@ -178,7 +178,7 @@ console.log(accumulatedValue); // 15
 
 위 코드에서, `reduce` 메서드를 사용하여 배열 요소의 합계를 계산합니다. 콜백 함수에서는 acc와 cur를 더하여 누적된 값을 반환합니다.
 
-</br>
+<br/>
 
 ### ✍ 삭제
 
@@ -203,11 +203,11 @@ console.log(filteredArr); // [1, 3, 5]
 
 따라서, 최종적으로 acc에 저장된 값이 추출된 홀수인 요소들이 됩니다.
 
-</br>
+<br/>
 
 ## 🔎 평균/최대값/최소값 계산
 
-</br>
+<br/>
 
 ### ✍ 평균
 
@@ -218,7 +218,7 @@ const average = sum / numbers.length;
 console.log(average); // 30
 ```
 
-</br>
+<br/>
 
 ### ✍ 최대값
 
@@ -230,7 +230,7 @@ const max = numbers.reduce((acc, cur) => (acc > cur ? acc : cur));
 console.log(max); // 50
 ```
 
-</br>
+<br/>
 
 ### ✍ 최소값
 
@@ -242,11 +242,11 @@ const min = numbers.reduce((acc, cur) => (acc < cur ? acc : cur));
 console.log(min); // 10
 ```
 
-</br>
+<br/>
 
 ## 🔎 객체(hash) 생성
 
-</br>
+<br/>
 
 ```js
 const arr = ['apple', 'banana', 'orange', 'pear'];
@@ -264,11 +264,11 @@ console.log(hash); // { 4 : ['pear'], 5 : ['apple'], 6: ['banana', 'orange']}
 
 요소의 글자수를 key로 사용하여 같은 글자수끼리의 집합을 생성
 
-</br>
+<br/>
 
 ## 🔎 중복 횟수 구하기
 
-</br>
+<br/>
 
 ### ✍ 배열에서 중복 횟수 구하기
 
@@ -313,13 +313,13 @@ const count = arr.reduce((acc, cur) => {
 console.log(count); // { apple: 3, banana: 3, orange: 1, pear: 1 }
 ```
 
-</br>
+<br/>
 
 ## 🔎 2차원 배열 평탄화
 
 🤚 flat 메서드를 사용하는 편이 좋습니다.
 
-</br>
+<br/>
 
 ```js
 const Arr = [
@@ -333,7 +333,7 @@ const flattenedArr = Arr.reduce((acc, cur) => {
 console.log(flattenedArr); // [1, 2, 3, 4, 5, 6]
 ```
 
-</br>
+<br/>
 
 ## 🔎 중복 제거
 
@@ -375,13 +375,13 @@ const uniqueArr = arr.reduce((acc, cur) => {
 console.log(uniqueArr); // [1, 2, 3, 4, 5]
 ```
 
-</br>
+<br/>
 
 ## 🔎 특정 조건에 따른 배열 필터링
 
 🤚 특정 조건에 따른 배열 필터링에는 filter 메서드를 사용하거나 map 메서드를 사용하는 편이 좋습니다.
 
-</br>
+<br/>
 
 ```js
 const arr = [1, 2, 3, 4, 5, 6];
@@ -402,11 +402,11 @@ console.log(filteredArr); // [2, 4, 6]
 
 위 예시에서는, 배열에서 짝수인 요소만을 추출하였습니다. 이와 같은 방식으로, 배열에서 특정 조건을 만족하는 요소만을 추출할 수 있습니다.
 
-</br>
+<br/>
 
 ## 🔎 reduce를 사용한 재귀함수
 
-</br>
+<br/>
 
 ### ✍ reduce 메서드를 사용한 팩토리얼
 
@@ -422,7 +422,7 @@ console.log(factorial(5)); // 120
 
 reduce 메서드의 두 번째 매개변수로 초기값인 1을 전달했으므로, 배열의 첫 번째 요소부터 시작하여 계산을 진행합니다.
 
-</br>
+<br/>
 
 ### ✍ reduce 메서드를 사용한 제곱근 계산 재귀 함수
 
@@ -444,29 +444,29 @@ console.log(sqrt(16)); // 4
 
 reduce 메서드의 초기값을 전달하지 않았으므로, 배열의 첫 번째 요소부터 시작하여 계산을 진행합니다. 초기값을 전달하지 않고 reduce 메서드를 사용하면, 배열의 첫 번째 요소가 초기값이 됩니다.
 
-</br>
+<br/>
 
 # 🎁 좀 더 생각해볼 부분
 
-</br>
+<br/>
 
 ## ✍ reduce 와 map/filter/some/every 메서드의 차이점
 
-</br>
+<br/>
 
 > [for, foreach, filter, map, reduce 기능 및 성능 비교](https://daesuni.github.io/Loop-performance/)
 
-</br>
+<br/>
 
 ## ✍ reduce 메서드와 성능 개선
 
-</br>
+<br/>
 
-</br>
+<br/>
 
 # 🥊 실전문제
 
-</br>
+<br/>
 
 ## 🎯 [[level 1] [1차] 비밀지도 - 17681](https://school.programmers.co.kr/learn/courses/30/lessons/17681)
 
@@ -530,7 +530,7 @@ function solution(n, arr1, arr2) {
 }
 ```
 
-</br>
+<br/>
 
 ## 🎯[[level 2] 피보나치 수 - 12945](https://school.programmers.co.kr/learn/courses/30/lessons/12945)
 
@@ -570,7 +570,7 @@ function solution(n) {
 
 6. 마지막으로 n번째 요소를 반환하는 코드를 설명합니다.
 
-</br>
+<br/>
 
 # 📚 레퍼런스
 
