@@ -1,6 +1,6 @@
 ---
 title: JS reduce
-slug: JS_reduce Method
+slug: JS_reduce method
 meta: 자바스크립트 reduce method에 대해 알아보기
 ---
 
