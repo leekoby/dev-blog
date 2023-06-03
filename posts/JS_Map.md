@@ -724,11 +724,6 @@ function solution(clothes) {
 <br/>
 
 ```js
-//*요구사항
-//같은 장르끼리 묶는다
-//묶인 노래들을 재생 순으로 정렬
-//2개씩 묶는다
-
 function solution(genres, plays) {
   // 장르별 총 재생 수와 2개의 높은 재생 수를 가진 노래를 저장하는 Map() 객체 생성
   const genreMap = new Map();
@@ -750,7 +745,7 @@ function solution(genres, plays) {
 
   // Map() 객체를 배열로 변환하여 장르별 총 재생 수로 정렬한 후 노래 인덱스를 추출
   return [...genreMap.entries()]
-    .sort((a, b) => b[1].total - a[1].total)
+    .sort((a, b) => b[].total - a[1].total)
     .flatMap((item) => item[1].songs)
     .map((song) => song.index);
 }
@@ -759,12 +754,11 @@ function solution(genres, plays) {
 <br/>
 
 1. 이 코드에서는 장르별로 노래를 구분하고, 장르별로 노래를 총 재생 수가 높은 순으로 정렬하여, 가장 많이 재생된 장르의 노래부터 최대 2개씩 추출하는 방식으로 베스트앨범을 구성합니다.
-
 2. 코드의 구체적인 동작 과정은 다음과 같습니다.
-3. Map() 객체 genreMap을 생성합니다. 이 객체는 각 장르별로 총 재생 수와 노래 정보를 저장합니다.
-4. genres와 plays 배열을 순회하며, 각 노래의 장르와 재생 수를 Map() 객체에 추가합니다. 노래 정보는 { play, index } 형태로 저장합니다.
+3. `Map()` 객체 `genreMap`을 생성합니다. 이 객체는 각 장르별로 총 재생 수와 노래 정보를 저장합니다.
+4. `genres`와 `plays` 배열을 순회하며, 각 노래의 장르와 재생 수를 `Map()` 객체에 추가합니다. 노래 정보는 `{ play, index }` 형태로 저장합니다.
 5. 장르별로 총 재생 수와 노래 정보를 갱신합니다. 해당 장르의 노래 정보는 재생 수가 높은 순으로 정렬하고, 상위 2개의 노래만 선택합니다.
-6. Map() 객체 genreMap을 배열로 변환한 후, 장르별 총 재생 수로 내림차순 정렬합니다.
+6. `Map()` 객체 genreMap을 배열로 변환한 후, 장르별 총 재생 수로 내림차순 정렬합니다.
 7. 정렬된 배열에서 각 장르별로 상위 2개의 노래를 추출합니다.
 8. 추출된 노래의 인덱스를 배열로 반환합니다.
 
@@ -831,3 +825,7 @@ function solution(gems) {
 > [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
 
 > [Symbol.iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator)
+
+```
+
+```
