@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import Link from 'next/link';
 import { FC } from 'react';
 
@@ -7,7 +6,7 @@ interface Props {
   desc: string;
   slug: string;
 }
-
+/** 2023/06/02 - 블로그 글 카드 - by leekoby */
 const BlogCard: FC<Props> = ({ title, desc, slug }): JSX.Element => {
   return (
     <Link href={'/blogs/' + slug} className='block'>

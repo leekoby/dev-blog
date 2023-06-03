@@ -64,6 +64,7 @@ type Post = {
   };
 };
 
+/** 2023/06/03 - getStaticProps - by leekoby */
 export const getStaticProps: GetStaticProps<Post> = async (context) => {
   try {
     const { params } = context;
