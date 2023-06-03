@@ -45,7 +45,7 @@ export const getStaticPaths: GetStaticPaths = () => {
   });
 
   return {
-    paths: [{ params: { postSlug: 'JS_filter method' } }],
+    paths,
     //https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-paths
 
     // TODO: fallback options에 대해 자세히 알아보자
