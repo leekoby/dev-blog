@@ -5,11 +5,19 @@ import path from 'path';
 import { ParsedUrlQuery } from 'querystring';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
+import { useRouter } from 'next/router';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 /** 2023/06/03 - 상세 페이지 - by leekoby */
 const SinglePage: NextPage<Props> = ({ post }) => {
+  const router = useRouter();
+
+  //fallback 상태일때 처리
+  if (router.isFallback) {
+    return <p>Loading...</p>;
+  }
+
   const { content, title } = post;
   return (
     <div className='max-w-3xl mx-auto'>
@@ -38,8 +46,10 @@ export const getStaticPaths: GetStaticPaths = () => {
 
   return {
     paths: [{ params: { postSlug: 'JS_filter method' } }],
-    //TODO: 이해해서 완성하기
-    fallback: false,
+    //https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-paths
+
+    // TODO: fallback options에 대해 자세히 알아보자
+    fallback: 'blocking',
   };
 };
 
@@ -55,25 +65,30 @@ type Post = {
 };
 
 export const getStaticProps: GetStaticProps<Post> = async (context) => {
-  const { params } = context;
-  const { postSlug } = params as StaticProps;
-  const filePathToRead = path.join(process.cwd(), 'posts/' + postSlug + '.md');
-  //encoding으로 타입 지정 안하면 버퍼로 출력됨. 인코딩 타입 형식 지정
-  const fileContent = fs.readFileSync(filePathToRead, { encoding: 'utf-8' });
+  try {
+    const { params } = context;
+    const { postSlug } = params as StaticProps;
+    const filePathToRead = path.join(process.cwd(), 'posts/' + postSlug + '.md');
+    //encoding으로 타입 지정 안하면 버퍼로 출력됨. 인코딩 타입 형식 지정
+    const fileContent = fs.readFileSync(filePathToRead, { encoding: 'utf-8' });
+    // const { content, data } = matter(fileContent);
+    const source: any = await serialize(fileContent, {
+      parseFrontmatter: true,
+    });
 
-  // const { content, data } = matter(fileContent);
-  const source: any = await serialize(fileContent, {
-    parseFrontmatter: true,
-  });
-
-  return {
-    props: {
-      post: {
-        content: source,
-        title: source.frontmatter.title,
+    return {
+      props: {
+        post: {
+          content: source,
+          title: source.frontmatter.title,
+        },
       },
-    },
-  };
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 export default SinglePage;

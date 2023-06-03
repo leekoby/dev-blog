@@ -1,10 +1,10 @@
-import { NextApiHandler } from 'next';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { PostApiResponse } from '@/utils/types';
 
 /** 2023/06/03 - posts 폴더에서 파일 데이터 읽어오기 - by leekoby */
-const readPostsInfo = () => {
+export const readPostsInfo = (): PostApiResponse => {
   const dirPathToRead = path.join(process.cwd(), 'posts');
   const dirs = fs.readdirSync(dirPathToRead);
   const data = dirs.map((filename) => {
@@ -13,19 +13,5 @@ const readPostsInfo = () => {
     const fileContent = fs.readFileSync(filePathToRead, { encoding: 'utf-8' });
     return matter(fileContent).data;
   });
-  return data;
+  return data as PostApiResponse;
 };
-
-const handler: NextApiHandler = (req, res) => {
-  const { method } = req;
-  switch (method) {
-    case 'GET': {
-      const data = readPostsInfo();
-      return res.json({ postInfo: data });
-    }
-    default:
-      return res.status(400).send('Not Found');
-  }
-};
-
-export default handler;
