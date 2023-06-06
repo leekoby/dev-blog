@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { validateUrl } from '../EditorUtils';
 
 interface Props {
   visible: boolean;
   onSubmit(link: LinkOption): void;
+  initialState: LinkOption;
 }
 
 export type LinkOption = {
@@ -14,7 +15,7 @@ export type LinkOption = {
 const defaultLink = { url: '', openInNewTab: false };
 
 /** 2023/06/06 - 텍스트에디터 링크 컴포넌트 - by leekoby */
-const LinkForm: React.FC<Props> = ({ visible, onSubmit }): JSX.Element | null => {
+const LinkForm: React.FC<Props> = ({ visible, initialState, onSubmit }): JSX.Element | null => {
   const [link, setLink] = useState<LinkOption>(defaultLink);
   const handleSubmit = () => {
     if (!link.url.trim()) return;
@@ -25,6 +26,10 @@ const LinkForm: React.FC<Props> = ({ visible, onSubmit }): JSX.Element | null =>
   const resetForm = () => {
     setLink({ ...defaultLink });
   };
+
+  useEffect(() => {
+    if (initialState) setLink({ ...initialState });
+  }, [initialState]);
 
   if (!visible) return null;
   return (
