@@ -12,7 +12,6 @@ import {
   BsTypeItalic,
   BsTypeStrikethrough,
   BsTypeUnderline,
-  BsYoutube,
 } from 'react-icons/bs';
 import { RiDoubleQuotesL } from 'react-icons/ri';
 import { getFocusedEditor } from '../EditorUtils';
@@ -20,11 +19,13 @@ import InsertLink from '../Link/InsertLink';
 import { LinkOption } from '../Link/LinkForm';
 import Button from './Button';
 import EmbedYoutube from './EmbedYoutube';
+
 interface Props {
   editor: Editor | null;
+  onOpenImageClick?: () => void;
 }
 /** 2023/06/05 - 에디터 툴바 - by leekoby */
-const ToolBar: React.FC<Props> = ({ editor }): JSX.Element | null => {
+const ToolBar: React.FC<Props> = ({ editor, onOpenImageClick }): JSX.Element | null => {
   if (!editor) return null;
 
   const options = [
@@ -144,7 +145,7 @@ const ToolBar: React.FC<Props> = ({ editor }): JSX.Element | null => {
       <div className='flex items-center space-x-3'>
         <EmbedYoutube onSubmit={handleEmbedYoutube} />
 
-        <Button>
+        <Button onClick={onOpenImageClick}>
           <BsImage />
         </Button>
       </div>

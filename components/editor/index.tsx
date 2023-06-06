@@ -7,11 +7,15 @@ import Youtube from '@tiptap/extension-youtube';
 import ToolBar from './ToolBar';
 import { useEffect, useState } from 'react';
 import EditLink from './Link/EditLink';
+import GalleryModal from './GalleryModal/GalleryModal';
 
 interface Props {}
 
+/** 2023/06/05 - 에디터 - by leekoby */
 const Editor: React.FC<Props> = (props): JSX.Element => {
   const [selectionRange, setSelectionRange] = useState<Range>();
+  const [showGallery, setShowGallery] = useState(false);
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -53,12 +57,15 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
   }, [editor, selectionRange]);
 
   return (
-    <div className='p-3 dark:bg-primary-dark bg-primary transition'>
-      <ToolBar editor={editor} />
-      <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
-      {editor && <EditLink editor={editor} />}
-      <EditorContent editor={editor} />
-    </div>
+    <>
+      <div className='p-3 dark:bg-primary-dark bg-primary transition'>
+        <ToolBar editor={editor} onOpenImageClick={() => setShowGallery(true)} />
+        <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
+        {editor && <EditLink editor={editor} />}
+        <EditorContent editor={editor} />
+        <GalleryModal visible={showGallery} onClose={() => setShowGallery(false)} />
+      </div>
+    </>
   );
 };
 
