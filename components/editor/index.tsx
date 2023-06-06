@@ -7,7 +7,7 @@ import Youtube from '@tiptap/extension-youtube';
 import ToolBar from './ToolBar';
 import { useEffect, useState } from 'react';
 import EditLink from './Link/EditLink';
-import GalleryModal from './GalleryModal/GalleryModal';
+import GalleryModal from './GalleryModal';
 
 interface Props {}
 
