@@ -2,6 +2,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import PlaceHolder from '@tiptap/extension-placeholder';
+import Link from '@tiptap/extension-link';
 import ToolBar from './ToolBar';
 
 interface Props {}
@@ -11,6 +12,14 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
     extensions: [
       StarterKit,
       Underline,
+      Link.configure({
+        autolink: false,
+        linkOnPaste: false,
+        openOnClick: false,
+        HTMLAttributes: {
+          target: '',
+        },
+      }),
       PlaceHolder.configure({
         placeholder: 'Type something',
       }),

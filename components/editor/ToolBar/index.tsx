@@ -51,8 +51,10 @@ const ToolBar: React.FC<Props> = ({ editor }): JSX.Element | null => {
     if (editor.isActive('heading', { level: 3 })) return 'Heading 3';
     return 'Paragraph';
   };
-  const handleLinkSubmit = (link: LinkOption) => {
-    console.log(link);
+  const handleLinkSubmit = ({ url, openInNewTab }: LinkOption) => {
+    const { commands } = editor;
+    if (openInNewTab) commands.setLink({ href: url, target: '_blank' });
+    else commands.setLink({ href: url });
   };
 
   const Head = () => {
