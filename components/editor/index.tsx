@@ -3,6 +3,7 @@ import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import PlaceHolder from '@tiptap/extension-placeholder';
 import Link from '@tiptap/extension-link';
+import Youtube from '@tiptap/extension-youtube';
 import ToolBar from './ToolBar';
 import { useEffect, useState } from 'react';
 import EditLink from './Link/EditLink';
@@ -25,6 +26,11 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
       }),
       PlaceHolder.configure({
         placeholder: 'Type something',
+      }),
+      Youtube.configure({
+        width: 840,
+        height: 472.5,
+        HTMLAttributes: { class: 'mx-auto rounded' },
       }),
     ],
 
