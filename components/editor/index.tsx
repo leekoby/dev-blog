@@ -101,6 +101,7 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
           {/* 썸네일 선택 & 버튼 */}
           <div className='flex items-center justify-between mb-3'>
             <ThumbnailSelector onChange={(file) => console.log(file)} />
+
             <div className='inline-block'>
               <ActionButton title='Submit' />
             </div>
@@ -112,30 +113,28 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
             className='py-2 outline-none bg-transparent w-full border-0 border-b-[1px] border-secondary-dark dark:border-secondary-light text-3xl font-semibold italic text-primary-dark dark:text-primary mb-3'
             placeholder='제목'
           />
-
           {/* 툴바 */}
           <ToolBar editor={editor} onOpenImageClick={() => setShowGallery(true)} />
 
           <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
-
-          {editor && <EditLink editor={editor} />}
-
-          <EditorContent editor={editor} className='min-h-[300px]' />
-
-          <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
-
-          <SeoForm onChange={(result) => console.log(result)} />
         </div>
+        {editor && <EditLink editor={editor} />}
 
-        <GalleryModal
-          visible={showGallery}
-          onClose={() => setShowGallery(false)}
-          onSelect={handleImageSelection}
-          images={images}
-          onFileSelect={handleImageUpload}
-          uploading={uploading}
-        />
+        <EditorContent editor={editor} className='min-h-[300px]' />
+
+        <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
+
+        <SeoForm onChange={(result) => console.log(result)} />
       </div>
+
+      <GalleryModal
+        visible={showGallery}
+        onClose={() => setShowGallery(false)}
+        onSelect={handleImageSelection}
+        images={images}
+        onFileSelect={handleImageUpload}
+        uploading={uploading}
+      />
     </>
   );
 };
