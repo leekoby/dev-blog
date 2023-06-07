@@ -11,6 +11,8 @@ import TipTapImage from '@tiptap/extension-image';
 import ToolBar from './ToolBar';
 import EditLink from './Link/EditLink';
 import GalleryModal, { ImageSelectionResult } from './GalleryModal';
+import axios from 'axios';
+import SeoForm from './SeoForm';
 
 interface Props {}
 
@@ -18,6 +20,23 @@ interface Props {}
 const Editor: React.FC<Props> = (props): JSX.Element => {
   const [selectionRange, setSelectionRange] = useState<Range>();
   const [showGallery, setShowGallery] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [images, setImages] = useState<{ src: string }[]>([]);
+
+  //이미지 fetching
+  const fetchImages = async () => {
+    const { data } = await axios('/api/image');
+    setImages(data.images);
+  };
+  //이미지 file upload
+  const handleImageUpload = async (image: File) => {
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('image', image);
+    const { data } = await axios.post('/api/image', formData);
+    setUploading(false);
+    setImages([data, ...images]);
+  };
 
   const editor = useEditor({
     extensions: [
@@ -32,7 +51,7 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
         },
       }),
       PlaceHolder.configure({
-        placeholder: 'Type something',
+        placeholder: '내용 입력',
       }),
       Youtube.configure({
         width: 840,
@@ -68,18 +87,43 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
     if (editor && selectionRange) editor.commands.setTextSelection(selectionRange);
   }, [editor, selectionRange]);
 
+  // 이미지 fetching
+  useEffect(() => {
+    fetchImages();
+  }, []);
+
   return (
     <>
       <div className='p-3 dark:bg-primary-dark bg-primary transition'>
-        <ToolBar editor={editor} onOpenImageClick={() => setShowGallery(true)} />
-        <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
-        {editor && <EditLink editor={editor} />}
-        <EditorContent editor={editor} />
+        <div className='sticky top-0 z-10 dark:bg-primary-dark bg-primary'>
+          {/* 제목 */}
+          <input
+            type='text'
+            className='py-2 outline-none bg-transparent w-full border-0 border-b-[1px] border-secondary-dark dark:border-secondary-light text-3xl font-semibold italic text-primary-dark dark:text-primary mb-3'
+            placeholder='제목'
+          />
+
+          {/* 툴바 */}
+          <ToolBar editor={editor} onOpenImageClick={() => setShowGallery(true)} />
+
+          <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
+
+          {editor && <EditLink editor={editor} />}
+
+          <EditorContent editor={editor} className='min-h-[300px]' />
+
+          <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
+
+          <SeoForm />
+        </div>
+
         <GalleryModal
           visible={showGallery}
           onClose={() => setShowGallery(false)}
           onSelect={handleImageSelection}
-          onFileSelect={() => {}}
+          images={images}
+          onFileSelect={handleImageUpload}
+          uploading={uploading}
         />
       </div>
     </>
