@@ -13,6 +13,8 @@ import EditLink from './Link/EditLink';
 import GalleryModal, { ImageSelectionResult } from './GalleryModal';
 import axios from 'axios';
 import SeoForm from './SeoForm';
+import ActionButton from '../common/ActionButton';
+import ThumbnailSelector from './ThumbnailSelector';
 
 interface Props {}
 
@@ -96,6 +98,14 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
     <>
       <div className='p-3 dark:bg-primary-dark bg-primary transition'>
         <div className='sticky top-0 z-10 dark:bg-primary-dark bg-primary'>
+          {/* 썸네일 선택 & 버튼 */}
+          <div className='flex items-center justify-between mb-3'>
+            <ThumbnailSelector onChange={(file) => console.log(file)} />
+            <div className='inline-block'>
+              <ActionButton title='Submit' />
+            </div>
+          </div>
+
           {/* 제목 */}
           <input
             type='text'
