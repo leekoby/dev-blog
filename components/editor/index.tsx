@@ -114,7 +114,7 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
 
           <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
 
-          <SeoForm />
+          <SeoForm onChange={(result) => console.log(result)} />
         </div>
 
         <GalleryModal
