@@ -1,13 +1,16 @@
+import { useEffect, useState } from 'react';
+
 import { useEditor, EditorContent, getMarkRange, Range } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import PlaceHolder from '@tiptap/extension-placeholder';
 import Link from '@tiptap/extension-link';
 import Youtube from '@tiptap/extension-youtube';
+import TipTapImage from '@tiptap/extension-image';
+
 import ToolBar from './ToolBar';
-import { useEffect, useState } from 'react';
 import EditLink from './Link/EditLink';
-import GalleryModal from './GalleryModal';
+import GalleryModal, { ImageSelectionResult } from './GalleryModal';
 
 interface Props {}
 
@@ -36,6 +39,11 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
         height: 472.5,
         HTMLAttributes: { class: 'mx-auto rounded' },
       }),
+      TipTapImage.configure({
+        HTMLAttributes: {
+          class: 'mx-auto',
+        },
+      }),
     ],
 
     editorProps: {
@@ -51,6 +59,10 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
     },
   });
 
+  const handleImageSelection = (result: ImageSelectionResult) => {
+    editor?.chain().focus().setImage({ src: result.src, alt: result.altText }).run();
+  };
+
   // 링크 범위 선택
   useEffect(() => {
     if (editor && selectionRange) editor.commands.setTextSelection(selectionRange);
@@ -63,7 +75,12 @@ const Editor: React.FC<Props> = (props): JSX.Element => {
         <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
         {editor && <EditLink editor={editor} />}
         <EditorContent editor={editor} />
-        <GalleryModal visible={showGallery} onClose={() => setShowGallery(false)} />
+        <GalleryModal
+          visible={showGallery}
+          onClose={() => setShowGallery(false)}
+          onSelect={handleImageSelection}
+          onFileSelect={() => {}}
+        />
       </div>
     </>
   );

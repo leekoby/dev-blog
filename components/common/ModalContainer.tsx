@@ -1,15 +1,14 @@
 import { MouseEventHandler, ReactNode, useCallback, useEffect, useId } from 'react';
 
 export interface ModalProps {
-  children: ReactNode;
   visible?: boolean;
   onClose?(): void;
 }
 interface Props extends ModalProps {
-  chlidren: ReactNode;
+  children: ReactNode;
 }
 /** 2023/06/06 - 이미지 첨부 모달 컨테이너 - by leekoby */
-const ModalContainer: React.FC<ModalProps> = ({
+const ModalContainer: React.FC<Props> = ({
   visible,
   children,
   onClose,
