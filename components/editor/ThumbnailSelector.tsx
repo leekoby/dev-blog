@@ -15,7 +15,7 @@ const ThumbnailSelector: React.FC<Props> = ({ initialValue, onChange }): JSX.Ele
     const { files } = target;
     if (!files) return;
     const file = files[0];
-    setSelectedThumbnail(URL.createObjectURL(file));
+    setSelectedThumbnail(window.URL.createObjectURL(file)); //window 뺴면 에러남
     onChange(file);
   };
 
