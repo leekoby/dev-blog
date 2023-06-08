@@ -4,7 +4,7 @@ import { validateUrl } from '../EditorUtils';
 interface Props {
   visible: boolean;
   onSubmit(link: LinkOption): void;
-  initialState: LinkOption;
+  initialState?: LinkOption;
 }
 
 export type LinkOption = {
