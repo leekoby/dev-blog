@@ -1,9 +1,19 @@
 // title, content, slug, tags, thumbnail, meta, author, date
 
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, ObjectId, Model } from 'mongoose';
 
+interface PostModelSchema {
+  title: string;
+  slug: string;
+  meta: string;
+  content: string;
+  tags: string[];
+  thumbnail: { url: string; public_id: string };
+  createdAt: Date;
+  author: ObjectId;
+}
 /** 2023/06/08 - mongoose schema - by leekoby */
-const PostSchema = new Schema(
+const PostSchema = new Schema<PostModelSchema>(
   {
     title: {
       type: String,
@@ -46,4 +56,4 @@ const PostSchema = new Schema(
 
 /** 2023/06/08 - schema model- by leekoby */
 const Post = models?.Post || model('Post', PostSchema);
-export default Post;
+export default Post as Model<PostModelSchema>;
