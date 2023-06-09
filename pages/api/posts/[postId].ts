@@ -1,6 +1,8 @@
+import cloudinary from '@/lib/cloudinary';
 import Post from '@/lib/models/Post';
 import { readFile } from '@/lib/utils';
 import { postValidationSchema, validateSchema } from '@/lib/validator';
+import formidable from 'formidable';
 import { NextApiHandler } from 'next';
 
 export const config = {
@@ -39,6 +41,7 @@ const updatePost: NextApiHandler = async (req, res) => {
   if (body.tags) tags = JSON.parse(body.tags as string);
 
   const error = validateSchema(postValidationSchema, { ...body, tags });
+
   if (error) return res.status(400).json({ error });
 
   const { title, content, meta, slug } = body;
@@ -48,6 +51,19 @@ const updatePost: NextApiHandler = async (req, res) => {
   post.tags = tags;
   post.slug = slug;
 
+  //thumbnail
+  const thumbnail = files.thumbnail as formidable.File;
+  if (thumbnail) {
+    const { secure_url: url, public_id } = await cloudinary.uploader.upload(thumbnail.filepath, {
+      folder: 'dev-blogs',
+    });
+    const publicId = post.thumbnail?.public_id;
+    if (publicId) {
+      //기존에 있던 썸네일 파일 제거
+      await cloudinary.uploader.destroy(publicId);
+      post.thumbnail = { url, public_id };
+    }
+  }
   await post.save();
   res.json({ post });
 };
