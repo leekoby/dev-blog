@@ -13,7 +13,7 @@ const NAV_VISIBILITY = 'nav-visibility';
 
 /** 2023/06/03 - AdminNavbar - by leekoby */
 const AdminNav: React.FC<Props> = ({ navItems }): JSX.Element => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const navRef = useRef<HTMLElement>(null);
 
   const toggleNav = (visibility: boolean) => {
@@ -21,7 +21,7 @@ const AdminNav: React.FC<Props> = ({ navItems }): JSX.Element => {
     if (!currentNav) return;
     const { classList } = currentNav;
     //TODO: 이 방법이 좋은지 tailwind css에 리터럴템플릿으로 옵션주는게 좋을지 고민해보자
-    if (visible) {
+    if (visibility) {
       // nav 숨기기
       classList.remove(NAV_OPEN_WIDTH);
       classList.add(NAV_CLOSE_WIDTH);
