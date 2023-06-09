@@ -4,8 +4,8 @@ import Post from '@/lib/models/Post';
 import { readFile } from '@/lib/utils';
 import { postValidationSchema, validateSchema } from '@/lib/validator';
 import formidable from 'formidable';
-import Joi from 'joi';
 import { NextApiHandler } from 'next';
+import { IncomingPost } from './[postId]';
 
 export const config = {
   api: { bodyParser: false },
@@ -23,9 +23,10 @@ const handler: NextApiHandler = async (req, res) => {
       return createNewPost(req, res);
   }
 };
+
 /** 2023/06/08 - createNewPost handler / Joi 유효성 검사 - by leekoby */
 const createNewPost: NextApiHandler = async (req, res) => {
-  const { files, body } = await readFile(req);
+  const { files, body } = await readFile<IncomingPost>(req);
 
   console.log(body);
 
