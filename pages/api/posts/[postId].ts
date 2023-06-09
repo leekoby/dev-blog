@@ -2,6 +2,7 @@ import cloudinary from '@/lib/cloudinary';
 import Post from '@/lib/models/Post';
 import { readFile } from '@/lib/utils';
 import { postValidationSchema, validateSchema } from '@/lib/validator';
+import { IncomingPost } from '@/utils/types';
 import formidable from 'formidable';
 import { NextApiHandler } from 'next';
 
@@ -19,14 +20,6 @@ export const handler: NextApiHandler = (req, res) => {
       res.status(404).send('Not found');
   }
 };
-
-export interface IncomingPost {
-  title: string;
-  content: string;
-  slug: string;
-  meta: string;
-  tags: string;
-}
 
 /** 2023/06/09 - 업데이트 함수 - by leekoby */
 const updatePost: NextApiHandler = async (req, res) => {

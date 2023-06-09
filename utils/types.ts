@@ -12,5 +12,14 @@ export interface PostDetail {
   meta: string;
   tags: string[];
   thumbnail?: string;
-  createdAt: Date;
+  createdAt: string;
+}
+
+/** 2023/06/09 - 게시글 수신 타입 - by leekoby */
+export interface IncomingPost {
+  title: string;
+  content: string;
+  slug: string;
+  meta: string;
+  tags: string;
 }

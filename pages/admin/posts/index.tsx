@@ -1,9 +1,11 @@
-import PostCard from '@/components/common/PostCard';
-import AdminLayout from '@/components/layout/AdminLayout';
-import { GetServerSideProps, NextPage } from 'next';
 import { useState } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next';
+import AdminLayout from '@/components/layout/AdminLayout';
+import PostCard from '@/components/common/PostCard';
+import { PostDetail } from '@/utils/types';
+import { formatPosts, readPostsFromDb } from '@/lib/utils';
 
-interface Props {}
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 const posts = [
   {
@@ -32,9 +34,12 @@ const posts = [
   },
 ];
 
+let pageNo = 0;
+const limit = 0;
 /** 2023/06/09 - 게시글 리스트 - by leekoby */
-const Posts: NextPage<Props> = () => {
+const Posts: NextPage<Props> = ({ posts }) => {
   const [postsToRender, setPostsToRender] = useState(posts);
+
   return (
     <AdminLayout>
       <div className='max-w-4xl mx-auto p-3'>
@@ -48,8 +53,24 @@ const Posts: NextPage<Props> = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return { props: {} };
+interface ServerSideResponse {
+  posts: PostDetail[];
+}
+/** 2023/06/09 - 게시글 Fetching  - by leekoby */
+export const getServerSideProps: GetServerSideProps<ServerSideResponse> = async () => {
+  try {
+    //read
+    const posts = await readPostsFromDb(limit, pageNo);
+    //formatting
+    const formattedPosts = formatPosts(posts);
+    return {
+      props: {
+        posts: formattedPosts,
+      },
+    };
+  } catch (error) {
+    return { notFound: true };
+  }
 };
 
 export default Posts;
