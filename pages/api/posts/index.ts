@@ -30,7 +30,7 @@ const createNewPost: NextApiHandler = async (req, res) => {
   console.log(body);
 
   let tags = [];
-
+  //태그가 문자열 형식이므로 배열로 변환
   if (body.tags) tags = JSON.parse(body.tags as string);
   //스키마 유효성 검사 함수
   const error = validateSchema(postValidationSchema, { ...body, tags });
