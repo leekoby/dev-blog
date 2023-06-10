@@ -20,7 +20,6 @@ const Update: NextPage<Props> = ({ post }) => {
 
       // 게시글 제출
       const { data } = await axios.patch('/api/posts/' + post.id, formData);
-      console.log(data);
     } catch (error: any) {
       console.log(error.response.data);
     }

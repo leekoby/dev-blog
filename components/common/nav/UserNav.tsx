@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { APP_NAME } from '../AppHead';
 import { HiLightBulb } from 'react-icons/hi';
 import Logo from '../Logo';
@@ -10,6 +11,15 @@ interface Props {}
 
 /** 2023/06/09 - User Nav - by leekoby */
 const UserNav: React.FC<Props> = (props): JSX.Element => {
+  //session 추가
+  const { data, status } = useSession();
+  const isAuth = status === 'authenticated';
+
+  const hadleLoginWithGithub = async () => {
+    const res = await signIn('github');
+    
+  };
+
   const dropDownOtions: dropDownOtions = [
     //TODO: Amin 아닐때 조건에 따라 렌더링되게 변경
     {
@@ -18,7 +28,9 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
     },
     {
       label: 'Logout',
-      onClick() {},
+      async onClick() {
+        await signOut();
+      },
     },
   ];
   return (
@@ -32,12 +44,15 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
         <button className='dark:text-secondary-dark text-secondary-light'>
           <HiLightBulb size={34} className='' />
         </button>
-        <GitHubAuthButton lightOnly />
 
-        <DropdownOptions
-          options={dropDownOtions}
-          head={<ProfileHead nameInitail='N' lightOnly />}
-        />
+        {isAuth ? (
+          <DropdownOptions
+            options={dropDownOtions}
+            head={<ProfileHead nameInitail='N' lightOnly />}
+          />
+        ) : (
+          <GitHubAuthButton lightOnly onClick={hadleLoginWithGithub} />
+        )}
       </div>
     </div>
   );

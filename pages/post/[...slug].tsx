@@ -4,7 +4,6 @@ interface Props {}
 
 const MySlugPage: NextPage<Props> = () => {
   const router = useRouter();
-  console.log(router);
   return <div>MySlugPage</div>;
 };
 

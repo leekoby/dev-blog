@@ -55,10 +55,8 @@ export const getServerSideProps: GetServerSideProps<ServerSideResponse> = async 
   try {
     //read
     const posts = await readPostsFromDb(limit, pageNo);
-    console.log(posts);
     //formatting
     const formattedPosts = formatPosts(posts);
-    console.log(formattedPosts);
     return {
       props: {
         posts: formattedPosts,

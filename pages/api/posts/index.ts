@@ -27,8 +27,6 @@ const handler: NextApiHandler = async (req, res) => {
 const createNewPost: NextApiHandler = async (req, res) => {
   const { files, body } = await readFile<IncomingPost>(req);
 
-  console.log(body);
-
   let tags = [];
   //태그가 문자열 형식이므로 배열로 변환
   if (body.tags) tags = JSON.parse(body.tags as string);

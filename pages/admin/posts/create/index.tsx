@@ -15,7 +15,6 @@ const Create: NextPage<Props> = () => {
 
       // 게시글 제출
       const { data } = await axios.post('/api/posts', formData);
-      console.log(data);
     } catch (error: any) {
       console.log(error.response.data);
     }
