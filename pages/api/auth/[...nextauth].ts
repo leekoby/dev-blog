@@ -40,9 +40,13 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     jwt({ token, user }) {
       if (user) token.role = (user as any).role;
-      console.log(user);
       return token;
     },
+  },
+  // 커스텀 로그인 페이지
+  pages: {
+    signIn: '/auth/signin',
+    error: '/404',
   },
 };
 export default NextAuth(authOptions);
