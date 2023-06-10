@@ -29,7 +29,7 @@ export const readPostsFromDb = async (limit: number, pageNo: number) => {
   await dbConnect();
   const posts = await Post.find()
     .sort({ createdAt: 'desc' })
-    .select('-content slug')
+    .select('-content')
     .skip(skip)
     .limit(limit);
 

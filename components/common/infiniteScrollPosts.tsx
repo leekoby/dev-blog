@@ -33,7 +33,7 @@ const InfiniteScrollPosts: React.FC<Props> = ({
       dataLength={dataLength}
       loader={loader || defaultLoader}>
       <div className='max-w-4xl mx-auto p-3'>
-        <div className='grid gird-col-3 gap-4'>
+        <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-4'>
           {posts.map((post) => (
             <PostCard post={post} key={post.slug} controls={showControls} />
           ))}

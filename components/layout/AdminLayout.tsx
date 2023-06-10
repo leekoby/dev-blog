@@ -1,4 +1,4 @@
-import AdminNav from '../common/AdminNav';
+import AdminNav from '../common/nav/AdminNav';
 import {
   AiOutlineDashboard,
   AiOutlineContainer,
