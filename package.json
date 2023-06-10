@@ -34,7 +34,7 @@
     "gray-matter": "^4.0.3",
     "joi": "^17.9.2",
     "mongoose": "^7.2.2",
-    "next": "13.4.4-canary.5",
+    "next": "^13.4.5-canary.9",
     "next-auth": "^4.22.1",
     "next-mdx-remote": "^4.4.1",
     "postcss": "8.4.24",
