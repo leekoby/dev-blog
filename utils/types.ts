@@ -23,3 +23,11 @@ export interface IncomingPost {
   meta: string;
   tags: string;
 }
+/** 2023/06/10 - 유저정보 타입 - by leekoby */
+export interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string | undefined;
+  role: 'user' | 'admin';
+}

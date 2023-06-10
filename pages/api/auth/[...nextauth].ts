@@ -42,7 +42,23 @@ const authOptions: NextAuthOptions = {
       if (user) token.role = (user as any).role;
       return token;
     },
+
+    async session({ session }) {
+      await dbConnect();
+      //이메일로 DB에서 유저 찾기
+      const user = await User.findOne({ email: session.user?.email });
+      if (user)
+        session.user = {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+          role: user.role,
+        } as any; //타입 캐스팅 id, avatar
+      return session;
+    },
   },
+
   // 커스텀 로그인 페이지
   pages: {
     signIn: '/auth/signin',
