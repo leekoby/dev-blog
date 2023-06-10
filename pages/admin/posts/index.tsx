@@ -4,51 +4,41 @@ import AdminLayout from '@/components/layout/AdminLayout';
 import PostCard from '@/components/common/PostCard';
 import { PostDetail } from '@/utils/types';
 import { formatPosts, readPostsFromDb } from '@/lib/utils';
+import InfiniteScrollPosts from '@/components/common/infiniteScrollPosts';
+import axios from 'axios';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-const posts = [
-  {
-    title: 'string1',
-    slug: 'string',
-    meta: 'string',
-    tags: ['string'],
-    thumbnail: '',
-    createdAt: Date.now(),
-  },
-  {
-    title: 'string2',
-    slug: 'string',
-    meta: 'string',
-    tags: ['string'],
-    thumbnail: '',
-    createdAt: Date.now(),
-  },
-  {
-    title: 'string3',
-    slug: 'string',
-    meta: 'string',
-    tags: ['string'],
-    thumbnail: '',
-    createdAt: Date.now(),
-  },
-];
-
 let pageNo = 0;
-const limit = 0;
+const limit = 9;
 /** 2023/06/09 - 게시글 리스트 - by leekoby */
 const Posts: NextPage<Props> = ({ posts }) => {
   const [postsToRender, setPostsToRender] = useState(posts);
+  const [hasMorePosts, setHasMorePosts] = useState(true);
 
+  const fetchMorePosts = async () => {
+    try {
+      pageNo++;
+      const { data } = await axios(`/api/posts?limit=${limit}&pageNo=${pageNo}`);
+
+      if (data.post.length < limit) {
+        setPostsToRender([...postsToRender, ...data.posts]);
+        setHasMorePosts(false);
+      } else setPostsToRender([...postsToRender, ...data.posts]);
+    } catch (error) {
+      setHasMorePosts(false);
+      console.log(error);
+    }
+  };
   return (
     <AdminLayout>
-      <div className='max-w-4xl mx-auto p-3'>
-        <div className='grid gird-col-3 gap-4'>
-          {postsToRender.map((post) => (
-            <PostCard post={post} key={post.slug} />
-          ))}
-        </div>
-      </div>
+      <InfiniteScrollPosts
+        hasMore={hasMorePosts}
+        next={fetchMorePosts}
+        dataLength={postsToRender.length}
+        posts={postsToRender}
+        showControls
+      />
     </AdminLayout>
   );
 };
@@ -69,6 +59,7 @@ export const getServerSideProps: GetServerSideProps<ServerSideResponse> = async 
       },
     };
   } catch (error) {
+    console.log(error);
     return { notFound: true };
   }
 };
