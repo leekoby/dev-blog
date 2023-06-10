@@ -1,7 +1,9 @@
 import { ReactNode, useState } from 'react';
 
+export type dropDownOtions = { label: string; onClick(): void }[];
+
 interface Props {
-  options: { label: string; onClick(): void }[];
+  options: dropDownOtions;
   head: ReactNode;
 }
 
