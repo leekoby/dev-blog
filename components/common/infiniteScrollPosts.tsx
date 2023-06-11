@@ -7,7 +7,7 @@ import PostCard from './PostCard';
 
 interface Props {
   posts: PostDetail[];
-  showControls: boolean;
+  showControls?: boolean;
   hasMore: boolean;
   next(): void;
   dataLength: number;
