@@ -52,6 +52,7 @@ const EditLink: React.FC<Props> = ({ editor }): React.JSX.Element => {
         onHide: () => {
           setShowEditForm(false);
         },
+        appendTo: 'parent', //bubllemenu warining tippyjs
       }}>
       <LinkForm visible={showEditForm} onSubmit={handleSubmit} initialState={getInitialState()} />
       {!showEditForm && (
