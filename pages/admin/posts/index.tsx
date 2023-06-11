@@ -7,6 +7,7 @@ import { formatPosts, readPostsFromDb } from '@/lib/utils';
 import InfiniteScrollPosts from '@/components/common/infiniteScrollPosts';
 import axios from 'axios';
 import ConfirmModal from '@/components/common/ConfirmModal';
+import { filterPosts } from '@/utils/helper';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -40,15 +41,9 @@ const Posts: NextPage<Props> = ({ posts }) => {
           dataLength={postsToRender.length}
           posts={postsToRender}
           showControls
+          onPostRemoved={(post) => setPostsToRender(filterPosts(posts, post))}
         />
       </AdminLayout>
-
-      <ConfirmModal
-        visible
-        title='삭제하시겠습니까?'
-        subTitle='해당 게시글이 영구적으로 삭제됩니다.'
-        busy
-      />
     </>
   );
 };

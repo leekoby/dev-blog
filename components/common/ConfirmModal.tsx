@@ -38,8 +38,12 @@ const ConfirmModal: React.FC<Props> = ({
         )}
         {!busy && (
           <div className='flex items-center space-x-2 pt-2'>
-            <button className={classNames(commonBtnClasses, 'bg-red-500')}>확인</button>
-            <button className={classNames(commonBtnClasses, 'bg-blue-500')}>취소</button>
+            <button onClick={onConfirm} className={classNames(commonBtnClasses, 'bg-red-500')}>
+              확인
+            </button>
+            <button onClick={onCancel} className={classNames(commonBtnClasses, 'bg-blue-500')}>
+              취소
+            </button>
           </div>
         )}
       </div>

@@ -11,13 +11,35 @@ export const config = {
 };
 
 /** 2023/06/09 - 업데이트 API - by leekoby */
-export const handler: NextApiHandler = (req, res) => {
+const handler: NextApiHandler = (req, res) => {
   const { method } = req;
   switch (method) {
     case 'PATCH':
       return updatePost(req, res);
+
+    case 'DELETE':
+      return removePost(req, res);
     default:
       res.status(404).send('Not found');
+  }
+};
+
+/** 2023/06/11 - 삭제 함수 - by leekoby */
+const removePost: NextApiHandler = async (req, res) => {
+  try {
+    const postId = req.query.postId as string;
+    const post = await Post.findByIdAndDelete(postId);
+    if (!post) return res.status(404).json({ error: 'Post not found' });
+
+    // 썸네일 삭제
+    const publicId = post.thumbnail?.public_id;
+    if (publicId) {
+      //기존에 있던 썸네일 파일 제거
+      await cloudinary.uploader.destroy(publicId);
+    }
+    res.json({ removed: true });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -60,3 +82,4 @@ const updatePost: NextApiHandler = async (req, res) => {
   await post.save();
   res.json({ post });
 };
+export default handler;

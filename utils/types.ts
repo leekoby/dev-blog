@@ -7,6 +7,7 @@ export type PostApiResponse = {
 
 /** 2023/06/09 - 게시글 타입 - by leekoby */
 export interface PostDetail {
+  id: string;
   title: string;
   slug: string;
   meta: string;

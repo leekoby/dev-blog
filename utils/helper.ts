@@ -1,4 +1,5 @@
 import { FinalPost } from '@/components/editor';
+import { PostDetail } from './types';
 
 /** 2023/06/09 - FormData 생성 함수 - by leekoby */
 export const generateFormData = (post: FinalPost) => {
@@ -12,4 +13,11 @@ export const generateFormData = (post: FinalPost) => {
   }
 
   return formData;
+};
+
+/** 2023/06/11 - 변경된 게시글 필터링 함수 - by leekoby */
+export const filterPosts = (posts: PostDetail[], postToFilter: PostDetail) => {
+  return posts.filter((post) => {
+    return post.id !== postToFilter.id;
+  });
 };

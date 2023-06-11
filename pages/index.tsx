@@ -1,9 +1,11 @@
 import InfiniteScrollPosts from '@/components/common/infiniteScrollPosts';
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import { formatPosts, readPostsFromDb } from '@/lib/utils';
-import { PostDetail } from '@/utils/types';
+import { filterPosts } from '@/utils/helper';
+import { PostDetail, UserProfile } from '@/utils/types';
 import axios from 'axios';
 import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next';
+import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
@@ -12,7 +14,9 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const Home: NextPage<Props> = ({ posts }) => {
   const [postsToRender, setPostsToRender] = useState(posts);
   const [hasMorePosts, setHasMorePosts] = useState(true);
-  const isAdmin = false;
+  const { data } = useSession();
+  const profile = data?.user as UserProfile;
+  const isAdmin = profile && profile.role === 'admin';
 
   const fetchMorePosts = async () => {
     try {
@@ -37,6 +41,7 @@ const Home: NextPage<Props> = ({ posts }) => {
           dataLength={postsToRender.length}
           posts={postsToRender}
           showControls={isAdmin}
+          onPostRemoved={(post) => setPostsToRender(filterPosts(posts, post))}
         />
       </div>
     </DefaultLayout>

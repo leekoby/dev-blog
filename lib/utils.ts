@@ -39,6 +39,7 @@ export const readPostsFromDb = async (limit: number, pageNo: number) => {
 /** 2023/06/09 - Db에서 게시글 Format  - by leekoby */
 export const formatPosts = (posts: PostModelSchema[]): PostDetail[] => {
   return posts.map((post) => ({
+    id: post._id.toString(),
     title: post.title,
     slug: post.slug,
     createdAt: post.createdAt.toString(),
