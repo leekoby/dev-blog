@@ -8,6 +8,7 @@ import ProfileHead from '../ProfileHead';
 import DropdownOptions, { dropDownOtions } from '../DropDownOption';
 import { useRouter } from 'next/router';
 import { UserProfile } from '@/utils/types';
+import useDarkMode from '@/pages/hooks/useDarkMode';
 
 interface Props {}
 
@@ -30,6 +31,7 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
   const profile = data?.user as UserProfile | undefined;
   const isAdmin = profile && profile.role === 'admin';
 
+  const { toggleTheme } = useDarkMode();
   const hadleLoginWithGithub = async () => {
     const res = await signIn('github');
   };
@@ -54,7 +56,7 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
         <span className='text-xl font-semibold'>{APP_NAME}</span>
       </Link>
       <div className='flex items-center space-x-5'>
-        <button className='dark:text-secondary-dark text-secondary-light'>
+        <button onClick={toggleTheme} className='dark:text-secondary-dark text-secondary-light'>
           <HiLightBulb size={34} className='' />
         </button>
 
