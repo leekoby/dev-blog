@@ -42,11 +42,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   try {
     await dbConnect();
     const posts = await Post.find().select('slug');
-    const paths = posts.map(({ slug }) => {
-      params: slug;
-    });
+    const paths = posts.map(({ slug }) => ({ params: { slug } }));
     return {
-      paths: [{ params: { slug: '' } }],
+      paths,
       fallback: 'blocking',
     };
   } catch (error) {
@@ -92,6 +90,7 @@ export const getStaticProps: GetStaticProps<StaticPropsResponse, { slug: string 
           createdAt: createdAt.toString(),
         },
       },
+      revalidate: 60, // 60초
     };
   } catch (error) {
     return { notFound: true };

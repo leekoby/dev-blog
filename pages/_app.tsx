@@ -1,8 +1,9 @@
-import DefaultLayout from '@/components/layout/DefaultLayout';
-import { SessionProvider } from 'next-auth/react';
-import { Session } from 'next-auth';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
+
+import DefaultLayout from '@/components/layout/DefaultLayout';
 
 interface Props {
   session?: Session | null;
