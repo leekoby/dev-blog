@@ -1,8 +1,10 @@
-import { PostDetail } from '@/utils/types';
+import { PostDetail, UserProfile } from '@/utils/types';
 import formidable from 'formidable';
-import { NextApiRequest } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth';
 import dbConnect from './dbConnect';
 import Post, { PostModelSchema } from './models/Post';
+import { authOptions } from '../pages/api/auth/[...nextauth]';
 
 // [postId] 타입에러 해결 제네릭 사용
 interface FormidablePromise<T> {
@@ -47,4 +49,18 @@ export const formatPosts = (posts: PostModelSchema[]): PostDetail[] => {
     meta: post.meta,
     tags: post.tags,
   }));
+};
+
+/** 2023/06/11 - 관리자 확인 - by leekoby */
+export const isAdmin = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getServerSession(req, res, authOptions);
+  const user = session?.user as UserProfile;
+  return user && user.role === 'admin';
+};
+
+/** 2023/06/11 - 로그인 확인 - by leekoby */
+export const isAuth = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getServerSession(req, res, authOptions);
+  const user = session?.user;
+  if (user) return user as UserProfile;
 };

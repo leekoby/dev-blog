@@ -16,7 +16,7 @@ const GIT_CLIENT_SECRET =
   MODE === 'development' ? GITHUB_CLIENT_SECRET_LOCAL : GITHUB_CLIENT_SECRET;
 
 /** 2023/06/10 - NextAuth Provider - by leekoby */
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GitHubAuthProvider({
       clientId: GIT_CLIENT_ID as string,
