@@ -2,17 +2,36 @@ import DefaultLayout from '@/components/layout/DefaultLayout';
 import dbConnect from '@/lib/dbConnect';
 import Post from '@/lib/models/Post';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import parse from 'html-react-parser';
+import Image from 'next/image';
+import dateformat from 'dateformat';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 /** 2023/06/11 - 게시글 상세페이지 - by leekoby */
 
 const SinglePost: NextPage<Props> = ({ post }) => {
+  const { title, content, tags, meta, thumbnail, slug, createdAt } = post;
   return (
-    <DefaultLayout>
-      {post.title}
-      {post.content}
-      {post.slug}
+    <DefaultLayout title={title} desc={meta}>
+      <div className='pb-20'>
+        {thumbnail ? (
+          <div className='relative aspect-video'>
+            <Image src={thumbnail} fill alt={title} />
+          </div>
+        ) : null}
+
+        <div className='flex items-center justify-between py-2'>
+          {tags.map((tag, index) => (
+            <span key={tag + index}>{tag}</span>
+          ))}
+          <span>{dateformat(createdAt, 'paddedShortDate')}</span>
+        </div>
+        <div className='prose prose-lg max-w-full mx-auto dark:prose-invert'>
+          <h1>{title}</h1>
+          {parse(content)}
+        </div>
+      </div>
     </DefaultLayout>
   );
 };
