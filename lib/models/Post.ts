@@ -13,7 +13,7 @@ export interface PostModelSchema {
   createdAt: Date;
   author: ObjectId;
 }
-/** 2023/06/08 - mongoose schema - by leekoby */
+/** 2023/06/08 - mongoose Post Model Schema - by leekoby */
 const PostSchema = new Schema<PostModelSchema>(
   {
     title: {
@@ -55,6 +55,6 @@ const PostSchema = new Schema<PostModelSchema>(
   }
 );
 
-/** 2023/06/08 - schema model- by leekoby */
+/** 2023/06/08 - Post schema model- by leekoby */
 const Post = models?.Post || model('Post', PostSchema);
 export default Post as Model<PostModelSchema>;

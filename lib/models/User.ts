@@ -9,7 +9,7 @@ export interface UserModelSchema {
   provider: 'github'; //|'google'| 'credential';
   avatar?: string;
 }
-/** 2023/06/10 - mongoose UserModelSchema - by leekoby */
+/** 2023/06/10 - mongoose UserModel Schema - by leekoby */
 const UserSchema = new Schema<UserModelSchema>(
   {
     name: {
@@ -39,6 +39,6 @@ const UserSchema = new Schema<UserModelSchema>(
   }
 );
 
-/** 2023/06/10 - UserModelSchema- by leekoby */
+/** 2023/06/10 - User Schema Model- by leekoby */
 const User = models?.User || model('User', UserSchema);
 export default User as Model<UserModelSchema>;
