@@ -6,6 +6,7 @@ import { PostDetail } from '@/utils/types';
 import { formatPosts, readPostsFromDb } from '@/lib/utils';
 import InfiniteScrollPosts from '@/components/common/infiniteScrollPosts';
 import axios from 'axios';
+import ConfirmModal from '@/components/common/ConfirmModal';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -31,15 +32,24 @@ const Posts: NextPage<Props> = ({ posts }) => {
     }
   };
   return (
-    <AdminLayout>
-      <InfiniteScrollPosts
-        hasMore={hasMorePosts}
-        next={fetchMorePosts}
-        dataLength={postsToRender.length}
-        posts={postsToRender}
-        showControls
+    <>
+      <AdminLayout>
+        <InfiniteScrollPosts
+          hasMore={hasMorePosts}
+          next={fetchMorePosts}
+          dataLength={postsToRender.length}
+          posts={postsToRender}
+          showControls
+        />
+      </AdminLayout>
+
+      <ConfirmModal
+        visible
+        title='삭제하시겠습니까?'
+        subTitle='해당 게시글이 영구적으로 삭제됩니다.'
+        busy
       />
-    </AdminLayout>
+    </>
   );
 };
 
