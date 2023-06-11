@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { APP_NAME } from '../AppHead';
 import { HiLightBulb } from 'react-icons/hi';
 import Logo from '../Logo';
@@ -32,9 +32,6 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
   const isAdmin = profile && profile.role === 'admin';
 
   const { toggleTheme } = useDarkMode();
-  const hadleLoginWithGithub = async () => {
-    const res = await signIn('github');
-  };
 
   const dropDownOtions: dropDownOtions = isAdmin
     ? [
@@ -66,7 +63,7 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
             head={<ProfileHead nameInitail='N' lightOnly />}
           />
         ) : (
-          <GitHubAuthButton lightOnly onClick={hadleLoginWithGithub} />
+          <GitHubAuthButton lightOnly />
         )}
       </div>
     </div>

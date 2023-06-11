@@ -5,16 +5,20 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } fro
 import parse from 'html-react-parser';
 import Image from 'next/image';
 import dateformat from 'dateformat';
+import useAuth from '@/hooks/useAuth';
+import CommentForm from '@/components/common/CommentForm';
+import { GitHubAuthButton } from '@/components/button';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 /** 2023/06/11 - 게시글 상세페이지 - by leekoby */
 
 const SinglePost: NextPage<Props> = ({ post }) => {
+  const userProfile = useAuth();
   const { title, content, tags, meta, thumbnail, slug, createdAt } = post;
   return (
     <DefaultLayout title={title} desc={meta}>
-      <div className='pb-20'>
+      <div className=''>
         {thumbnail ? (
           <div className='relative aspect-video'>
             <Image src={thumbnail} fill alt={title} />
@@ -30,6 +34,20 @@ const SinglePost: NextPage<Props> = ({ post }) => {
           <span>{dateformat(createdAt, 'paddedShortDate')}</span>
         </div>
         <div className='prose prose-lg max-w-full mx-auto dark:prose-invert'>{parse(content)}</div>
+
+        {/* 댓글폼 */}
+        <div className='py-20'>
+          {userProfile ? (
+            <CommentForm title='댓글 작성...' />
+          ) : (
+            <div className='flex flex-col items-end space-y-2'>
+              <h3 className='text-secondary-dark text-xl font-semibold'>
+                댓글을 남기시려면 로그인하세요.
+              </h3>
+              <GitHubAuthButton />
+            </div>
+          )}
+        </div>
       </div>
     </DefaultLayout>
   );
