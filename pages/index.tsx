@@ -13,7 +13,7 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 /** 2023/06/10 - 홈 레이아웃 적용 - by leekoby */
 const Home: NextPage<Props> = ({ posts }) => {
   const [postsToRender, setPostsToRender] = useState(posts);
-  const [hasMorePosts, setHasMorePosts] = useState(true);
+  const [hasMorePosts, setHasMorePosts] = useState(posts.length >= limit);
   const { data } = useSession();
   const profile = data?.user as UserProfile;
   const isAdmin = profile && profile.role === 'admin';
@@ -21,7 +21,7 @@ const Home: NextPage<Props> = ({ posts }) => {
   const fetchMorePosts = async () => {
     try {
       pageNo++;
-      const { data } = await axios(`/api/posts?limit=${limit}&pageNo=${pageNo}`);
+      const { data } = await axios(`/api/posts?limit=${limit}&skip=${postsToRender.length}`);
 
       if (data.post.length < limit) {
         setPostsToRender([...postsToRender, ...data.posts]);

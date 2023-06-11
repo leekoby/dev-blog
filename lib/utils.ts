@@ -23,14 +23,14 @@ export const readFile = <T extends object>(req: NextApiRequest): Promise<Formida
 };
 
 /** 2023/06/09 - Db에서 게시글 불러올 범위 함수 // 무한스크롤(예정)  - by leekoby */
-export const readPostsFromDb = async (limit: number, pageNo: number) => {
+export const readPostsFromDb = async (limit: number, pageNo: number, skip?: number) => {
   if (!limit || limit > 10) throw Error('최대 10 페이지까지 가능합니다');
-  const skip = limit * pageNo;
+  const finalSkip = skip || limit * pageNo;
   await dbConnect();
   const posts = await Post.find()
     .sort({ createdAt: 'desc' })
     .select('-content')
-    .skip(skip)
+    .skip(finalSkip)
     .limit(limit);
 
   return posts;
