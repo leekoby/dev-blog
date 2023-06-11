@@ -29,6 +29,17 @@ const useDarkMode = () => {
     if (oldTheme) {
       return updateTheme(oldTheme);
     }
+
+    //사용자가 사용하고 있는 테마에 따라 웹 테마 변경
+    const runningOnDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (runningOnDarkMode) {
+      updateTheme(darkTheme);
+      storeThemeToLs(darkTheme);
+    } else {
+      updateTheme(defaultTheme);
+      storeThemeToLs(defaultTheme);
+    }
   }, []);
 
   return { toggleTheme };
