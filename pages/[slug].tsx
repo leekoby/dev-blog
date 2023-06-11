@@ -21,16 +21,15 @@ const SinglePost: NextPage<Props> = ({ post }) => {
           </div>
         ) : null}
 
-        <div className='flex items-center justify-between py-2'>
+        <h1 className='text-6xl font-semibold text-primary-dark dark:text-primary py-2'>{title}</h1>
+
+        <div className='flex items-center justify-between py-2 text-secondary-dark dark:text-secondary-light'>
           {tags.map((tag, index) => (
             <span key={tag + index}>{tag}</span>
           ))}
           <span>{dateformat(createdAt, 'paddedShortDate')}</span>
         </div>
-        <div className='prose prose-lg max-w-full mx-auto dark:prose-invert'>
-          <h1>{title}</h1>
-          {parse(content)}
-        </div>
+        <div className='prose prose-lg max-w-full mx-auto dark:prose-invert'>{parse(content)}</div>
       </div>
     </DefaultLayout>
   );

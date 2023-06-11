@@ -49,7 +49,9 @@ const LinkForm: React.FC<Props> = ({ visible, initialState, onSubmit }): JSX.Ele
           checked={link.openInNewTab}
           onChange={({ target }) => setLink({ ...link, openInNewTab: target.checked })}
         />
-        <label htmlFor='open-in-new-tab'>새탭에서 열기</label>
+        <label className='text-secondary-dark dark:text-secondary-light' htmlFor='open-in-new-tab '>
+          새탭에서 열기
+        </label>
         <div className='flex-1 text-right'>
           <button onClick={handleSubmit} className='bg-action px-2 py-1 text-primary'>
             적용
