@@ -32,6 +32,7 @@ const AdminLayout: React.FC<Props> = ({ children, title }): JSX.Element => {
         <AdminNav navItems={navItems} />
         <div className='flex-1 p-4 dark:bg-primary-dark bg-primary'>
           <AdminSecondaryNav />
+          {children}
         </div>
         {/* create button */}
         <Link
