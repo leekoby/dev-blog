@@ -1,5 +1,5 @@
 import { signOut } from 'next-auth/react';
-import useDarkMode from '@/pages/hooks/useDarkMode';
+import useDarkMode from '@/hooks/useDarkMode';
 import { options } from 'joi';
 import { useRouter } from 'next/router';
 import DropdownOptions, { dropDownOtions } from '../DropDownOption';

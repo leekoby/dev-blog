@@ -8,7 +8,7 @@ import ProfileHead from '../ProfileHead';
 import DropdownOptions, { dropDownOtions } from '../DropDownOption';
 import { useRouter } from 'next/router';
 import { UserProfile } from '@/utils/types';
-import useDarkMode from '@/pages/hooks/useDarkMode';
+import useDarkMode from '@/hooks/useDarkMode';
 
 interface Props {}
 
