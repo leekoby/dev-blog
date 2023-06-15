@@ -32,7 +32,11 @@ const SeoForm: React.FC<Props> = ({ initialValue, title = '', onChange }): JSX.E
   };
 
   useEffect(() => {
-    const slug = slugify(title, { lower: true, locale: 'ko', remove: /[*+~.()'"!:@&]/g });
+    const slug = slugify(title, {
+      lower: true,
+      locale: 'ko',
+      remove: /[*+~.()'"!:@&]/g,
+    });
     const newValues = { ...values, slug };
     setValues(newValues);
     onChange(newValues);

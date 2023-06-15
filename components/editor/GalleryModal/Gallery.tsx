@@ -26,7 +26,13 @@ const Gallery: React.FC<Props> = ({
       {images.map(({ src }, index) => {
         return (
           <div key={index} className='basis-1/4 relative w-[200px] aspect-square p-2'>
-            <Image src={src} selected={selectedImage === src} onClick={() => onSelect(src)} />;
+            <Image
+              src={src}
+              selected={selectedImage === src}
+              alt='gallery'
+              onClick={() => onSelect(src)}
+            />
+            ;
           </div>
         );
       })}

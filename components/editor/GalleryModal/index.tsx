@@ -82,7 +82,12 @@ const GalleryModal: React.FC<Props> = ({
                   />
                   <ActionButton busy title='Select' onClick={handleSelection} />
                   <div className='relative aspect-video bg-png-pattern'>
-                    <Image src={selectedImage} fill style={{ objectFit: 'contain' }} alt={''} />
+                    <Image
+                      src={selectedImage}
+                      fill
+                      style={{ objectFit: 'contain' }}
+                      alt='selected'
+                    />
                   </div>
                 </>
               ) : null}
