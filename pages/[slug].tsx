@@ -29,7 +29,7 @@ const SinglePost: NextPage<Props> = ({ post }) => {
 
         <div className='flex items-center justify-between py-2 text-secondary-dark dark:text-secondary-light'>
           {tags.map((tag, index) => (
-            <span key={tag + index}>{tag}</span>
+            <span key={tag + index}>#{tag}</span>
           ))}
           <span>{dateformat(createdAt, 'paddedShortDate')}</span>
         </div>
