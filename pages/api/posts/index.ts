@@ -1,11 +1,13 @@
 import cloudinary from '@/lib/cloudinary';
 import dbConnect from '@/lib/dbConnect';
 import Post from '@/lib/models/Post';
-import { formatPosts, readFile, readPostsFromDb } from '@/lib/utils';
+import { formatPosts, isAdmin, readFile, readPostsFromDb } from '@/lib/utils';
 import { postValidationSchema, validateSchema } from '@/lib/validator';
-import { IncomingPost } from '@/utils/types';
+import { IncomingPost, UserProfile } from '@/utils/types';
 import formidable from 'formidable';
 import { NextApiHandler } from 'next';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 export const config = {
   api: { bodyParser: false },
@@ -25,6 +27,9 @@ const handler: NextApiHandler = async (req, res) => {
 
 /** 2023/06/08 - createNewPost handler / Joi 유효성 검사 - by leekoby */
 const createNewPost: NextApiHandler = async (req, res) => {
+  const admin = await isAdmin(req, res);
+  if (!admin) return res.status(401).json({ error: 'unauthorized request!' });
+
   const { files, body } = await readFile<IncomingPost>(req);
 
   let tags = [];

@@ -1,6 +1,6 @@
 import cloudinary from '@/lib/cloudinary';
 import Post from '@/lib/models/Post';
-import { readFile } from '@/lib/utils';
+import { isAdmin, readFile } from '@/lib/utils';
 import { postValidationSchema, validateSchema } from '@/lib/validator';
 import { IncomingPost } from '@/utils/types';
 import formidable from 'formidable';
@@ -27,6 +27,8 @@ const handler: NextApiHandler = (req, res) => {
 /** 2023/06/11 - 삭제 함수 - by leekoby */
 const removePost: NextApiHandler = async (req, res) => {
   try {
+    const admin = await isAdmin(req, res);
+    if (!admin) return res.status(401).json({ error: 'unauthorized request!' });
     const postId = req.query.postId as string;
     const post = await Post.findByIdAndDelete(postId);
     if (!post) return res.status(404).json({ error: 'Post not found' });
@@ -45,6 +47,8 @@ const removePost: NextApiHandler = async (req, res) => {
 
 /** 2023/06/09 - 업데이트 함수 - by leekoby */
 const updatePost: NextApiHandler = async (req, res) => {
+  const admin = await isAdmin(req, res);
+  if (!admin) return res.status(401).json({ error: 'unauthorized request!' });
   const postId = req.query.postId as string; // slug 에서 postId로 변경
   const post = await Post.findById(postId);
   if (!post) return res.status(404).json({ error: '게시글이 없습니다.' });

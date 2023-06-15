@@ -1,7 +1,7 @@
 import { NextApiHandler } from 'next';
 import formidable from 'formidable';
 import cloudinary from '@/lib/cloudinary';
-import { readFile } from '@/lib/utils';
+import { isAdmin, readFile } from '@/lib/utils';
 
 export const config = {
   api: { bodyParser: false },
@@ -22,6 +22,9 @@ const handler: NextApiHandler = (req, res) => {
 /** 2023/06/07 - 이미지 업로드  - by leekoby */
 const uploadNewImage: NextApiHandler = async (req, res) => {
   try {
+    const admin = await isAdmin(req, res);
+    if (!admin) return res.status(401).json({ error: 'unauthorized request!' });
+
     const { files } = await readFile(req);
     const imageFile = files.image as formidable.File;
     const { secure_url: url } = await cloudinary.uploader.upload(imageFile.filepath, {
@@ -37,6 +40,9 @@ const uploadNewImage: NextApiHandler = async (req, res) => {
 /** 2023/06/07 - 이미지 Read  - by leekoby */
 const readAllImages: NextApiHandler = async (req, res) => {
   try {
+    const admin = await isAdmin(req, res);
+    if (!admin) return res.status(401).json({ error: 'unauthorized request!' });
+
     const { resources } = await cloudinary.api.resources({
       resource_type: 'image',
       type: 'upload',

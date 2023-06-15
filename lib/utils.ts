@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import dbConnect from './dbConnect';
 import Post, { PostModelSchema } from './models/Post';
-import { authOptions } from '../pages/api/auth/[...nextauth]';
+import { authOptions } from '@/pages/api/auth/[...nextauth]';
 
 // [postId] 타입에러 해결 제네릭 사용
 interface FormidablePromise<T> {
@@ -64,3 +64,5 @@ export const isAuth = async (req: NextApiRequest, res: NextApiResponse) => {
   const user = session?.user;
   if (user) return user as UserProfile;
 };
+
+
