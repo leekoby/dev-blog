@@ -1,10 +1,11 @@
-import { PostDetail, UserProfile } from '@/utils/types';
+import { CommentResponse, PostDetail, UserProfile } from '@/utils/types';
 import formidable from 'formidable';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import dbConnect from './dbConnect';
 import Post, { PostModelSchema } from './models/Post';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { IComment } from './models/Comment';
 
 // [postId] 타입에러 해결 제네릭 사용
 interface FormidablePromise<T> {
@@ -65,4 +66,20 @@ export const isAuth = async (req: NextApiRequest, res: NextApiResponse) => {
   if (user) return user as UserProfile;
 };
 
+/** 2023/06/19 - 댓글 형식 - by leekoby */
+export const formatComment = (comment: IComment, user?: UserProfile): CommentResponse => {
+  const owner = comment.owner as any;
+  return {
+    id: comment._id.toString(),
+    content: comment.content,
+    likes: comment.likes.length,
+    chiefComment: comment?.chiefComment || false,
+    createdAt: comment.createdAt?.toString(),
+    owner: { id: owner._id, name: owner.name, avatar: owner.avatar },
+    repliedTo: comment?.repliedTo?.toString(),
+    likedByOwner: user ? getLikedByOwner(comment.likes, user) : false,
+  };
+};
 
+/** 2023/06/19 - 좋아요 여부 확인 함수  - by leekoby */
+const getLikedByOwner = (likes: any[], user: UserProfile) => likes.includes(user.id);
