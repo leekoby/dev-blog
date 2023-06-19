@@ -3,6 +3,7 @@ import Comment from '@/lib/models/Comment';
 import Post from '@/lib/models/Post';
 import { formatComment, isAuth } from '@/lib/utils';
 import { commentValidationSchema, validateSchema } from '@/lib/validator';
+import { CommentResponse } from '@/utils/types';
 import { isValidObjectId } from 'mongoose';
 import { NextApiHandler } from 'next';
 
@@ -32,7 +33,7 @@ const readComments: NextApiHandler = async (req, res) => {
   if (!belongsTo || !isValidObjectId(belongsTo))
     return res.status(422).json({ error: '유효하지 않은 요청' });
 
-  const comment = await Comment.findOne({ belongsTo })
+  const comments = await Comment.find({ belongsTo })
     .populate({
       path: 'owner',
       select: 'name avatar',
@@ -46,14 +47,13 @@ const readComments: NextApiHandler = async (req, res) => {
     })
     .select('createdAt likes content repliedTo');
 
-  if (!comment) return res.json({ comment });
+  if (!comments) return res.json({ comment: comments });
 
-  const formattedComment = {
+  const formattedComment: CommentResponse[] = comments.map((comment) => ({
     ...formatComment(comment, user),
     replies: comment.replies?.map((c: any) => formatComment(c, user)),
-  };
-
-  res.json({ comment: formattedComment });
+  }));
+  res.json({ comments: formattedComment });
 };
 
 /** 2023/06/09 - 댓글 등록 API - by leekoby */
