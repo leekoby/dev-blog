@@ -6,9 +6,9 @@ export interface IComment {
   owner: ObjectId; //댓글 작성자
   content: string;
   likes: ObjectId[]; // 좋아요 누른 사람들
-  replies: ObjectId[]; //대댓글;
-  repliedTo: ObjectId; //어떤 댓글의 대댓글인지
-  chiefComment: boolean; //  메인 댓글
+  replies?: ObjectId[]; //대댓글;
+  repliedTo?: ObjectId; //어떤 댓글의 대댓글인지
+  chiefComment?: boolean; //  메인 댓글
   createdAt: string; //생성 날짜
 }
 
