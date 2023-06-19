@@ -1,5 +1,7 @@
 import useAuth from '@/hooks/useAuth';
+import { CommentResponse } from '@/utils/types';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { GitHubAuthButton } from '../button';
 import CommentForm from './CommentForm';
 
@@ -9,15 +11,25 @@ interface Props {
 
 /** 2023/06/19 - 댓글 컴포넌트 분리 - by leekoby */
 const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
+  const [comments, setComments] = useState<CommentResponse[]>();
   const userProfile = useAuth();
 
   const handleNewCommentSubmit = async (content: string) => {
-    const comment = await axios
+    const newComment = await axios
       .post('/api/comment/', { content, belongsTo })
       .then(({ data }) => data.comment)
       .catch((err) => console.log(err));
-    console.log(comment);
+    if (newComment && comments) setComments([...comments, newComment]);
+    else setComments([newComment]);
   };
+
+  useEffect(() => {
+    axios(`/api/comment?belongsTo=${belongsTo}`)
+      .then(({ data }) => {
+        console.log(data.comments);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className='py-20'>
