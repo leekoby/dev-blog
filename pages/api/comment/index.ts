@@ -1,7 +1,7 @@
 import dbConnect from '@/lib/dbConnect';
 import Comment from '@/lib/models/Comment';
 import Post from '@/lib/models/Post';
-import { isAuth } from '@/lib/utils';
+import { formatComment, isAuth } from '@/lib/utils';
 import { commentValidationSchema, validateSchema } from '@/lib/validator';
 import { isValidObjectId } from 'mongoose';
 import { NextApiHandler } from 'next';
@@ -25,6 +25,8 @@ const handler: NextApiHandler = (req, res) => {
 
 /** 2023/06/19 - 댓글 읽기 API - by leekoby */
 const readComments: NextApiHandler = async (req, res) => {
+  const user = await isAuth(req, res);
+
   const { belongsTo } = req.query;
 
   if (!belongsTo || !isValidObjectId(belongsTo))
@@ -43,7 +45,15 @@ const readComments: NextApiHandler = async (req, res) => {
       },
     })
     .select('createdAt likes content repliedTo');
-  res.json(comment);
+
+  if (!comment) return res.json({ comment });
+
+  const formattedComment = {
+    ...formatComment(comment, user),
+    replies: comment.replies?.map((c: any) => formatComment(c, user)),
+  };
+
+  res.json({ comment: formattedComment });
 };
 
 /** 2023/06/09 - 댓글 등록 API - by leekoby */
@@ -73,7 +83,8 @@ const createNewComment: NextApiHandler = async (req, res) => {
   });
 
   await comment.save();
-  res.status(201).json(comment);
+  const commentWithOwner = await comment.populate('owner');
+  res.status(201).json({ comment: formatComment(commentWithOwner, user) });
 };
 
 /** 2023/06/19 - 댓글 삭제 API - by leekoby */
@@ -96,7 +107,7 @@ const removeComment: NextApiHandler = async (req, res) => {
   else {
     // 답글인 경우 메인 댓글에서 제거
     const chiefComment = await Comment.findById(comment.repliedTo);
-    if (chiefComment?.replies.includes(commentId as any)) {
+    if (chiefComment?.replies?.includes(commentId as any)) {
       chiefComment.replies = chiefComment.replies.filter((cId) => cId.toString() === commentId);
 
       await chiefComment.save();
