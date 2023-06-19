@@ -47,7 +47,7 @@ export const validateSchema = (schema: ObjectSchema, value: any) => {
 /** 2023/06/11 - 댓글 스키마 유효성 검사 - by leekoby */
 export const commentValidationSchema = Joi.object().keys({
   belongsTo: Joi.string()
-    .required()
+    // .required()
     .custom((value, helper) => {
       if (!isValidObjectId(value)) return helper.error('any.invalid');
       return true;
