@@ -16,9 +16,34 @@ const handler: NextApiHandler = (req, res) => {
       return removeComment(req, res);
     case 'PATCH':
       return updateComment(req, res);
+    case 'GET':
+      return readComments(req, res);
     default:
       res.status(404).send('Not found');
   }
+};
+
+/** 2023/06/19 - 댓글 읽기 API - by leekoby */
+const readComments: NextApiHandler = async (req, res) => {
+  const { belongsTo } = req.query;
+
+  if (!belongsTo || !isValidObjectId(belongsTo))
+    return res.status(422).json({ error: '유효하지 않은 요청' });
+
+  const comment = await Comment.findOne({ belongsTo })
+    .populate({
+      path: 'owner',
+      select: 'name avatar',
+    })
+    .populate({
+      path: 'replies',
+      populate: {
+        path: 'owner',
+        select: 'name avatar',
+      },
+    })
+    .select('createdAt likes content repliedTo');
+  res.json(comment);
 };
 
 /** 2023/06/09 - 댓글 등록 API - by leekoby */
@@ -87,5 +112,20 @@ const removeComment: NextApiHandler = async (req, res) => {
 const updateComment: NextApiHandler = async (req, res) => {
   const user = await isAuth(req, res);
   if (!user) return res.status(403).json({ error: 'unauthrized request' });
+
+  const error = validateSchema(commentValidationSchema, req.body);
+  if (error) return res.status(422).json({ error });
+
+  const { commentId } = req.query;
+  if (!commentId || !isValidObjectId(commentId))
+    return res.status(422).json({ error: '유효하지 않은 요청' });
+
+  const comment = await Comment.findOne({ _id: commentId, owner: user.id });
+
+  if (!comment) return res.status(404).json({ error: '댓글이 존재하지 않습니다' });
+
+  comment.content = req.body.content;
+  await comment.save();
+  res.json(comment);
 };
 export default handler;
