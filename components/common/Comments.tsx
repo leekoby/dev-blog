@@ -3,6 +3,7 @@ import { CommentResponse } from '@/utils/types';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { GitHubAuthButton } from '../button';
+import CommentCard from './CommentCard';
 import CommentForm from './CommentForm';
 
 interface Props {
@@ -26,13 +27,13 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
   useEffect(() => {
     axios(`/api/comment?belongsTo=${belongsTo}`)
       .then(({ data }) => {
-        console.log(data.comments);
+        setComments(data.comments);
       })
       .catch((err) => console.log(err));
   }, []);
 
   return (
-    <div className='py-20'>
+    <div className='py-20 space-y-4'>
       {userProfile ? (
         <CommentForm onSubmit={handleNewCommentSubmit} title='댓글 작성...' />
       ) : (
@@ -43,6 +44,14 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
           <GitHubAuthButton />
         </div>
       )}
+
+      {comments?.map(({ id, owner, createdAt, content }) => {
+        return (
+          <div key={id}>
+            <CommentCard profile={owner} date={createdAt} content={content} />
+          </div>
+        );
+      })}
     </div>
   );
 };
