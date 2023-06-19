@@ -34,7 +34,7 @@ const AdminSecondaryNav: React.FC<Props> = (props): JSX.Element => {
       {/* 검색 */}
       <SearchBar />
       {/* 옵션/프로필  */}
-      <DropdownOptions head={<ProfileHead nameInitail='L' />} options={options} />
+      <DropdownOptions head={<ProfileHead nameInitial='L' />} options={options} />
     </div>
   );
 };

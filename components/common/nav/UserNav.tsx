@@ -60,7 +60,7 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
         {isAuth ? (
           <DropdownOptions
             options={dropDownOtions}
-            head={<ProfileHead nameInitail='N' lightOnly />}
+            head={<ProfileHead nameInitial='N' lightOnly />}
           />
         ) : (
           <GitHubAuthButton lightOnly />
