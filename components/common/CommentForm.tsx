@@ -1,15 +1,24 @@
 import useEditorConfig from '@/hooks/useEditorConfig';
 import { EditorContent } from '@tiptap/react';
+import { useEffect } from 'react';
 import ActionButton from './ActionButton';
 
 interface Props {
   title?: string;
   onSubmit(content: string): void;
   busy?: boolean;
+  onClose?(): void;
+  initialState?: string;
 }
 
 /** 2023/06/11 - 댓글폼 - by leekoby */
-const CommentForm: React.FC<Props> = ({ title, busy = false, onSubmit }): JSX.Element => {
+const CommentForm: React.FC<Props> = ({
+  title,
+  busy = false,
+  onSubmit,
+  onClose,
+  initialState,
+}): JSX.Element => {
   const { editor } = useEditorConfig({ placeholder: '댓글을 입력하세요.' });
 
   const handleSubmit = () => {
@@ -21,6 +30,11 @@ const CommentForm: React.FC<Props> = ({ title, busy = false, onSubmit }): JSX.El
     }
   };
 
+  useEffect(() => {
+    // if (editor && initialState) 이렇게 쓸때는 수정 <=> 작성 변경이 안됨
+    if (typeof initialState === 'string') editor?.chain().focus().setContent(initialState).run();
+  }, [editor, initialState]);
+
   return (
     <div>
       {title ? (
@@ -31,8 +45,13 @@ const CommentForm: React.FC<Props> = ({ title, busy = false, onSubmit }): JSX.El
         editor={editor}
       />
       <div className='flex justify-end py-3'>
-        <div className='inline-block'>
+        <div className='flex space-x-4'>
           <ActionButton busy={busy} title='Submit' onClick={handleSubmit} />
+          {onClose ? (
+            <button onClick={onClose} className='text-primary-dark dark:text-primary'>
+              닫기
+            </button>
+          ) : null}
         </div>
       </div>
     </div>
