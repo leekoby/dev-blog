@@ -32,3 +32,19 @@ export interface UserProfile {
   avatar: string | undefined;
   role: 'user' | 'admin';
 }
+
+/** 2023/06/19 - 답글 타입 - by leekoby */
+export type replyComments = CommentResponse[];
+
+/** 2023/06/19 - 댓글 타입 - by leekoby */
+export interface CommentResponse {
+  id: string;
+  content: string;
+  createdAt: string;
+  likes: number;
+  likedByOwner?: boolean;
+  replies?: replyComments;
+  repliedTo?: string;
+  chiefComment: boolean;
+  owner: { name: string; id: string; avatar?: string } | null;
+}
