@@ -14,6 +14,23 @@ interface Props {
 const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
   const [comments, setComments] = useState<CommentResponse[]>();
   const userProfile = useAuth();
+
+  //답글 추가 함수
+  const InsertNewReplyComments = (reply: CommentResponse) => {
+    if (!comments) return;
+    let updatedComments = [...comments];
+
+    const chiefCommentIndex = updatedComments.findIndex(({ id }) => id === reply.repliedTo);
+
+    const { replies } = updatedComments[chiefCommentIndex];
+    if (replies) {
+      updatedComments[chiefCommentIndex].replies = [...replies, reply];
+    } else {
+      updatedComments[chiefCommentIndex].replies = [reply];
+    }
+    setComments([...updatedComments]);
+  };
+
   // 댓글
   const handleNewCommentSubmit = async (content: string) => {
     const newComment = await axios
@@ -28,7 +45,7 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
   const handleReplySubmit = (replyComment: { content: string; repliedTo: string }) => {
     axios
       .post('/api/comment/add-reply', replyComment)
-      .then(({ data }) => console.log(data.comment))
+      .then(({ data }) => InsertNewReplyComments(data.comment))
       .catch((err) => console.log(err));
   };
 
@@ -61,6 +78,17 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
               onReplySubmit={(content) => handleReplySubmit({ content, repliedTo: comment.id })}
               onUpdateSubmit={(content) => console.log('update', content)}
             />
+
+            {comment.replies?.map((reply) => {
+              return (
+                <CommentCard
+                  key={reply.id}
+                  comment={reply}
+                  onReplySubmit={(content) => handleReplySubmit({ content, repliedTo: comment.id })}
+                  onUpdateSubmit={(content) => console.log('update', content)}
+                />
+              );
+            })}
           </div>
         );
       })}
