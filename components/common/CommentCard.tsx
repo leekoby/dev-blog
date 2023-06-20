@@ -14,10 +14,18 @@ interface Props {
   profile: CommentOwnersProfile;
   date: string;
   content: string;
+  onUpdateSubmit?(content: string): void;
+  onReplySubmit?(content: string): void;
 }
 
 /** 2023/06/19 - 댓글 카드 - by leekoby */
-const CommentCard: React.FC<Props> = ({ profile, date, content }): JSX.Element => {
+const CommentCard: React.FC<Props> = ({
+  profile,
+  date,
+  content,
+  onUpdateSubmit,
+  onReplySubmit,
+}): JSX.Element => {
   const { name, avatar } = profile;
   const [showForm, setShowForm] = useState(false);
   const [initialState, setInitialState] = useState(''); // 댓글 수정 초기값 설정
@@ -42,7 +50,15 @@ const CommentCard: React.FC<Props> = ({ profile, date, content }): JSX.Element =
     setInitialState(content);
   };
 
-  const handleCommentSubmit = () => {};
+  const handleCommentSubmit = (comment: string) => {
+    //update
+    if (initialState) {
+      onUpdateSubmit && onUpdateSubmit(comment);
+    } else {
+      //reply
+      onReplySubmit && onReplySubmit(comment);
+    }
+  };
 
   return (
     <div className='flex space-x-3'>
