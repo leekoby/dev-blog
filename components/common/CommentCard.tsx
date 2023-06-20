@@ -4,29 +4,18 @@ import parse from 'html-react-parser';
 import { BsFillReplyAllFill, BsFillTrashFill, BsPencilSquare } from 'react-icons/bs';
 import { ReactNode, useState } from 'react';
 import CommentForm from './CommentForm';
-
-interface CommentOwnersProfile {
-  name: string;
-  avatar?: string;
-}
+import { CommentResponse } from '@/utils/types';
 
 interface Props {
-  profile: CommentOwnersProfile;
-  date: string;
-  content: string;
+  comment: CommentResponse;
   onUpdateSubmit?(content: string): void;
   onReplySubmit?(content: string): void;
 }
 
 /** 2023/06/19 - 댓글 카드 - by leekoby */
-const CommentCard: React.FC<Props> = ({
-  profile,
-  date,
-  content,
-  onUpdateSubmit,
-  onReplySubmit,
-}): JSX.Element => {
-  const { name, avatar } = profile;
+const CommentCard: React.FC<Props> = ({ comment, onUpdateSubmit, onReplySubmit }): JSX.Element => {
+  const { owner, content, createdAt } = comment;
+  const { name, avatar } = owner;
   const [showForm, setShowForm] = useState(false);
   const [initialState, setInitialState] = useState(''); // 댓글 수정 초기값 설정
 
@@ -70,7 +59,9 @@ const CommentCard: React.FC<Props> = ({
         <h1 className='text-lg text-primary-dark dark:text-primary font-semibold'>{name}</h1>
 
         {/* 게시일 */}
-        <span className='text-sm text-secondary-dark'>{dateFormat(date, 'paddedShortDate')}</span>
+        <span className='text-sm text-secondary-dark'>
+          {dateFormat(createdAt, 'paddedShortDate')}
+        </span>
 
         {/* 내용 */}
         <div className='text-primary-dark dark:text-primary'>{parse(content)}</div>

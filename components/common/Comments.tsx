@@ -14,7 +14,7 @@ interface Props {
 const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
   const [comments, setComments] = useState<CommentResponse[]>();
   const userProfile = useAuth();
-
+  // 댓글
   const handleNewCommentSubmit = async (content: string) => {
     const newComment = await axios
       .post('/api/comment/', { content, belongsTo })
@@ -22,6 +22,14 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
       .catch((err) => console.log(err));
     if (newComment && comments) setComments([...comments, newComment]);
     else setComments([newComment]);
+  };
+
+  // 답글
+  const handleReplySubmit = (replyComment: { content: string; repliedTo: string }) => {
+    axios
+      .post('/api/comment/add-reply', replyComment)
+      .then(({ data }) => console.log(data.comment))
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -45,14 +53,12 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
         </div>
       )}
 
-      {comments?.map(({ id, owner, createdAt, content }) => {
+      {comments?.map((comment) => {
         return (
-          <div key={id}>
+          <div key={comment.id}>
             <CommentCard
-              profile={owner}
-              date={createdAt}
-              content={content}
-              onReplySubmit={(content) => console.log('reply', content)}
+              comment={comment}
+              onReplySubmit={(content) => handleReplySubmit({ content, repliedTo: comment.id })}
               onUpdateSubmit={(content) => console.log('update', content)}
             />
           </div>
