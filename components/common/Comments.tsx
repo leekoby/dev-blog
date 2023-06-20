@@ -15,6 +15,30 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
   const [comments, setComments] = useState<CommentResponse[]>();
   const userProfile = useAuth();
 
+  //댓글 수정 함수
+  const updateEditedComment = (newComment: CommentResponse) => {
+    if (!comments) return;
+
+    let updatedComments = [...comments];
+    // 편집된 댓글이 메인 댓글인 경우에만 내용을 변경
+    if (newComment.chiefComment) {
+      const index = updatedComments.findIndex(({ id }) => id === newComment.id);
+      updatedComments[index].content = newComment.content;
+    } else {
+      // 그렇지 않으면 답글 업데이트
+      const chiefCommentIndex = updatedComments.findIndex(({ id }) => id === newComment.repliedTo);
+
+      let newReplies = updatedComments[chiefCommentIndex].replies;
+      newReplies = newReplies?.map((comment) => {
+        if (comment.id === newComment.id) comment.content = newComment.content;
+        return comment;
+      });
+
+      updatedComments[chiefCommentIndex].replies = newReplies;
+      setComments([...updatedComments]);
+    }
+  };
+
   //답글 추가 함수
   const InsertNewReplyComments = (reply: CommentResponse) => {
     if (!comments) return;
@@ -39,6 +63,14 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
       .catch((err) => console.log(err));
     if (newComment && comments) setComments([...comments, newComment]);
     else setComments([newComment]);
+  };
+
+  // 댓글
+  const handleUpdateSubmit = (content: string, id: string) => {
+    axios
+      .patch(`/api/comment/?commentId=${id}`, { content })
+      .then(({ data }) => updateEditedComment(data.comment))
+      .catch((err) => console.log(err));
   };
 
   // 답글
@@ -78,7 +110,7 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
               comment={comment}
               showControls={userProfile?.id === comment.owner.id}
               onReplySubmit={(content) => handleReplySubmit({ content, repliedTo: comment.id })}
-              onUpdateSubmit={(content) => console.log('update', content)}
+              onUpdateSubmit={(content) => handleUpdateSubmit(content, comment.id)}
             />
             {replies?.length ? (
               <div className='w-[93%] ml-auto'>
@@ -92,7 +124,7 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
                       onReplySubmit={(content) =>
                         handleReplySubmit({ content, repliedTo: comment.id })
                       }
-                      onUpdateSubmit={(content) => console.log('update', content)}
+                      onUpdateSubmit={(content) => handleUpdateSubmit(content, reply.id)}
                     />
                   );
                 })}

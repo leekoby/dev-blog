@@ -131,12 +131,13 @@ const updateComment: NextApiHandler = async (req, res) => {
   if (!commentId || !isValidObjectId(commentId))
     return res.status(422).json({ error: '유효하지 않은 요청' });
 
-  const comment = await Comment.findOne({ _id: commentId, owner: user.id });
+  const comment = await Comment.findOne({ _id: commentId, owner: user.id }).populate('owner');
 
   if (!comment) return res.status(404).json({ error: '댓글이 존재하지 않습니다' });
 
   comment.content = req.body.content;
   await comment.save();
-  res.json(comment);
+
+  res.json({ comment: formatComment(comment) });
 };
 export default handler;
