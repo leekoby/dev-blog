@@ -47,6 +47,7 @@ const CommentCard: React.FC<Props> = ({ comment, onUpdateSubmit, onReplySubmit }
       //reply
       onReplySubmit && onReplySubmit(comment);
     }
+    hideReplyForm();
   };
 
   return (
