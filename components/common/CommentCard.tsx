@@ -8,12 +8,18 @@ import { CommentResponse } from '@/utils/types';
 
 interface Props {
   comment: CommentResponse;
+  showControls: boolean;
   onUpdateSubmit?(content: string): void;
   onReplySubmit?(content: string): void;
 }
 
 /** 2023/06/19 - 댓글 카드 - by leekoby */
-const CommentCard: React.FC<Props> = ({ comment, onUpdateSubmit, onReplySubmit }): JSX.Element => {
+const CommentCard: React.FC<Props> = ({
+  comment,
+  showControls = false,
+  onUpdateSubmit,
+  onReplySubmit,
+}): JSX.Element => {
   const { owner, content, createdAt } = comment;
   const { name, avatar } = owner;
   const [showForm, setShowForm] = useState(false);
@@ -73,14 +79,19 @@ const CommentCard: React.FC<Props> = ({ comment, onUpdateSubmit, onReplySubmit }
             <BsFillReplyAllFill />
             <span>답글</span>
           </Button>
-          <Button onClick={handleOnEditClick}>
-            <BsPencilSquare />
-            <span>수정</span>
-          </Button>
-          <Button>
-            <BsFillTrashFill />
-            <span>삭제</span>
-          </Button>
+
+          {showControls && (
+            <>
+              <Button onClick={handleOnEditClick}>
+                <BsPencilSquare />
+                <span>수정</span>
+              </Button>
+              <Button>
+                <BsFillTrashFill />
+                <span>삭제</span>
+              </Button>
+            </>
+          )}
         </div>
         {showForm && (
           <div className='mt-3'>
