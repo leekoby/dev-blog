@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { GitHubAuthButton } from '../button';
 import CommentCard from './CommentCard';
 import CommentForm from './CommentForm';
+import ConfirmModal from './ConfirmModal';
 
 interface Props {
   belongsTo: string; // 소속된 게시글 Id
@@ -13,9 +14,13 @@ interface Props {
 /** 2023/06/19 - 댓글 컴포넌트 분리 - by leekoby */
 const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
   const [comments, setComments] = useState<CommentResponse[]>();
+
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState<CommentResponse | null>(null);
+
   const userProfile = useAuth();
 
-  //댓글 수정 함수
+  //댓글 수정 렌더링 함수
   const updateEditedComment = (newComment: CommentResponse) => {
     if (!comments) return;
 
@@ -37,6 +42,26 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
       updatedComments[chiefCommentIndex].replies = newReplies;
       setComments([...updatedComments]);
     }
+  };
+
+  //댓글 삭제 렌더링 함수
+  const updateDeletedComments = (deleteComment: CommentResponse) => {
+    if (!comments) return;
+    let newComments = [...comments];
+
+    // 메인 댓글 삭제
+    if (deleteComment.chiefComment) {
+      newComments = newComments.filter(({ id }) => id !== deleteComment.id);
+    }
+    // 답글 삭제
+    else {
+      const index = newComments.findIndex(({ id }) => id === deleteComment.repliedTo);
+      const newReplies = newComments[index].replies?.filter(({ id }) => id !== deleteComment.id);
+
+      newComments[index].replies = newReplies;
+    }
+
+    setComments([...newComments]);
   };
 
   //답글 추가 함수
@@ -81,6 +106,31 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
       .catch((err) => console.log(err));
   };
 
+  //삭제 버튼 클릭
+  const handOnDeleteClick = (comment: CommentResponse) => {
+    setCommentToDelete(comment);
+    setShowConfirmModal(true);
+  };
+  //삭제 모달 취소
+  const handOnDeleteCancel = () => {
+    setCommentToDelete(null);
+    setShowConfirmModal(false);
+  };
+  //삭제 확인
+  const handOnDeleteConfirm = () => {
+    if (!commentToDelete) return;
+    axios
+      .delete(`/api/comment?commentId=${commentToDelete?.id}`)
+      .then(({ data }) => {
+        if (data.removed) updateDeletedComments(commentToDelete);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setCommentToDelete(null);
+        setShowConfirmModal(false);
+      });
+  };
+
   useEffect(() => {
     axios(`/api/comment?belongsTo=${belongsTo}`)
       .then(({ data }) => {
@@ -111,7 +161,11 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
               showControls={userProfile?.id === comment.owner.id}
               onReplySubmit={(content) => handleReplySubmit({ content, repliedTo: comment.id })}
               onUpdateSubmit={(content) => handleUpdateSubmit(content, comment.id)}
+              onDeleteClick={() => {
+                handOnDeleteClick(comment);
+              }}
             />
+
             {replies?.length ? (
               <div className='w-[93%] ml-auto'>
                 <h1 className='text-secondary-dark my-3'>답글 목록</h1>
@@ -125,6 +179,9 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
                         handleReplySubmit({ content, repliedTo: comment.id })
                       }
                       onUpdateSubmit={(content) => handleUpdateSubmit(content, reply.id)}
+                      onDeleteClick={() => {
+                        handOnDeleteClick(reply);
+                      }}
                     />
                   );
                 })}
@@ -133,6 +190,13 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
           </div>
         );
       })}
+      <ConfirmModal
+        visible={showConfirmModal}
+        title='삭제하시겠습니까?'
+        subTitle='이 작업은 댓글을 삭제합니다. 메인 댓글일 경우 답글도 함께 삭제됩니다'
+        onCancel={handOnDeleteCancel}
+        onConfirm={handOnDeleteConfirm}
+      />
     </div>
   );
 };

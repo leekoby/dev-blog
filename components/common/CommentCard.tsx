@@ -9,8 +9,9 @@ import { CommentResponse } from '@/utils/types';
 interface Props {
   comment: CommentResponse;
   showControls: boolean;
-  onUpdateSubmit?(content: string): void;
   onReplySubmit?(content: string): void;
+  onUpdateSubmit?(content: string): void;
+  onDeleteClick?(): void;
 }
 
 /** 2023/06/19 - 댓글 카드 - by leekoby */
@@ -19,6 +20,7 @@ const CommentCard: React.FC<Props> = ({
   showControls = false,
   onUpdateSubmit,
   onReplySubmit,
+  onDeleteClick,
 }): JSX.Element => {
   const { owner, content, createdAt } = comment;
   const { name, avatar } = owner;
@@ -86,7 +88,7 @@ const CommentCard: React.FC<Props> = ({
                 <BsPencilSquare />
                 <span>수정</span>
               </Button>
-              <Button>
+              <Button onClick={onDeleteClick}>
                 <BsFillTrashFill />
                 <span>삭제</span>
               </Button>
