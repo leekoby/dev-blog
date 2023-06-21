@@ -16,9 +16,26 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
   const [comments, setComments] = useState<CommentResponse[]>();
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+
   const [commentToDelete, setCommentToDelete] = useState<CommentResponse | null>(null);
 
   const userProfile = useAuth();
+
+  //답글 추가 함수
+  const InsertNewReplyComments = (reply: CommentResponse) => {
+    if (!comments) return;
+    let updatedComments = [...comments];
+
+    const chiefCommentIndex = updatedComments.findIndex(({ id }) => id === reply.repliedTo);
+
+    const { replies } = updatedComments[chiefCommentIndex];
+    if (replies) {
+      updatedComments[chiefCommentIndex].replies = [...replies, reply];
+    } else {
+      updatedComments[chiefCommentIndex].replies = [reply];
+    }
+    setComments([...updatedComments]);
+  };
 
   //댓글 수정 렌더링 함수
   const updateEditedComment = (newComment: CommentResponse) => {
@@ -64,22 +81,6 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
     setComments([...newComments]);
   };
 
-  //답글 추가 함수
-  const InsertNewReplyComments = (reply: CommentResponse) => {
-    if (!comments) return;
-    let updatedComments = [...comments];
-
-    const chiefCommentIndex = updatedComments.findIndex(({ id }) => id === reply.repliedTo);
-
-    const { replies } = updatedComments[chiefCommentIndex];
-    if (replies) {
-      updatedComments[chiefCommentIndex].replies = [...replies, reply];
-    } else {
-      updatedComments[chiefCommentIndex].replies = [reply];
-    }
-    setComments([...updatedComments]);
-  };
-
   // 댓글
   const handleNewCommentSubmit = async (content: string) => {
     const newComment = await axios
@@ -117,10 +118,11 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
     setShowConfirmModal(false);
   };
   //삭제 확인
-  const handOnDeleteConfirm = () => {
+  const handleOnDeleteConfirm = () => {
     if (!commentToDelete) return;
+
     axios
-      .delete(`/api/comment?commentId=${commentToDelete?.id}`)
+      .delete(`/api/comment?commentId=${commentToDelete.id}`)
       .then(({ data }) => {
         if (data.removed) updateDeletedComments(commentToDelete);
       })
@@ -137,7 +139,7 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
         setComments(data.comments);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [belongsTo]);
 
   return (
     <div className='py-20 space-y-4'>
@@ -195,7 +197,7 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
         title='삭제하시겠습니까?'
         subTitle='이 작업은 댓글을 삭제합니다. 메인 댓글일 경우 답글도 함께 삭제됩니다'
         onCancel={handOnDeleteCancel}
-        onConfirm={handOnDeleteConfirm}
+        onConfirm={handleOnDeleteConfirm}
       />
     </div>
   );

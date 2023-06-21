@@ -108,7 +108,7 @@ const removeComment: NextApiHandler = async (req, res) => {
     // 답글인 경우 메인 댓글에서 제거
     const chiefComment = await Comment.findById(comment.repliedTo);
     if (chiefComment?.replies?.includes(commentId as any)) {
-      chiefComment.replies = chiefComment.replies.filter((cId) => cId.toString() === commentId);
+      chiefComment.replies = chiefComment.replies.filter((cId) => cId.toString() !== commentId);
 
       await chiefComment.save();
     }
