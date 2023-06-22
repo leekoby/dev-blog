@@ -2,6 +2,7 @@ import { PostDetail } from '@/utils/types';
 import Image from 'next/image';
 import dateformat from 'dateformat';
 import Link from 'next/link';
+import { trimText } from '@/utils/helper';
 
 interface Props {
   post: PostDetail;
@@ -9,12 +10,6 @@ interface Props {
   controls?: boolean;
   onDeleteClcik?(): void;
 }
-
-// 글자수 제한 함수
-const trimText = (text: string, trimBy: number) => {
-  if (text.length <= trimBy) return text;
-  return text.substring(0, trimBy).trim() + '...';
-};
 
 /** 2023/06/09 - 게시글 카드 - by leekoby */
 const PostCard: React.FC<Props> = ({

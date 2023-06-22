@@ -21,3 +21,12 @@ export const filterPosts = (posts: PostDetail[], postToFilter: PostDetail) => {
     return post.id !== postToFilter.id;
   });
 };
+
+/** 2023/06/22 - 글자수 제한 함수 - by leekoby
+ * @text 대상 텍스트
+ * @trimby 글자수 지정
+ */
+export const trimText = (text: string, trimBy: number) => {
+  if (text.length <= trimBy) return text;
+  return text.substring(0, trimBy).trim() + '...';
+};
