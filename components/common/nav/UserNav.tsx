@@ -33,7 +33,7 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
 
   const { toggleTheme } = useDarkMode();
 
-  const dropDownOtions: dropDownOtions = isAdmin
+  const dropDownOptions: dropDownOtions = isAdmin
     ? [
         {
           label: 'Dashboard',
@@ -59,7 +59,7 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
 
         {isAuth ? (
           <DropdownOptions
-            options={dropDownOtions}
+            options={dropDownOptions}
             head={<ProfileHead nameInitial='N' lightOnly />}
           />
         ) : (
