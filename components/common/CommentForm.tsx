@@ -46,10 +46,10 @@ const CommentForm: React.FC<Props> = ({
       />
       <div className='flex justify-end py-3'>
         <div className='flex space-x-4'>
-          <ActionButton busy={busy} title='Submit' onClick={handleSubmit} />
+          <ActionButton busy={busy} title='등록' onClick={handleSubmit} />
           {onClose ? (
-            <button onClick={onClose} className='text-primary-dark dark:text-primary'>
-              닫기
+            <button onClick={onClose} className='text-primary-dark dark:text-primary break-keep'>
+              취소
             </button>
           ) : null}
         </div>
