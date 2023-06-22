@@ -61,6 +61,31 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
     }
   };
 
+  //좋아요 업데이트 함수
+  const updateLikedComments = (likedComment: CommentResponse) => {
+    if (!comments) return;
+    let newComments = [...comments];
+
+    //
+    if (likedComment.chiefComment) {
+      newComments = newComments.map((comment) => {
+        if (comment.id === likedComment.id) return likedComment;
+        return comment;
+      });
+    }
+    //
+    else {
+      const index = newComments.findIndex(({ id }) => id === likedComment.repliedTo);
+      const newReplies = newComments[index].replies?.map((reply) => {
+        if (reply.id === likedComment.id) return likedComment;
+        return reply;
+      });
+
+      newComments[index].replies = newReplies;
+    }
+
+    setComments([...newComments]);
+  };
   //댓글 삭제 렌더링 함수
   const updateDeletedComments = (deleteComment: CommentResponse) => {
     if (!comments) return;
@@ -132,6 +157,13 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
         setShowConfirmModal(false);
       });
   };
+  // 좋아요 버튼 핸들러
+  const handleOnLikeClick = (comment: CommentResponse) => {
+    axios
+      .post(`/api/comment/update-like`, { commentId: comment.id })
+      .then(({ data }) => updateLikedComments(data.comment))
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     axios(`/api/comment?belongsTo=${belongsTo}`)
@@ -166,6 +198,7 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
               onDeleteClick={() => {
                 handOnDeleteClick(comment);
               }}
+              onLikeClick={() => handleOnLikeClick(comment)}
             />
 
             {replies?.length ? (
@@ -184,6 +217,7 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
                       onDeleteClick={() => {
                         handOnDeleteClick(reply);
                       }}
+                      onLikeClick={() => handleOnLikeClick(reply)}
                     />
                   );
                 })}

@@ -5,6 +5,7 @@ import { BsFillReplyAllFill, BsFillTrashFill, BsPencilSquare } from 'react-icons
 import { ReactNode, useState } from 'react';
 import CommentForm from './CommentForm';
 import { CommentResponse } from '@/utils/types';
+import LikeHeart from './LikeHeart';
 
 interface Props {
   comment: CommentResponse;
@@ -12,6 +13,7 @@ interface Props {
   onReplySubmit?(content: string): void;
   onUpdateSubmit?(content: string): void;
   onDeleteClick?(): void;
+  onLikeClick?(): void;
 }
 
 /** 2023/06/19 - 댓글 카드 - by leekoby */
@@ -21,8 +23,9 @@ const CommentCard: React.FC<Props> = ({
   onUpdateSubmit,
   onReplySubmit,
   onDeleteClick,
+  onLikeClick,
 }): JSX.Element => {
-  const { owner, content, createdAt } = comment;
+  const { owner, content, createdAt, likedByOwner, likes } = comment;
   const { name, avatar } = owner;
   const [showForm, setShowForm] = useState(false);
   const [initialState, setInitialState] = useState(''); // 댓글 수정 초기값 설정
@@ -77,6 +80,8 @@ const CommentCard: React.FC<Props> = ({
 
         {/* 버튼 영역 */}
         <div className='flex space-x-4'>
+          {/* 좋아요 버튼 */}
+          <LikeHeart liked={comment.likedByOwner} label={likes + 'likes'} onClick={onLikeClick} />
           <Button onClick={handleOnReplyClick}>
             <BsFillReplyAllFill />
             <span>답글</span>

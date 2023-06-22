@@ -1,6 +1,6 @@
 import dbConnect from '@/lib/dbConnect';
 import Comment from '@/lib/models/Comment';
-import { isAuth } from '@/lib/utils';
+import { formatComment, isAuth } from '@/lib/utils';
 import { isValidObjectId, Types } from 'mongoose';
 import { NextApiHandler } from 'next';
 
@@ -27,7 +27,18 @@ const updateLike: NextApiHandler = async (req, res) => {
 
   await dbConnect();
 
-  const comment = await Comment.findById(commentId);
+  const comment = await Comment.findById(commentId)
+    .populate({
+      path: 'owner',
+      select: 'name avatar',
+    })
+    .populate({
+      path: 'replies',
+      populate: {
+        path: 'owner',
+        select: 'name avatar',
+      },
+    });
 
   // 코멘트가 없을 경우
   if (!comment) return res.status(404).json({ error: '댓글을 찾을 수 없습니다' });
@@ -48,7 +59,12 @@ const updateLike: NextApiHandler = async (req, res) => {
   }
 
   await comment.save();
-  res.status(201).json({ comment });
+  res.status(201).json({
+    comment: {
+      ...formatComment(comment, user),
+      replies: comment.replies?.map((reply: any) => formatComment(reply, user)),
+    },
+  });
 };
 
 export default handler;
