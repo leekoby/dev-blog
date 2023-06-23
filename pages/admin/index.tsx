@@ -43,7 +43,7 @@ const Admin: NextPage<Props> = () => {
           })}
         </ContentWrapper>
 
-        <ContentWrapper title='최근 댓글' seeAllRoute='/admin'>
+        <ContentWrapper title='최근 댓글' seeAllRoute='/admin/comments'>
           {latestComments?.map((comment) => {
             return <LatestCommentListCard key={comment.id} comment={comment} />;
           })}
