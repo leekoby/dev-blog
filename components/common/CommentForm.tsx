@@ -9,6 +9,7 @@ interface Props {
   busy?: boolean;
   onClose?(): void;
   initialState?: string;
+  visible?: boolean;
 }
 
 /** 2023/06/11 - 댓글폼 - by leekoby */
@@ -18,7 +19,8 @@ const CommentForm: React.FC<Props> = ({
   onSubmit,
   onClose,
   initialState,
-}): JSX.Element => {
+  visible = true,
+}): JSX.Element | null => {
   const { editor } = useEditorConfig({ placeholder: '댓글을 입력하세요.' });
 
   const handleSubmit = () => {
@@ -34,6 +36,8 @@ const CommentForm: React.FC<Props> = ({
     // if (editor && initialState) 이렇게 쓸때는 수정 <=> 작성 변경이 안됨
     if (typeof initialState === 'string') editor?.chain().focus().setContent(initialState).run();
   }, [editor, initialState]);
+
+  if (!visible) return null;
 
   return (
     <div>
