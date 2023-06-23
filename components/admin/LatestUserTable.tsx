@@ -2,7 +2,7 @@ import { LatestUsersProfile } from '@/utils/types';
 import ProfileIcon from '../common/ProfileIcon';
 
 interface Props {
-  users: LatestUsersProfile[];
+  users?: LatestUsersProfile[];
 }
 
 /** 2023/06/23 - 유저 정보 확인 페이지 - by leekoby */
@@ -16,7 +16,7 @@ const LatestUserTable: React.FC<Props> = ({ users }): JSX.Element => {
             <th className='p-2'>이메일</th>
             <th className='p-2'>제공</th>
           </tr>
-          {users.map((profile) => {
+          {users?.map((profile) => {
             return (
               <tr key={profile.id} className='border-b'>
                 <td className='p-2'>
