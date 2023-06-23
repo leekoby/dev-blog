@@ -6,16 +6,23 @@ import { GitHubAuthButton } from '../button';
 import CommentCard from './CommentCard';
 import CommentForm from './CommentForm';
 import ConfirmModal from './ConfirmModal';
+import PageNavigator from './PageNavigator';
 
 interface Props {
-  belongsTo: string; // 소속된 게시글 Id
+  belongsTo?: string; // 소속된 게시글 Id
+  fetchAll?: boolean;
 }
 
+const limit = 5;
+let currentPageNo = 0;
+
 /** 2023/06/19 - 댓글 컴포넌트 분리 - by leekoby */
-const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
+const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
   const [comments, setComments] = useState<CommentResponse[]>();
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const [reachedToEnd, setReachedToEnd] = useState(false);
 
   const [commentToDelete, setCommentToDelete] = useState<CommentResponse | null>(null);
 
@@ -166,6 +173,7 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
   };
 
   useEffect(() => {
+    if (!belongsTo) return;
     axios(`/api/comment?belongsTo=${belongsTo}`)
       .then(({ data }) => {
         setComments(data.comments);
@@ -173,10 +181,44 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
       .catch((err) => console.log(err));
   }, [belongsTo]);
 
+  //모든 댓글 가져오기
+  const fetchAllComments = async (pageNo: number = currentPageNo) => {
+    try {
+      const { data } = await axios(`/api/comment/all?pageNo=${pageNo}&limit=${limit}`);
+
+      if (data.comments.length < limit) {
+        currentPageNo = currentPageNo - 1;
+
+        return setReachedToEnd(true);
+      }
+      setComments(data.comments);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleOnNextClick = () => {
+    if (reachedToEnd) return;
+    currentPageNo = currentPageNo + 1;
+    fetchAllComments(currentPageNo);
+  };
+  const handleOnPrevClick = () => {
+    if (currentPageNo <= 0) return;
+    if (reachedToEnd) setReachedToEnd(false);
+    currentPageNo = currentPageNo - 1;
+    fetchAllComments(currentPageNo);
+  };
+
+  useEffect(() => {
+    if (!belongsTo && fetchAll) {
+      fetchAllComments();
+    }
+  }, [belongsTo, fetchAll]);
+
   return (
     <div className='py-20 space-y-4'>
       {userProfile ? (
-        <CommentForm onSubmit={handleNewCommentSubmit} title='댓글 작성...' />
+        <CommentForm visible={!fetchAll} onSubmit={handleNewCommentSubmit} title='댓글 작성...' />
       ) : (
         <div className='flex flex-col items-end space-y-2'>
           <h3 className='text-secondary-dark text-xl font-semibold'>
@@ -226,6 +268,10 @@ const Comments: React.FC<Props> = ({ belongsTo }): JSX.Element => {
           </div>
         );
       })}
+
+      <div className='py-10 flex justify-end'>
+        <PageNavigator onNextClick={handleOnNextClick} onPrevClick={handleOnPrevClick} />
+      </div>
       <ConfirmModal
         visible={showConfirmModal}
         title='삭제하시겠습니까?'
