@@ -64,3 +64,12 @@ export interface LatestComment {
     slug: string;
   };
 }
+/** 2023/06/23 - 최근 유저 타입 - by leekoby */
+
+export interface LatestUsersProfile {
+  id: string;
+  name: string;
+  avatar?: string;
+  provider: string;
+  email: string;
+}
