@@ -12,6 +12,8 @@ import { useState, useCallback, useEffect } from 'react';
 import useAuth from '@/hooks/useAuth';
 import { signIn } from 'next-auth/react';
 import axios from 'axios';
+import User from '@/models/User';
+import AuthorInfo from '@/components/common/AuthorInfo';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -20,7 +22,7 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 const SinglePost: NextPage<Props> = ({ post }) => {
   const [likes, setLikes] = useState({ likedByOwner: false, count: 0 });
   const user = useAuth();
-  const { id, title, content, tags, meta, thumbnail, slug, createdAt } = post;
+  const { id, title, content, tags, meta, thumbnail, slug, createdAt, author } = post;
 
   const getLikeLabel = useCallback((): string => {
     const { likedByOwner, count } = likes;
@@ -48,7 +50,7 @@ const SinglePost: NextPage<Props> = ({ post }) => {
 
   return (
     <DefaultLayout title={title} desc={meta}>
-      <div className=''>
+      <div className='lg:px-0 px-3'>
         {thumbnail ? (
           <div className='relative aspect-video'>
             <Image src={thumbnail} fill alt={title} />
@@ -73,6 +75,9 @@ const SinglePost: NextPage<Props> = ({ post }) => {
           />
         </div>
 
+        <div className='pt-10'>
+          <AuthorInfo profile={JSON.parse(author)} />
+        </div>
         {/* 댓글폼 */}
         <Comments belongsTo={id} />
       </div>
@@ -110,6 +115,7 @@ interface StaticPropsResponse {
     slug: string;
     thumbnail: string;
     createdAt: string;
+    author: string;
   };
 }
 /** 2023/06/11 - 게시글 상세페이지 StaticProps - by leekoby */
@@ -118,10 +124,23 @@ export const getStaticProps: GetStaticProps<StaticPropsResponse, { slug: string 
 }) => {
   try {
     await dbConnect();
-    const post = await Post.findOne({ slug: params?.slug });
+    const post = await Post.findOne({ slug: params?.slug }).populate('author');
     if (!post) return { notFound: true };
 
-    const { _id, title, content, meta, slug, tags, thumbnail, createdAt } = post;
+    const { _id, title, content, meta, slug, tags, thumbnail, createdAt, author } = post;
+
+    const admin = await User.findOne({ role: 'admin' });
+
+    const authorInfo = (author || admin) as any;
+
+    const postAuthor = {
+      id: authorInfo._id,
+      name: authorInfo.name,
+      avatar: authorInfo.avatar,
+      message: `작성자 ${authorInfo.name}. 프론트엔드 취업준비생, 어제보다 오늘 더 나은 개발자가 되자.`,
+      // 추후 작성자에 대한 추가 설명을 적어도 될거같음.
+    };
+
     return {
       props: {
         post: {
@@ -133,6 +152,7 @@ export const getStaticProps: GetStaticProps<StaticPropsResponse, { slug: string 
           tags,
           thumbnail: thumbnail?.url || '',
           createdAt: createdAt.toString(),
+          author: JSON.stringify(postAuthor),
         },
       },
       revalidate: 60, // 60초

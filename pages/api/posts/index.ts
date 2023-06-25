@@ -1,7 +1,7 @@
 import cloudinary from '@/lib/cloudinary';
 import dbConnect from '@/lib/dbConnect';
 import Post from '@/models/Post';
-import { formatPosts, isAdmin, readFile, readPostsFromDb } from '@/lib/utils';
+import { formatPosts, isAdmin, isAuth, readFile, readPostsFromDb } from '@/lib/utils';
 import { postValidationSchema, validateSchema } from '@/lib/validator';
 import { IncomingPost, UserProfile } from '@/utils/types';
 import formidable from 'formidable';
@@ -28,7 +28,9 @@ const handler: NextApiHandler = async (req, res) => {
 /** 2023/06/08 - createNewPost handler / Joi 유효성 검사 - by leekoby */
 const createNewPost: NextApiHandler = async (req, res) => {
   const admin = await isAdmin(req, res);
-  if (!admin) return res.status(401).json({ error: 'unauthorized request!' });
+  const user = await isAuth(req, res);
+
+  if (!admin || !user) return res.status(401).json({ error: 'unauthorized request!' });
 
   const { files, body } = await readFile<IncomingPost>(req);
 
@@ -47,7 +49,7 @@ const createNewPost: NextApiHandler = async (req, res) => {
   // 이미 존재하는 경우
   if (alreadyExists) return res.status(400).json({ error: '같은 Slug가 이미 존재합니다.' });
 
-  const newPost = new Post({ title, content, slug, meta, tags });
+  const newPost = new Post({ title, content, slug, meta, tags, author: user.id });
 
   await newPost.save();
 
