@@ -10,6 +10,7 @@ import LikeHeart from './LikeHeart';
 interface Props {
   comment: CommentResponse;
   showControls: boolean;
+  busy?: boolean;
   onReplySubmit?(content: string): void;
   onUpdateSubmit?(content: string): void;
   onDeleteClick?(): void;
@@ -20,6 +21,7 @@ interface Props {
 const CommentCard: React.FC<Props> = ({
   comment,
   showControls = false,
+  busy,
   onUpdateSubmit,
   onReplySubmit,
   onDeleteClick,
@@ -81,7 +83,12 @@ const CommentCard: React.FC<Props> = ({
         {/* 버튼 영역 */}
         <div className='flex space-x-4'>
           {/* 좋아요 버튼 */}
-          <LikeHeart liked={comment.likedByOwner} label={likes + 'likes'} onClick={onLikeClick} />
+          <LikeHeart
+            liked={comment.likedByOwner}
+            label={likes + 'likes'}
+            onClick={onLikeClick}
+            busy={busy}
+          />
           <Button onClick={handleOnReplyClick}>
             <BsFillReplyAllFill />
             <span>답글</span>

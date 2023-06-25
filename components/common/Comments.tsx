@@ -24,6 +24,8 @@ const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
 
   const [reachedToEnd, setReachedToEnd] = useState(false);
 
+  const [busyCommentLike, setBusyCommentLike] = useState(false);
+
   const [commentToDelete, setCommentToDelete] = useState<CommentResponse | null>(null);
 
   const userProfile = useAuth();
@@ -166,10 +168,17 @@ const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
   };
   // 좋아요 버튼 핸들러
   const handleOnLikeClick = (comment: CommentResponse) => {
+    setBusyCommentLike(true);
     axios
       .post(`/api/comment/update-like`, { commentId: comment.id })
-      .then(({ data }) => updateLikedComments(data.comment))
-      .catch((err) => console.log(err));
+      .then(({ data }) => {
+        updateLikedComments(data.comment);
+        setBusyCommentLike(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setBusyCommentLike(false);
+      });
   };
 
   useEffect(() => {
@@ -241,6 +250,7 @@ const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
                 handOnDeleteClick(comment);
               }}
               onLikeClick={() => handleOnLikeClick(comment)}
+              busy={busyCommentLike}
             />
 
             {replies?.length ? (
@@ -260,6 +270,7 @@ const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
                         handOnDeleteClick(reply);
                       }}
                       onLikeClick={() => handleOnLikeClick(reply)}
+                      busy={busyCommentLike}
                     />
                   );
                 })}
