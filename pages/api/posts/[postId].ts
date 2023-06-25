@@ -16,7 +16,6 @@ const handler: NextApiHandler = (req, res) => {
   switch (method) {
     case 'PATCH':
       return updatePost(req, res);
-
     case 'DELETE':
       return removePost(req, res);
     default:

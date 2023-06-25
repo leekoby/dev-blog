@@ -17,9 +17,9 @@ export const config = {
 const handler: NextApiHandler = async (req, res) => {
   const { method } = req;
   switch (method) {
-    case 'GET': {
+    case 'GET':
       return readPosts(req, res);
-    }
+
     case 'POST':
       return createNewPost(req, res);
   }
