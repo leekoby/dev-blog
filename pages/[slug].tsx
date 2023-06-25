@@ -6,13 +6,46 @@ import parse from 'html-react-parser';
 import Image from 'next/image';
 import dateformat from 'dateformat';
 import Comments from '@/components/common/Comments';
+import LikeHeart from '@/components/common/LikeHeart';
+
+import { useState, useCallback, useEffect } from 'react';
+import useAuth from '@/hooks/useAuth';
+import { signIn } from 'next-auth/react';
+import axios from 'axios';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 /** 2023/06/11 - 게시글 상세페이지 - by leekoby */
 
 const SinglePost: NextPage<Props> = ({ post }) => {
+  const [likes, setLikes] = useState({ likedByOwner: false, count: 0 });
+  const user = useAuth();
   const { id, title, content, tags, meta, thumbnail, slug, createdAt } = post;
+
+  const getLikeLabel = useCallback((): string => {
+    const { likedByOwner, count } = likes;
+    if (likedByOwner && count === 1) return '이 게시글에 좋아요를 눌렀습니다';
+    if (likedByOwner) return `방문자님과 ${count - 1}명이 좋아요를 눌렀습니다.`;
+    if (count === 0) return '좋아요 누르기';
+    return count + '명이 좋아요를 눌렀습니다.';
+  }, [likes]);
+
+  const handleOnLikeClick = async () => {
+    try {
+      if (!user) return await signIn('github');
+      const { data } = await axios.post(`/api/posts/update-like?postId=${id}`);
+      setLikes({ likedByOwner: !likes.likedByOwner, count: data.newLikes });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    axios(`/api/posts/like-status?postId=${id}`)
+      .then(({ data }) => setLikes({ likedByOwner: data.likedByOwner, count: data.likesCount }))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <DefaultLayout title={title} desc={meta}>
       <div className=''>
@@ -31,6 +64,14 @@ const SinglePost: NextPage<Props> = ({ post }) => {
           <span>{dateformat(createdAt, 'paddedShortDate')}</span>
         </div>
         <div className='prose prose-lg max-w-full mx-auto dark:prose-invert'>{parse(content)}</div>
+
+        <div className='py-10'>
+          <LikeHeart
+            liked={likes.likedByOwner}
+            label={getLikeLabel()}
+            onClick={handleOnLikeClick}
+          />
+        </div>
 
         {/* 댓글폼 */}
         <Comments belongsTo={id} />
