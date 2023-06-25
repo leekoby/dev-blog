@@ -12,6 +12,7 @@ export interface PostModelSchema {
   thumbnail: { url: string; public_id: string };
   createdAt: Date;
   author: ObjectId;
+  likes?: ObjectId[];
 }
 /** 2023/06/08 - mongoose Post Model Schema - by leekoby */
 const PostSchema = new Schema<PostModelSchema>(
@@ -49,6 +50,12 @@ const PostSchema = new Schema<PostModelSchema>(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     timestamps: true,
