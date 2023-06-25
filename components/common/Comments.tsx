@@ -186,7 +186,7 @@ const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
     try {
       const { data } = await axios(`/api/comment/all?pageNo=${pageNo}&limit=${limit}`);
 
-      if (data.comments.length < limit) {
+      if (!data.comments.length) {
         currentPageNo = currentPageNo - 1;
 
         return setReachedToEnd(true);
@@ -269,9 +269,11 @@ const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
         );
       })}
 
-      <div className='py-10 flex justify-end'>
-        <PageNavigator onNextClick={handleOnNextClick} onPrevClick={handleOnPrevClick} />
-      </div>
+      {fetchAll ? (
+        <div className='py-10 flex justify-end'>
+          <PageNavigator onNextClick={handleOnNextClick} onPrevClick={handleOnPrevClick} />
+        </div>
+      ) : null}
       <ConfirmModal
         visible={showConfirmModal}
         title='삭제하시겠습니까?'
