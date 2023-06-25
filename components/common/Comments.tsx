@@ -27,8 +27,9 @@ const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
   const [busyCommentLike, setBusyCommentLike] = useState(false);
 
   const [selectedComment, setSelectedComment] = useState<CommentResponse | null>(null);
-
   const [commentToDelete, setCommentToDelete] = useState<CommentResponse | null>(null);
+
+  const [submitting, setSubmitting] = useState(false);
 
   const userProfile = useAuth();
 
@@ -119,12 +120,18 @@ const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
 
   // 댓글
   const handleNewCommentSubmit = async (content: string) => {
-    const newComment = await axios
-      .post('/api/comment/', { content, belongsTo })
-      .then(({ data }) => data.comment)
-      .catch((err) => console.log(err));
-    if (newComment && comments) setComments([...comments, newComment]);
-    else setComments([newComment]);
+    setSubmitting(true);
+    try {
+      const newComment = await axios
+        .post('/api/comment/', { content, belongsTo })
+        .then(({ data }) => data.comment)
+        .catch((err) => console.log(err));
+      if (newComment && comments) setComments([...comments, newComment]);
+      else setComments([newComment]);
+    } catch (error) {
+      console.log(error);
+    }
+    setSubmitting(false);
   };
 
   // 댓글
@@ -232,7 +239,12 @@ const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
   return (
     <div className='py-20 space-y-4'>
       {userProfile ? (
-        <CommentForm visible={!fetchAll} onSubmit={handleNewCommentSubmit} title='댓글 작성...' />
+        <CommentForm
+          visible={!fetchAll}
+          onSubmit={handleNewCommentSubmit}
+          title='댓글 작성...'
+          busy={submitting}
+        />
       ) : (
         <div className='flex flex-col items-end space-y-2'>
           <h3 className='text-secondary-dark text-xl font-semibold'>
