@@ -1,6 +1,6 @@
 import cloudinary from '@/lib/cloudinary';
 import dbConnect from '@/lib/dbConnect';
-import Post from '@/lib/models/Post';
+import Post from '@/models/Post';
 import { formatPosts, isAdmin, readFile, readPostsFromDb } from '@/lib/utils';
 import { postValidationSchema, validateSchema } from '@/lib/validator';
 import { IncomingPost, UserProfile } from '@/utils/types';

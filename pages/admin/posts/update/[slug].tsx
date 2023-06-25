@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next';
 import Editor, { FinalPost } from '@/components/editor';
 import dbConnect from '@/lib/dbConnect';
-import Post from '@/lib/models/Post';
+import Post from '@/models/Post';
 import AdminLayout from '@/components/layout/AdminLayout';
 import { generateFormData } from '@/utils/helper';
 import axios from 'axios';

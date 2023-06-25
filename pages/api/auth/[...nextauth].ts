@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/dbConnect';
-import User from '@/lib/models/User';
+import User from '@/models/User';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import GitHubAuthProvider from 'next-auth/providers/github';
 

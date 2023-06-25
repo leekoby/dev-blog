@@ -1,6 +1,6 @@
 import DefaultLayout from '@/components/layout/DefaultLayout';
 import dbConnect from '@/lib/dbConnect';
-import Post from '@/lib/models/Post';
+import Post from '@/models/Post';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
 import parse from 'html-react-parser';
 import Image from 'next/image';

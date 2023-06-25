@@ -1,5 +1,5 @@
 import dbConnect from '@/lib/dbConnect';
-import Comment from '@/lib/models/Comment';
+import Comment from '@/models/Comment';
 import { formatComment, isAuth } from '@/lib/utils';
 import { commentValidationSchema, validateSchema } from '@/lib/validator';
 import { isValidObjectId } from 'mongoose';

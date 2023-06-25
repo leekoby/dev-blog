@@ -1,4 +1,4 @@
-import Comment from '@/lib/models/Comment';
+import Comment from '@/models/Comment';
 import { formatComment, isAdmin, isAuth } from '@/lib/utils';
 import { CommentResponse } from '@/utils/types';
 import { NextApiHandler } from 'next';

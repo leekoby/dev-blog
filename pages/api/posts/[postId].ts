@@ -1,5 +1,5 @@
 import cloudinary from '@/lib/cloudinary';
-import Post from '@/lib/models/Post';
+import Post from '@/models/Post';
 import { isAdmin, readFile } from '@/lib/utils';
 import { postValidationSchema, validateSchema } from '@/lib/validator';
 import { IncomingPost } from '@/utils/types';

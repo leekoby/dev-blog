@@ -1,6 +1,6 @@
 import dbConnect from '@/lib/dbConnect';
-import Comment from '@/lib/models/Comment';
-import Post from '@/lib/models/Post';
+import Comment from '@/models/Comment';
+import Post from '@/models/Post';
 import { formatComment, isAuth } from '@/lib/utils';
 import { commentValidationSchema, validateSchema } from '@/lib/validator';
 import { CommentResponse } from '@/utils/types';

@@ -3,9 +3,9 @@ import formidable from 'formidable';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import dbConnect from './dbConnect';
-import Post, { PostModelSchema } from './models/Post';
+import Post, { PostModelSchema } from '../models/Post';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { IComment } from './models/Comment';
+import { IComment } from '../models/Comment';
 
 // [postId] 타입에러 해결 제네릭 사용
 interface FormidablePromise<T> {

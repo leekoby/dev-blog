@@ -1,4 +1,4 @@
-import User from '@/lib/models/User';
+import User from '@/models/User';
 import { isAdmin } from '@/lib/utils';
 import { LatestUsersProfile } from '@/utils/types';
 import { NextApiHandler } from 'next';
