@@ -19,7 +19,7 @@ import Link from 'next/link';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
-const host = 'http://localhost:3000';
+const host = 'https://kobyblog.vercel.app';
 
 /** 2023/06/11 - 게시글 상세페이지 - by leekoby */
 
