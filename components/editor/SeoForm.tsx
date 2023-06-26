@@ -35,7 +35,7 @@ const SeoForm: React.FC<Props> = ({ initialValue, title = '', onChange }): JSX.E
     const slug = slugify(title, {
       lower: true,
       locale: 'ko',
-      remove: /[*+~.()'"!:@&]/g,
+      remove: /[*+~.()'"!:@&/]/g,
     });
     const newValues = { ...values, slug };
     setValues(newValues);
@@ -46,7 +46,7 @@ const SeoForm: React.FC<Props> = ({ initialValue, title = '', onChange }): JSX.E
     if (initialValue) {
       setValues({
         ...initialValue,
-        slug: slugify(initialValue.slug, { lower: true, locale: 'ko', remove: /[*+~.()'"!:@&]/g }),
+        slug: slugify(initialValue.slug, { lower: true, locale: 'ko', remove: /[*+~.()'"!:@&/]/g }),
       });
     }
   }, [initialValue]);
