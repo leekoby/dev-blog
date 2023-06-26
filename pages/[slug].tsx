@@ -64,12 +64,14 @@ const SinglePost: NextPage<Props> = ({ post }) => {
           </div>
         ) : null}
 
-        <h1 className='text-4xl font-semibold text-primary-dark dark:text-primary py-2'>{title}</h1>
+        <h1 className='text-5xl font-semibold text-primary-dark dark:text-primary py-2'>{title}</h1>
 
         <div className='flex items-center justify-between py-2 text-secondary-dark dark:text-secondary-light'>
-          {tags.map((tag, index) => (
-            <span key={tag + index}>#{tag}</span>
-          ))}
+          <div className='space-x-3'>
+            {tags.map((tag, index) => (
+              <span key={tag + index}>#{tag}</span>
+            ))}
+          </div>
           <span>{dateformat(createdAt, 'paddedShortDate')}</span>
         </div>
 
