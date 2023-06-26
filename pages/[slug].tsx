@@ -14,8 +14,12 @@ import { signIn } from 'next-auth/react';
 import axios from 'axios';
 import User from '@/models/User';
 import AuthorInfo from '@/components/common/AuthorInfo';
+import Share from '@/components/common/Share';
+import Link from 'next/link';
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
+
+const host = 'http://localhost:3000';
 
 /** 2023/06/11 - 게시글 상세페이지 - by leekoby */
 
@@ -23,7 +27,7 @@ const SinglePost: NextPage<Props> = ({ post }) => {
   const [liking, setLiking] = useState(false);
   const [likes, setLikes] = useState({ likedByOwner: false, count: 0 });
   const user = useAuth();
-  const { id, title, content, tags, meta, thumbnail, slug, createdAt, author } = post;
+  const { id, title, content, tags, meta, thumbnail, slug, createdAt, author, relatedPosts } = post;
 
   const getLikeLabel = useCallback((): string => {
     const { likedByOwner, count } = likes;
@@ -68,6 +72,12 @@ const SinglePost: NextPage<Props> = ({ post }) => {
           ))}
           <span>{dateformat(createdAt, 'paddedShortDate')}</span>
         </div>
+
+        {/* 공유하기 */}
+        <div className='py-3 transition dark:bg-primary-dark bg-primary sticky top-0 z-50'>
+          <Share url={host + '/' + slug} />
+        </div>
+
         <div className='prose prose-lg max-w-full mx-auto dark:prose-invert'>{parse(content)}</div>
 
         <div className='py-10'>
@@ -82,6 +92,26 @@ const SinglePost: NextPage<Props> = ({ post }) => {
         <div className='pt-10'>
           <AuthorInfo profile={JSON.parse(author)} />
         </div>
+
+        {/* 관련글 */}
+        <div className='pt-5'>
+          <h3 className='text-xl font-semibold bg-secondary-dark text-primary p-2 mb-4'>
+            관련 게시글
+          </h3>
+          <div className='flex flex-col space-y-4'>
+            {relatedPosts.map((post) => {
+              return (
+                <Link
+                  key={post.id}
+                  href={post.slug}
+                  className='font-semibold text-primary-dark dark:text-primary hover:underline'>
+                  {post.title}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
         {/* 댓글폼 */}
         <Comments belongsTo={id} />
       </div>
@@ -120,6 +150,11 @@ interface StaticPropsResponse {
     thumbnail: string;
     createdAt: string;
     author: string;
+    relatedPosts: {
+      id: string;
+      title: string;
+      slug: string;
+    }[];
   };
 }
 /** 2023/06/11 - 게시글 상세페이지 StaticProps - by leekoby */
@@ -129,7 +164,25 @@ export const getStaticProps: GetStaticProps<StaticPropsResponse, { slug: string 
   try {
     await dbConnect();
     const post = await Post.findOne({ slug: params?.slug }).populate('author');
+
     if (!post) return { notFound: true };
+
+    // tags를 기반으로 관련글 가져오기 in=includes ne=not exist
+    const posts = await Post.find({
+      tags: { $in: [...post.tags] },
+      _id: { $ne: post._id },
+    })
+      .sort({ createdAt: 'desc' })
+      .limit(5)
+      .select('slug title');
+
+    const relatedPosts = posts.map((p) => {
+      return {
+        id: p._id.toString(),
+        title: p.title,
+        slug: p.slug,
+      };
+    });
 
     const { _id, title, content, meta, slug, tags, thumbnail, createdAt, author } = post;
 
@@ -157,6 +210,7 @@ export const getStaticProps: GetStaticProps<StaticPropsResponse, { slug: string 
           thumbnail: thumbnail?.url || '',
           createdAt: createdAt.toString(),
           author: JSON.stringify(postAuthor),
+          relatedPosts,
         },
       },
       revalidate: 60, // 60초
