@@ -22,7 +22,7 @@ const Create: NextPage<Props> = () => {
 
   return (
     <AdminLayout title='New Post'>
-      <div className='max-w-4xl mx-auto'>
+      <div className='max-w-5xl mx-auto'>
         <Editor onSubmit={handleSubmit} />
       </div>
     </AdminLayout>

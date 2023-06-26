@@ -49,7 +49,7 @@ const GalleryModal: React.FC<Props> = ({
 
   return (
     <ModalContainer visible={visible} onClose={onClose}>
-      <div className='max-w-4xl p-2 bg-primary-dark dark:bg-primary rounded'>
+      <div className='max-w-5xl p-2 bg-primary-dark dark:bg-primary rounded'>
         <div className='flex'>
           {/* 갤러리 */}
           <div className='basis-3/4 max-h-[450px] overflow-y-auto custom-scroll-bar'>

@@ -7,7 +7,7 @@ interface Props {}
 const AdminComments: NextPage<Props> = () => {
   return (
     <AdminLayout>
-      <div className='max-w-4xl mx-auto'>
+      <div className='max-w-5xl mx-auto'>
         <h1 className='text-2xl text-primary-dark dark:text-primary font-semibold py-2 transition'>
           Comments
         </h1>
