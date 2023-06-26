@@ -8,7 +8,7 @@ interface Props {
   post: PostDetail;
   busy?: boolean;
   controls?: boolean;
-  onDeleteClcik?(): void;
+  onDeleteClick?(): void;
 }
 
 /** 2023/06/09 - 게시글 카드 - by leekoby */
@@ -16,7 +16,7 @@ const PostCard: React.FC<Props> = ({
   controls = false,
   post,
   busy,
-  onDeleteClcik,
+  onDeleteClick,
 }): JSX.Element => {
   const { title, slug, meta, tags, thumbnail, createdAt } = post;
   return (
@@ -60,7 +60,7 @@ const PostCard: React.FC<Props> = ({
                 <Link href={'/admin/posts/update/' + slug} className='hover:underline'>
                   Edit
                 </Link>
-                <button onClick={onDeleteClcik} className='hover:underline'>
+                <button onClick={onDeleteClick} className='hover:underline'>
                   Delete
                 </button>
               </>
