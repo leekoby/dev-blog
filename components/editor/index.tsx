@@ -180,13 +180,14 @@ const Editor: React.FC<Props> = ({
 
           <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
         </div>
+
+        <SeoForm onChange={updateSeoValue} title={post.title} initialValue={seoInitialValue} />
+
+        <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-5' />
+
         {editor && <EditLink editor={editor} />}
 
         <EditorContent editor={editor} className='min-h-[300px]' />
-
-        <div className='h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3' />
-
-        <SeoForm onChange={updateSeoValue} title={post.title} initialValue={seoInitialValue} />
       </div>
 
       <GalleryModal
