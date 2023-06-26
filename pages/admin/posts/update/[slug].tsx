@@ -5,6 +5,7 @@ import Post from '@/models/Post';
 import AdminLayout from '@/components/layout/AdminLayout';
 import { generateFormData } from '@/utils/helper';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 interface PostResponse extends FinalPost {
   id: string;
@@ -13,6 +14,7 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 /** 2023/06/08 - 게시글 수정 - by leekoby */
 const Update: NextPage<Props> = ({ post }) => {
+  const router = useRouter();
   const handleSubmit = async (post: FinalPost) => {
     try {
       // FormData 생성
@@ -20,13 +22,14 @@ const Update: NextPage<Props> = ({ post }) => {
 
       // 게시글 제출
       const { data } = await axios.patch('/api/posts/' + post.id, formData);
+      router.push('/' + data.post.slug);
     } catch (error: any) {
       console.log(error.response.data);
     }
   };
   return (
     <AdminLayout title='Update'>
-      <div className='max-w-4xl mx-auto'>
+      <div className='max-w-5xl mx-auto'>
         <Editor initialValue={post} onSubmit={handleSubmit} btnTitle='Update' />
       </div>
     </AdminLayout>
