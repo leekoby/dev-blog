@@ -11,10 +11,12 @@ interface Props {
 const LatestPostListCard: React.FC<Props> = ({ title, slug, meta, onDeleteClick }): JSX.Element => {
   return (
     <div>
-      <h1 className='font-semibold text-lg text-primary-dark dark:text-primary transition'>
-        {trimText(title, 50)}
-      </h1>
-      <p className='text-sm text-secondary-dark'>{trimText(meta, 100)}</p>
+      <a href={'/' + slug}>
+        <h1 className='font-semibold text-lg text-primary-dark dark:text-primary transition'>
+          {trimText(title, 50)}
+        </h1>
+        <p className='text-sm text-secondary-dark'>{trimText(meta, 100)}</p>
+      </a>
 
       <div className='flex items-center justify-end space-x-3'>
         <Link
