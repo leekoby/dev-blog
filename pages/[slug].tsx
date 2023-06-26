@@ -20,6 +20,7 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 /** 2023/06/11 - 게시글 상세페이지 - by leekoby */
 
 const SinglePost: NextPage<Props> = ({ post }) => {
+  const [liking, setLiking] = useState(false);
   const [likes, setLikes] = useState({ likedByOwner: false, count: 0 });
   const user = useAuth();
   const { id, title, content, tags, meta, thumbnail, slug, createdAt, author } = post;
@@ -33,6 +34,7 @@ const SinglePost: NextPage<Props> = ({ post }) => {
   }, [likes]);
 
   const handleOnLikeClick = async () => {
+    setLiking(true);
     try {
       if (!user) return await signIn('github');
       const { data } = await axios.post(`/api/posts/update-like?postId=${id}`);
@@ -40,6 +42,7 @@ const SinglePost: NextPage<Props> = ({ post }) => {
     } catch (error) {
       console.log(error);
     }
+    setLiking(false);
   };
 
   useEffect(() => {
@@ -71,7 +74,8 @@ const SinglePost: NextPage<Props> = ({ post }) => {
           <LikeHeart
             liked={likes.likedByOwner}
             label={getLikeLabel()}
-            onClick={handleOnLikeClick}
+            onClick={!liking ? handleOnLikeClick : undefined}
+            busy={liking}
           />
         </div>
 

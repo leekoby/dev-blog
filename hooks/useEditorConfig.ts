@@ -2,6 +2,8 @@ import { getMarkRange, Range, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import PlaceHolder from '@tiptap/extension-placeholder';
+import Highlight from '@tiptap/extension-highlight';
+import Typography from '@tiptap/extension-typography';
 import Link from '@tiptap/extension-link';
 import Youtube from '@tiptap/extension-youtube';
 import TipTapImage from '@tiptap/extension-image';
@@ -19,6 +21,8 @@ const useEditorConfig = (options?: Options) => {
     extensions: [
       StarterKit,
       Underline,
+      Highlight,
+      Typography,
       Link.configure({
         autolink: false,
         linkOnPaste: false,
