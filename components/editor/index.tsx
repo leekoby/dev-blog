@@ -83,7 +83,7 @@ const Editor: React.FC<Props> = ({
       Youtube.configure({
         width: 840,
         height: 472.5,
-        HTMLAttributes: { class: 'mx-auto rounded' },
+        HTMLAttributes: { class: 'w-full aspect-video' },
       }),
       TipTapImage.configure({
         HTMLAttributes: {
