@@ -14,7 +14,6 @@ const AdminSecondaryNav: React.FC<Props> = (props): JSX.Element => {
   const { toggleTheme } = useDarkMode();
   const navigateToCreateNewPost = () => router.push('/admin/posts/create');
   const handleLogOut = async () => await signOut();
-
   const options: dropDownOtions = [
     {
       label: 'Add New Post',
@@ -29,10 +28,19 @@ const AdminSecondaryNav: React.FC<Props> = (props): JSX.Element => {
       onClick: handleLogOut,
     },
   ];
+
+  const handleSearchSubmit = (query: string) => {
+    //비어있을때
+    if (!query.trim()) return;
+
+    // 검색어를 입력했을때
+    router.push('/admin/search?title=' + query);
+  };
+
   return (
     <div className='flex items-center justify-between'>
       {/* 검색 */}
-      <SearchBar />
+      <SearchBar onSubmit={handleSearchSubmit} />
       {/* 옵션/프로필  */}
       <DropdownOptions head={<ProfileHead nameInitial='L' />} options={options} />
     </div>
