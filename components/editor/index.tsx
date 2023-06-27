@@ -15,6 +15,9 @@ import axios from 'axios';
 import SeoForm, { SeoResult } from './SeoForm';
 import ActionButton from '../common/ActionButton';
 import ThumbnailSelector from './ThumbnailSelector';
+import Highlight from '@tiptap/extension-highlight';
+import Typography from '@tiptap/extension-typography';
+import { Markdown } from 'tiptap-markdown';
 
 export interface FinalPost extends SeoResult {
   id?: string;
@@ -69,6 +72,8 @@ const Editor: React.FC<Props> = ({
     extensions: [
       StarterKit,
       Underline,
+      Highlight,
+      Typography,
       Link.configure({
         autolink: false,
         linkOnPaste: false,
@@ -89,6 +94,16 @@ const Editor: React.FC<Props> = ({
         HTMLAttributes: {
           class: 'mx-auto',
         },
+      }),
+      Markdown.configure({
+        html: true, // HTML 입력/출력 허용
+        tightLists: true, // 마크다운 출력에서 <li> 내부에 <p>가 없음
+        tightListClass: 'tight', // <p> 마진을 제거할 수 있게 <ul>에 클래스 추가
+        bulletListMarker: '-', // 마크다운 출력에서 <li> 접두어
+        linkify: true, // "https://..." 텍스트에서 링크 생성
+        breaks: true, // 마크다운 입력에서 새 줄 (\n)이 <br>로 변환됨
+        transformPastedText: true, // 에디터에 마크다운 텍스트를 붙여넣을 수 있음
+        transformCopiedText: true, // 복사된 텍스트가 마크다운으로 변환됨
       }),
     ],
 
@@ -145,7 +160,7 @@ const Editor: React.FC<Props> = ({
     if (initialValue) {
       setPost({ ...initialValue });
       editor?.commands.setContent(initialValue.content);
-
+      editor?.storage.markdown.getMarkdown();
       const { meta, slug, tags } = initialValue;
 
       setSeoInitialValue({ meta, slug, tags });

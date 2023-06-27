@@ -8,6 +8,7 @@ import Link from '@tiptap/extension-link';
 import Youtube from '@tiptap/extension-youtube';
 import TipTapImage from '@tiptap/extension-image';
 import { useState } from 'react';
+import { Markdown } from 'tiptap-markdown';
 
 interface Options {
   placeholder?: string;
@@ -43,6 +44,16 @@ const useEditorConfig = (options?: Options) => {
         HTMLAttributes: {
           class: 'mx-auto',
         },
+      }),
+      Markdown.configure({
+        html: true, // HTML 입력/출력 허용
+        tightLists: true, // 마크다운 출력에서 <li> 내부에 <p>가 없음
+        tightListClass: 'tight', // <p> 마진을 제거할 수 있게 <ul>에 클래스 추가
+        bulletListMarker: '-', // 마크다운 출력에서 <li> 접두어
+        linkify: true, // "https://..." 텍스트에서 링크 생성
+        breaks: true, // 마크다운 입력에서 새 줄 (\n)이 <br>로 변환됨
+        transformPastedText: true, // 에디터에 마크다운 텍스트를 붙여넣을 수 있음
+        transformCopiedText: true, // 복사된 텍스트가 마크다운으로 변환됨
       }),
     ],
 
