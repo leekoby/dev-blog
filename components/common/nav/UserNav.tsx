@@ -61,11 +61,11 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
         <Logo className='fill-highlight-dark md:w-8 md:h-8 w-5 h-5' />
         <span className='md:text-xl font-semibold'>{APP_NAME}</span>
       </Link>
-      <div className='flex justify-between flex-1 mx-20'>
+      <div className='flex items-center justify-between flex-1 mx-3 sm:mx-20'>
         <SearchBar onSubmit={handleSearchSubmit} position='user' />
         <div className='flex items-center space-x-5'>
           <button onClick={toggleTheme} className='dark:text-secondary-dark text-secondary-light'>
-            <HiLightBulb size={34} className='' />
+            <HiLightBulb size={32} className='' />
           </button>
 
           {isAuth ? (
