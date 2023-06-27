@@ -8,6 +8,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        main: ["BMJUA"],
+        special: ["TTWanjudaedunsancheB"],
+      },
       colors: {
         "primary-dark": "#1f1f1f",
         primary: "#ffffff",

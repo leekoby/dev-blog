@@ -19,3 +19,18 @@
 .custom-scroll-bar::-webkit-scrollbar-thumb {
   background: rgb(202, 181, 226);
 }
+
+@font-face {
+  font-family: 'BMJUA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TTWanjudaedunsancheB';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
