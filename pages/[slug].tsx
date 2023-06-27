@@ -33,7 +33,7 @@ const SinglePost: NextPage<Props> = ({ post }) => {
     const { likedByOwner, count } = likes;
     if (likedByOwner && count === 1) return '이 게시글에 좋아요를 눌렀습니다';
     if (likedByOwner) return `방문자님과 ${count - 1}명이 좋아요를 눌렀습니다.`;
-    if (count === 0) return '좋아요 누르기';
+    if (count === 0) return '잘했다고 칭찬하기';
     return count + '명이 좋아요를 눌렀습니다.';
   }, [likes]);
 
@@ -70,7 +70,7 @@ const SinglePost: NextPage<Props> = ({ post }) => {
         <div className='flex items-center justify-between py-2 text-secondary-dark dark:text-secondary-light'>
           <div className='space-x-3'>
             {tags.map((tag, index) => (
-              <span key={tag + index}>#{tag}</span>
+              <span key={tag + index}># {tag}</span>
             ))}
           </div>
           <span>{dateformat(createdAt, 'paddedShortDate')}</span>
@@ -86,7 +86,7 @@ const SinglePost: NextPage<Props> = ({ post }) => {
         <div className='prose prose-lg max-w-full mx-auto dark:prose-invert'>{parse(content)}</div>
         <hr className='mt-2' />
 
-        <div className='py-5'>
+        <div className='py-5 --jua'>
           <LikeHeart
             liked={likes.likedByOwner}
             label={getLikeLabel()}

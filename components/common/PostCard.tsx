@@ -20,7 +20,7 @@ const PostCard: React.FC<Props> = ({
 }): JSX.Element => {
   const { title, slug, meta, tags, thumbnail, createdAt } = post;
   return (
-    <div className='rounded shadow-sm shadow-secondary-dark overflow-hidden bg-primary dark:bg-primary-dark flex flex-col h-full transition hover:shadow-black/30 hover:shadow-lg'>
+    <div className='p-2 rounded shadow-sm shadow-secondary-dark overflow-hidden bg-primary dark:bg-primary-dark flex flex-col h-full transition hover:shadow-black/30 hover:shadow-lg'>
       {/* 썸네일 */}
       <Link href={'/' + slug}>
         <div className='aspect-video relative'>
@@ -39,7 +39,7 @@ const PostCard: React.FC<Props> = ({
           <div className='flex items-center justify-between text-sm text-primary-dark dark:text-primary'>
             <div className='flex items-center space-x-1'>
               {tags.map((tag, index) => (
-                <span key={tag + index}>#{tag}</span>
+                <span key={tag + index}># {tag}</span>
               ))}
             </div>
             <span>{dateformat(createdAt, 'paddedShortDate')}</span>
