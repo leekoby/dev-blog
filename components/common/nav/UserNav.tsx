@@ -55,7 +55,7 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
   };
 
   return (
-    <div className='flex items-center justify-between bg-primary-dark p-3'>
+    <div className='flex items-center justify-between bg-primary-dark p-3 mb-10'>
       {/* Logo */}
       <Link href={'/'} className='flex items-center space-x-2 text-highlight-dark'>
         <Logo className='fill-highlight-dark md:w-8 md:h-8 w-5 h-5' />

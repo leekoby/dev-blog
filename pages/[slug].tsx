@@ -57,14 +57,15 @@ const SinglePost: NextPage<Props> = ({ post }) => {
 
   return (
     <DefaultLayout title={title} desc={meta}>
-      <div className='lg:px-0 px-3'>
+      <div className='lg:px-0 px-3 space-y-5'>
         {thumbnail ? (
           <div className='relative aspect-video'>
             <Image src={thumbnail} fill alt={title} />
           </div>
         ) : null}
+        <hr className='mt-2' />
 
-        <h1 className='text-5xl font-semibold text-primary-dark dark:text-primary py-2'>{title}</h1>
+        <h1 className='text-6xl font-semibold text-primary-dark dark:text-primary py-2'>{title}</h1>
 
         <div className='flex items-center justify-between py-2 text-secondary-dark dark:text-secondary-light'>
           <div className='space-x-3'>
@@ -74,15 +75,18 @@ const SinglePost: NextPage<Props> = ({ post }) => {
           </div>
           <span>{dateformat(createdAt, 'paddedShortDate')}</span>
         </div>
+        <hr className='mt-2' />
 
         {/* 공유하기 */}
-        <div className='py-3 transition dark:bg-primary-dark bg-primary sticky top-0 z-50'>
+        <div className='py-2 transition dark:bg-primary-dark bg-primary sticky top-0 z-50'>
           <Share url={host + '/' + slug} />
         </div>
+        <hr className='mt-2' />
 
         <div className='prose prose-lg max-w-full mx-auto dark:prose-invert'>{parse(content)}</div>
+        <hr className='mt-2' />
 
-        <div className='py-10'>
+        <div className='py-5'>
           <LikeHeart
             liked={likes.likedByOwner}
             label={getLikeLabel()}
@@ -91,11 +95,13 @@ const SinglePost: NextPage<Props> = ({ post }) => {
           />
         </div>
 
-        <div className='pt-10'>
+        <div className=''>
           <AuthorInfo profile={JSON.parse(author)} />
         </div>
 
         {/* 관련글 */}
+        <hr className='mt-2' />
+
         <div className='pt-5'>
           <h3 className='text-xl font-semibold bg-secondary-dark text-primary p-2 mb-4'>
             관련 게시글
@@ -113,6 +119,7 @@ const SinglePost: NextPage<Props> = ({ post }) => {
             })}
           </div>
         </div>
+        <hr className='mt-2' />
 
         {/* 댓글폼 */}
         <Comments belongsTo={id} />

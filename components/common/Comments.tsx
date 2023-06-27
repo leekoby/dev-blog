@@ -237,7 +237,7 @@ const Comments: React.FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
   }, [belongsTo, fetchAll]);
 
   return (
-    <div className='py-20 space-y-4'>
+    <div className='pt-10 pb-20 space-y-4'>
       {userProfile ? (
         <CommentForm
           visible={!fetchAll}

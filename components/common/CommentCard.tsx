@@ -85,7 +85,7 @@ const CommentCard: React.FC<Props> = ({
           {/* 좋아요 버튼 */}
           <LikeHeart
             liked={comment.likedByOwner}
-            label={likes + 'likes'}
+            label={likes + ' 좋아요'}
             onClick={onLikeClick}
             busy={busy}
           />

@@ -45,7 +45,7 @@ const PostCard: React.FC<Props> = ({
             <span>{dateformat(createdAt, 'paddedShortDate')}</span>
           </div>
           {/* 제목 */}
-          <h1 className='font-semibold text-primary-dark dark:text-primary'>
+          <h1 className='text-2xl font-semibold text-primary-dark dark:text-primary'>
             {trimText(title, 50)}
           </h1>
           {/* meta */}

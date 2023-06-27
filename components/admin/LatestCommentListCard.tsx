@@ -14,7 +14,7 @@ const LatestCommentListCard: React.FC<Props> = ({ comment }): JSX.Element => {
     <div className='flex space-x-2'>
       <ProfileIcon nameInitial={owner.name[0]} avatar={owner.avatar} />
 
-      <div className='flex-1'>
+      <div className='flex-1 '>
         <p className='font-semibold text-primary-dark dark:text-primary transition'>
           {owner.name} <span className='text-sm text-secondary-dark'>commented on</span>
         </p>
@@ -25,7 +25,7 @@ const LatestCommentListCard: React.FC<Props> = ({ comment }): JSX.Element => {
           rel='noreferrer noopener'
           // TODO:  rel 에 'noreferrer noopener' 를 사용해야하는 이유
           // https://joshua-dev-story.blogspot.com/2020/12/html-rel-noopener-noreferrer.html
-          className='text-secondary-dark hover:underline'>
+          className='text-secondary-dark hover:underline '>
           <div className='flex items-center space-x-2'>
             <BsBoxArrowUpRight size={12} />
             {trimText(belongsTo.title, 30)}
