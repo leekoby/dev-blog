@@ -11,6 +11,13 @@ import {
   TwitterShareButton,
 } from 'next-share';
 
+import { AiOutlineLink } from 'react-icons/ai';
+
+import { useCallback } from 'react';
+import { usePathname } from 'next/navigation';
+//hooks
+import useCustomToast from '@/hooks/useCustomToast';
+
 interface Props {
   url: string;
   title?: string;
@@ -19,6 +26,14 @@ interface Props {
 
 /** 2023/06/26 - 게시글 공유하기 - by leekoby */
 const Share: React.FC<Props> = ({ url, title, quote }): JSX.Element => {
+  const toast = useCustomToast();
+  const pathname = usePathname();
+  const copyLink = useCallback(() => {
+    navigator.clipboard
+      .writeText(window.location.origin + pathname)
+      .then(() => toast({ title: '링크를 복사했습니다.', status: 'success' }));
+  }, []);
+
   return (
     //TODO: 카카오, 디스코드가 기본제공이 아니여서 오픈소스 기여해보자
     <div className='flex items-center space-x-3'>
@@ -35,6 +50,9 @@ const Share: React.FC<Props> = ({ url, title, quote }): JSX.Element => {
       <LineShareButton url={url} title={title}>
         <LineIcon round size={32} />
       </LineShareButton>
+      <button type='button' className='ml-auto' onClick={copyLink}>
+        <AiOutlineLink className='dark:text-primary-dark text-primary bg-secondary-dark dark:bg-secondary-light p-1 w-8 h-8 rounded-full ' />
+      </button>
     </div>
   );
 };
