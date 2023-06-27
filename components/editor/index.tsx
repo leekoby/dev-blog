@@ -17,7 +17,15 @@ import ActionButton from '../common/ActionButton';
 import ThumbnailSelector from './ThumbnailSelector';
 import Highlight from '@tiptap/extension-highlight';
 import Typography from '@tiptap/extension-typography';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableRow from '@tiptap/extension-table-row';
+import TableHeader from '@tiptap/extension-table-header';
 import { Markdown } from 'tiptap-markdown';
+import Document from '@tiptap/extension-document';
+import Gapcursor from '@tiptap/extension-gapcursor';
+import Paragraph from '@tiptap/extension-paragraph';
+import Text from '@tiptap/extension-text';
 
 export interface FinalPost extends SeoResult {
   id?: string;
@@ -71,6 +79,10 @@ const Editor: React.FC<Props> = ({
   const editor = useEditor({
     extensions: [
       StarterKit,
+      Document,
+      Paragraph,
+      Text,
+      Gapcursor,
       Underline,
       Highlight,
       Typography,
@@ -104,6 +116,25 @@ const Editor: React.FC<Props> = ({
         breaks: true, // 마크다운 입력에서 새 줄 (\n)이 <br>로 변환됨
         transformPastedText: true, // 에디터에 마크다운 텍스트를 붙여넣을 수 있음
         transformCopiedText: true, // 복사된 텍스트가 마크다운으로 변환됨
+      }),
+      TableRow,
+      TableCell,
+      TableHeader,
+      Table.configure({
+        resizable: true,
+        allowTableNodeSelection: true,
+        lastColumnResizable: false,
+        HTMLAttributes: {
+          table: {
+            className: 'tiptap-table',
+          },
+          td: {
+            className: 'tiptap-table-cell',
+          },
+          th: {
+            className: 'tiptap-table-header',
+          },
+        },
       }),
     ],
 

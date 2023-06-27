@@ -34,3 +34,24 @@
   font-weight: 700;
   font-style: normal;
 }
+
+table {
+  @apply w-full border-collapse;
+}
+th,
+td {
+  @apply border border-secondary-dark p-2 text-left;
+}
+
+.dark th {
+  @apply bg-header-dark; /* 어두운 테마의 테이블 헤더 배경색 사용 */
+}
+
+.light th {
+  @apply bg-header-light; /* 밝은 테마의 테이블 헤더 배경색 사용 */
+}
+
+th {
+  @apply text-center;
+  border-bottom: 3px double;
+}

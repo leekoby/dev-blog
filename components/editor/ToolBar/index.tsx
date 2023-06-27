@@ -8,6 +8,7 @@ import {
   BsLink45Deg,
   BsListOl,
   BsListUl,
+  BsTable,
   BsTypeBold,
   BsTypeItalic,
   BsTypeStrikethrough,
@@ -19,6 +20,7 @@ import InsertLink from '../Link/InsertLink';
 import { LinkOption } from '../Link/LinkForm';
 import Button from './Button';
 import EmbedYoutube from './EmbedYoutube';
+import Table from './Table';
 
 interface Props {
   editor: Editor | null;
@@ -139,6 +141,8 @@ const ToolBar: React.FC<Props> = ({ editor, onOpenImageClick }): JSX.Element | n
           onClick={() => getFocusedEditor(editor).toggleBulletList().run()}>
           <BsListUl />
         </Button>
+
+        <Table editor={editor} />
       </div>
       <div className='h-4 w-[1px] bg-secondary-dark dark:bg-secondary-light mx-8' />
 

@@ -9,6 +9,14 @@ import Youtube from '@tiptap/extension-youtube';
 import TipTapImage from '@tiptap/extension-image';
 import { useState } from 'react';
 import { Markdown } from 'tiptap-markdown';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableRow from '@tiptap/extension-table-row';
+import TableHeader from '@tiptap/extension-table-header';
+import Document from '@tiptap/extension-document';
+import Gapcursor from '@tiptap/extension-gapcursor';
+import Paragraph from '@tiptap/extension-paragraph';
+import Text from '@tiptap/extension-text';
 
 interface Options {
   placeholder?: string;
@@ -21,6 +29,10 @@ const useEditorConfig = (options?: Options) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
+      Document,
+      Paragraph,
+      Text,
+      Gapcursor,
       Underline,
       Highlight,
       Typography,
@@ -33,12 +45,12 @@ const useEditorConfig = (options?: Options) => {
         },
       }),
       PlaceHolder.configure({
-        placeholder: options?.placeholder || '내용 입력',
+        placeholder: '내용 입력',
       }),
       Youtube.configure({
         width: 840,
         height: 472.5,
-        HTMLAttributes: { class: 'mx-auto rounded' },
+        HTMLAttributes: { class: 'w-full aspect-video' },
       }),
       TipTapImage.configure({
         HTMLAttributes: {
@@ -54,6 +66,24 @@ const useEditorConfig = (options?: Options) => {
         breaks: true, // 마크다운 입력에서 새 줄 (\n)이 <br>로 변환됨
         transformPastedText: true, // 에디터에 마크다운 텍스트를 붙여넣을 수 있음
         transformCopiedText: true, // 복사된 텍스트가 마크다운으로 변환됨
+      }),
+      TableRow,
+      TableCell,
+      TableHeader,
+      Table.configure({
+        resizable: false,
+        allowTableNodeSelection: true,
+        HTMLAttributes: {
+          table: {
+            className: 'tiptap-table',
+          },
+          td: {
+            className: 'tiptap-table-cell',
+          },
+          th: {
+            className: 'tiptap-table-header',
+          },
+        },
       }),
     ],
 

@@ -24,6 +24,8 @@ module.exports = {
           light: "#e6e6e6",
         },
         action: "#3B82F6",
+        "header-light": "#f2f2f2",
+        "header-dark": "#4a4a4a",
       },
       transitionProperty: {
         width: 'width'
