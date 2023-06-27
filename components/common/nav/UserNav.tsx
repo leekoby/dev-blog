@@ -9,6 +9,7 @@ import DropdownOptions, { dropDownOtions } from '../DropDownOption';
 import { useRouter } from 'next/router';
 import { UserProfile } from '@/utils/types';
 import useDarkMode from '@/hooks/useDarkMode';
+import SearchBar from '../SearchBar';
 
 interface Props {}
 
@@ -45,6 +46,14 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
       ]
     : defaultOptions;
 
+  const handleSearchSubmit = (query: string) => {
+    //비어있을때
+    if (!query.trim()) return;
+
+    // 검색어를 입력했을때
+    router.push('/search?title=' + query);
+  };
+
   return (
     <div className='flex items-center justify-between bg-primary-dark p-3'>
       {/* Logo */}
@@ -52,25 +61,28 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
         <Logo className='fill-highlight-dark md:w-8 md:h-8 w-5 h-5' />
         <span className='md:text-xl font-semibold'>{APP_NAME}</span>
       </Link>
-      <div className='flex items-center space-x-5'>
-        <button onClick={toggleTheme} className='dark:text-secondary-dark text-secondary-light'>
-          <HiLightBulb size={34} className='' />
-        </button>
+      <div className='flex justify-between flex-1 mx-20'>
+        <SearchBar onSubmit={handleSearchSubmit} position='user' />
+        <div className='flex items-center space-x-5'>
+          <button onClick={toggleTheme} className='dark:text-secondary-dark text-secondary-light'>
+            <HiLightBulb size={34} className='' />
+          </button>
 
-        {isAuth ? (
-          <DropdownOptions
-            options={dropDownOptions}
-            head={
-              <ProfileHead
-                nameInitial={profile?.name[0].toUpperCase()}
-                avatar={profile?.avatar}
-                lightOnly
-              />
-            }
-          />
-        ) : (
-          <GitHubAuthButton lightOnly />
-        )}
+          {isAuth ? (
+            <DropdownOptions
+              options={dropDownOptions}
+              head={
+                <ProfileHead
+                  nameInitial={profile?.name[0].toUpperCase()}
+                  avatar={profile?.avatar}
+                  lightOnly
+                />
+              }
+            />
+          ) : (
+            <GitHubAuthButton lightOnly />
+          )}
+        </div>
       </div>
     </div>
   );

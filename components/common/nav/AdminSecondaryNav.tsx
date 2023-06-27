@@ -40,7 +40,7 @@ const AdminSecondaryNav: React.FC<Props> = (props): JSX.Element => {
   return (
     <div className='flex items-center justify-between'>
       {/* 검색 */}
-      <SearchBar onSubmit={handleSearchSubmit} />
+      <SearchBar onSubmit={handleSearchSubmit} position='admin' />
       {/* 옵션/프로필  */}
       <DropdownOptions head={<ProfileHead nameInitial='L' />} options={options} />
     </div>
