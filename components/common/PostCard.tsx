@@ -20,7 +20,7 @@ const PostCard: React.FC<Props> = ({
 }): JSX.Element => {
   const { title, slug, meta, tags, thumbnail, createdAt } = post;
   return (
-    <div className='rounded shadow-sm shadow-secondary-dark overflow-hidden bg-primary dark:bg-primary-dark flex flex-col h-full transition'>
+    <div className='rounded shadow-sm shadow-secondary-dark overflow-hidden bg-primary dark:bg-primary-dark flex flex-col h-full transition hover:shadow-black/30 hover:shadow-lg'>
       {/* 썸네일 */}
       <Link href={'/' + slug}>
         <div className='aspect-video relative'>
