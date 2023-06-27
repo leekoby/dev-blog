@@ -49,7 +49,7 @@ const PostCard: React.FC<Props> = ({
             {trimText(title, 50)}
           </h1>
           {/* meta */}
-          <p className='text-secondary-dark'>{trimText(title, 70)}</p>
+          <p className='text-secondary-dark'>{trimText(meta, 70)}</p>
         </Link>
         {controls && (
           <div className='flex justify-end items-center h-8 mt-auto space-x-4 text-primary-dark dark:text-primary'>
