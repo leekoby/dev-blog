@@ -6,6 +6,8 @@ import Router from 'next/router';
 import nProgress from 'nprogress';
 import { Jua, Noto_Sans_KR } from 'next/font/google';
 import classNames from 'classnames';
+import { ChakraProvider } from '@chakra-ui/react';
+import { CacheProvider } from '@chakra-ui/next-js';
 
 interface Props {
   session?: Session | null;
@@ -34,9 +36,13 @@ Router.events.on('routeChangeError', () => nProgress.done());
 export default function App({ Component, pageProps }: AppProps<Props>) {
   return (
     <main className={classNames(notoSansKr.className, jua.variable)}>
-      <SessionProvider session={pageProps.session}>
-        <Component {...pageProps} />
-      </SessionProvider>
+      <CacheProvider>
+        <ChakraProvider>
+          <SessionProvider session={pageProps.session}>
+            <Component {...pageProps} />
+          </SessionProvider>
+        </ChakraProvider>
+      </CacheProvider>
     </main>
   );
 }
