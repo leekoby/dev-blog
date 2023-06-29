@@ -30,6 +30,8 @@ function Copyright() {
     </>
   );
 }
+
+/** 2023/06/30 - Footer - by leekoby */
 const Footer: React.FC<Props> = (props): JSX.Element => {
   return (
     <footer className='bg-gray-800'>
