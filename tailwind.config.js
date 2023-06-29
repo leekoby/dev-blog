@@ -1,11 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  purge: {
+    content: [
+      './pages/**/*.{js,ts,jsx,tsx,mdx}',
+      './components/**/*.{js,ts,jsx,tsx,mdx}',
+      './app/**/*.{js,ts,jsx,tsx,mdx}',
+    ],
+    safelist: [
+      /data-theme$/,
+      /^prose/,
+      /^prose-lg/,
+      /^mx-auto/,
+      /^dark:/,
+      /^tiptap-table/,
+      /^tiptap-table-cell/,
+      /^tiptap-table-header/,
+    ],
+  },
   theme: {
     extend: {
       fontFamily: {

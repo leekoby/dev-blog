@@ -11,7 +11,7 @@ const LatestUserTable: React.FC<Props> = ({ users }): JSX.Element => {
     <div>
       <table className='w-full text-left text-primary-dark dark:text-primary'>
         <tbody>
-          <tr className='text-left bg-secondary-dark text-primary'>
+          <tr className='text-left bg-secondary-dark text-primary-dark dark:text-primary'>
             <th className='p-2'>유저정보</th>
             <th className='p-2'>이메일</th>
             <th className='p-2'>제공</th>

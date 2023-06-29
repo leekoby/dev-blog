@@ -55,3 +55,86 @@ th {
   @apply text-center;
   border-bottom: 3px double;
 }
+
+.dark p code {
+  color: #de6b18;
+  font-size: 0.85rem;
+  padding: 3px 5px;
+  word-break: break-word;
+  border-radius: 4px;
+  background-color: #272822;
+}
+.light p code {
+  color: #000;
+  font-size: 0.85rem;
+  padding: 3px 5px;
+  word-break: break-word;
+  border-radius: 4px;
+  background-color: #ccc;
+}
+
+pre code.language-hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+code.language-hljs {
+  padding: 3px 5px;
+}
+.language-hljs {
+  background: #272822;
+  color: #ddd;
+}
+.language-hljs-keyword,
+.language-hljs-literal,
+.language-hljs-name,
+.language-hljs-selector-tag,
+.language-hljs-strong,
+.language-hljs-tag {
+  color: #f92672;
+}
+.language-hljs-code {
+  color: #66d9ef;
+}
+.language-hljs-attribute,
+.language-hljs-link,
+.language-hljs-regexp,
+.language-hljs-symbol {
+  color: #bf79db;
+}
+.language-hljs-addition,
+.language-hljs-built_in,
+.language-hljs-bullet,
+.language-hljs-emphasis,
+.language-hljs-section,
+.language-hljs-selector-attr,
+.language-hljs-selector-pseudo,
+.language-hljs-string,
+.language-hljs-subst,
+.language-hljs-template-tag,
+.language-hljs-template-variable,
+.language-hljs-title,
+.language-hljs-type,
+.language-hljs-variable {
+  color: #a6e22e;
+}
+.language-hljs-class .language-hljs-title,
+.language-hljs-title.class_ {
+  color: #fff;
+}
+.language-hljs-comment,
+.language-hljs-deletion,
+.language-hljs-meta,
+.language-hljs-quote {
+  color: #75715e;
+}
+.language-hljs-doctag,
+.language-hljs-keyword,
+.language-hljs-literal,
+.language-hljs-section,
+.language-hljs-selector-id,
+.language-hljs-selector-tag,
+.language-hljs-title,
+.language-hljs-type {
+  font-weight: 700;
+}

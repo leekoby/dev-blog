@@ -26,6 +26,20 @@ import Document from '@tiptap/extension-document';
 import Gapcursor from '@tiptap/extension-gapcursor';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
+import CodeBlock from '@tiptap/extension-code-block';
+// import lowlight from '@tiptap/extension-code-block-lowlight';
+import { lowlight } from 'lowlight';
+import css from 'highlight.js/lib/languages/css';
+import js from 'highlight.js/lib/languages/javascript';
+import ts from 'highlight.js/lib/languages/typescript';
+import html from 'highlight.js/lib/languages/xml';
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+import 'highlight.js/styles/github.css';
+
+lowlight.registerLanguage('css', css);
+lowlight.registerLanguage('javascript', js);
+lowlight.registerLanguage('typescript', ts);
+lowlight.registerLanguage('xml', html);
 
 export interface FinalPost extends SeoResult {
   id?: string;
@@ -84,7 +98,9 @@ const Editor: React.FC<Props> = ({
       Text,
       Gapcursor,
       Underline,
-      Highlight,
+      Highlight.configure({
+        multicolor: true,
+      }),
       Typography,
       Link.configure({
         autolink: false,
@@ -113,7 +129,7 @@ const Editor: React.FC<Props> = ({
         tightListClass: 'tight', // <p> 마진을 제거할 수 있게 <ul>에 클래스 추가
         bulletListMarker: '-', // 마크다운 출력에서 <li> 접두어
         linkify: true, // "https://..." 텍스트에서 링크 생성
-        breaks: true, // 마크다운 입력에서 새 줄 (\n)이 <br>로 변환됨
+        breaks: false, // 마크다운 입력에서 새 줄 (\n)이 <br>로 변환됨
         transformPastedText: true, // 에디터에 마크다운 텍스트를 붙여넣을 수 있음
         transformCopiedText: true, // 복사된 텍스트가 마크다운으로 변환됨
       }),
@@ -135,6 +151,10 @@ const Editor: React.FC<Props> = ({
             className: 'tiptap-table-header',
           },
         },
+      }),
+      CodeBlock,
+      CodeBlockLowlight.configure({
+        lowlight,
       }),
     ],
 

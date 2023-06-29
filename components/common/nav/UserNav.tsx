@@ -58,10 +58,10 @@ const UserNav: React.FC<Props> = (props): JSX.Element => {
     <div className='flex items-center justify-between bg-primary-dark p-3 mb-10'>
       {/* Logo */}
       <Link href={'/'} className='flex items-center space-x-2 text-highlight-dark'>
-        <Logo className='fill-highlight-dark md:w-8 md:h-8 w-5 h-5' />
-        <span className='md:text-xl font-semibold'>{APP_NAME}</span>
+        <Logo className='fill-highlight-dark md:w-8 md:h-8 w-5 h-5 shrink-0 hidden md:block' />
+        <span className='text-md md:text-xl font-semibold'>{APP_NAME}</span>
       </Link>
-      <div className='flex items-center justify-between flex-1 mx-3 sm:mx-20'>
+      <div className='flex items-center justify-between mx-3 sm:mx-20 space-x-5'>
         <SearchBar onSubmit={handleSearchSubmit} position='user' />
         <div className='flex items-center space-x-5'>
           <button onClick={toggleTheme} className='dark:text-secondary-dark text-secondary-light'>

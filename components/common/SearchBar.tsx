@@ -18,7 +18,7 @@ const SearchBar: React.FC<Props> = ({ onSubmit, position }): JSX.Element => {
       <input
         placeholder='검색... '
         type='text'
-        className={`border-2 bg-transparent outline-none transition ${
+        className={`w-auto border-2 bg-transparent outline-none transition rounded-md ${
           position === 'admin'
             ? ' border-secondary-dark p-2 text-primary-dark dark:text-primary rounded focus:border-primary-dark dark:focus:border-primary'
             : ' text-primary'

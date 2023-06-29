@@ -5,7 +5,7 @@ interface Props {
   desc?: string;
 }
 
-export const APP_NAME = 'Koby Dev Blogs';
+export const APP_NAME = 'Koby Blogs';
 
 /** 2023/06/07 - Head - by leekoby */
 const AppHead: React.FC<Props> = ({ title, desc }): JSX.Element => {
