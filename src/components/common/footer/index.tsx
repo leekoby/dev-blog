@@ -1,12 +1,7 @@
-import { NextPage } from 'next';
 import Link from 'next/link';
+import { navigation } from '../nav-bar/navigation';
 
 interface Props {}
-
-const navigation = [
-  { name: 'Blogs', href: '/blogs' },
-  { name: 'Portfolio', href: '/portfolios' },
-];
 
 const socialLinks = [
   {
@@ -35,8 +30,7 @@ function Copyright() {
     </>
   );
 }
-
-const Footer: NextPage<Props> = () => {
+const Footer: React.FC<Props> = (props): JSX.Element => {
   return (
     <footer className='bg-gray-800'>
       <div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
