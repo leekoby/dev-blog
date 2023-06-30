@@ -6,6 +6,9 @@ import { PortfolioList } from '@/components/portfoilo';
 import { BaseLayout } from '@/components/layouts';
 import { getBlogs } from '@/lib/blogs';
 import { Blog } from '@/types/blog';
+import { getDir } from '@/lib/md';
+import { SearchContent } from '@/types/markdown';
+import fs from 'fs';
 
 interface Props {
   blogs: Blog[];
@@ -47,6 +50,22 @@ const Home: NextPage<Props> = ({ blogs }) => {
 /** 2023/06/30 - 메인페이지 StaticProps - by leekoby */
 export const getStaticProps: GetStaticProps = () => {
   const blogs = getBlogs();
+
+  const searchFile = getDir('/src/content/search/index.json');
+  const searchItemList: SearchContent[] = [];
+
+  blogs.forEach((blog) => {
+    const searchItem = {
+      slug: blog.slug,
+      title: blog.title,
+      description: blog.description,
+      category: 'blogs',
+    };
+
+    searchItemList.push(searchItem);
+  });
+
+  fs.writeFileSync(searchFile, JSON.stringify(searchItemList, null, 2)); // (함수, 대체 함수, 들여쓰기)
 
   return {
     props: { blogs },
