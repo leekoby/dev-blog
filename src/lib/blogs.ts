@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { Blog } from '@/types/blog';
-import { getAllItems, getDir, getFileNames, getItemInPath } from './md';
+import { getAllItems, getDir, getFileNames, getItemInPath, markdwonToHtml } from './md';
 
 const BLOG_DIR = getDir('/src/content/blogs');
 
@@ -26,6 +26,12 @@ const getBlog = (filename: string): Blog => {
   blog.slug = filename.replace(/.md$/, '');
   return blog;
 };
+/** 2023/06/30 - html을 markdown으로 변환해주는 함수 - by leekoby */
+const getBlogBySlugWithMarkdown = async (slug: string): Promise<Blog> => {
+  const blog = getBlogBySlug(slug);
+  blog.content = await markdwonToHtml(blog.content);
+  return blog;
+};
 
 /** 2023/06/30 - 모든 블로그 게시물들을 Blog[] 형식의 배열로 반환 - by leekoby */
 const getBlogs = (): Blog[] => {
@@ -33,4 +39,11 @@ const getBlogs = (): Blog[] => {
   return getAllItems(names, getBlog) as Blog[];
 };
 
-export { getBlogFileNames, getBlog, getBlogs, getBlogsSlugs, getBlogBySlug };
+export {
+  getBlogFileNames,
+  getBlog,
+  getBlogs,
+  getBlogsSlugs,
+  getBlogBySlug,
+  getBlogBySlugWithMarkdown,
+};

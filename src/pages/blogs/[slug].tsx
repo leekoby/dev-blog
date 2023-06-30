@@ -1,4 +1,4 @@
-import { getBlogBySlug, getBlogsSlugs } from '@/lib/blogs';
+import { getBlogBySlugWithMarkdown, getBlogsSlugs } from '@/lib/blogs';
 import { Blog } from '@/types/blog';
 import Image from 'next/image';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next/types';
@@ -58,7 +58,7 @@ const BlogDetail: NextPage<Props> = ({ blog }) => {
           {/* Blog Header Ends */}
           <article className='prose lg:prose-lg markdown-image-50'>
             {/* Blog Content Here */}
-            {blog.content}
+            <div dangerouslySetInnerHTML={{ __html: blog.content }} />
           </article>
         </div>
       </PageLayout>
@@ -74,9 +74,9 @@ interface Params extends ParsedUrlQuery {
 }
 
 /** 2023/06/30 - 블로그 상세글 GetStaticProps  - by leekoby */
-export const getStaticProps: GetStaticProps<Props, Params> = (context) => {
+export const getStaticProps: GetStaticProps<Props, Params> = async (context) => {
   const { slug } = context.params!;
-  const blog = getBlogBySlug(slug);
+  const blog = await getBlogBySlugWithMarkdown(slug);
 
   return {
     props: { blog },

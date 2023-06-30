@@ -3,6 +3,9 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { Blog } from '@/types/blog';
 import { MarkDownItem } from '@/types/markdown';
+import { remark } from 'remark';
+import remarkGfm from 'remark-gfm';
+import html from 'remark-html';
 
 /** 2023/06/30 - 입력으로 받은 상대경로의 절대경로를 반환 - by leekoby */
 const getDir = (path: string) => join(process.cwd(), path);
@@ -25,4 +28,10 @@ const getAllItems = (fileNames: string[], get: (name: string) => MarkDownItem) =
   return items;
 };
 
-export { getDir, getFileNames, getItemInPath, getAllItems };
+/** 2023/06/30 -markdown문법 html로 변경해주는 함수  - by leekoby */
+const markdwonToHtml = async (markdown: string) => {
+  const result = await remark().use(html).use(remarkGfm).process(markdown);
+  return result.toString();
+};
+
+export { getDir, getFileNames, getItemInPath, getAllItems, markdwonToHtml };
