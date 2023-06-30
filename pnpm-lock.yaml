@@ -44,6 +44,9 @@ dependencies:
   gray-matter:
     specifier: ^4.0.3
     version: 4.0.3
+  js-search:
+    specifier: ^2.0.1
+    version: 2.0.1
   next:
     specifier: 13.4.7
     version: 13.4.7(react-dom@18.2.0)(react@18.2.0)
@@ -76,6 +79,9 @@ devDependencies:
   '@tailwindcss/typography':
     specifier: ^0.5.9
     version: 0.5.9(tailwindcss@3.3.2)
+  '@types/js-search':
+    specifier: ^1.4.0
+    version: 1.4.0
 
 packages:
 
@@ -1616,6 +1622,10 @@ packages:
     dependencies:
       '@types/unist': 2.0.6
     dev: false
+
+  /@types/js-search@1.4.0:
+    resolution: {integrity: sha512-OMDWvQP2AmxpQI9vFh7U/TzExNGB9Sj9WQCoxUR8VXZEv6jM4cyNzLODkh1gkBHJ9Er7kdasChzEpba4FxLGaA==}
+    dev: true
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
@@ -3321,6 +3331,10 @@ packages:
   /jiti@1.18.2:
     resolution: {integrity: sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==}
     hasBin: true
+
+  /js-search@2.0.1:
+    resolution: {integrity: sha512-8k12LiC3fPt7gLRJTc1azE1BFvlxIw+BG3J9YzjuYf4wSE65uqYSYP4VhweApcTfV51Fzq/ogBulQew5937A9A==}
+    dev: false
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
