@@ -21,6 +21,8 @@ class ContentIndexer {
     const results = this.searchEngine.search(query);
     return results as SearchContent[];
   }
+
+  // TODO: Stemming / Tokenization
   private buildIndex() {
     this.searchEngine = new JsSearch.Search('slug');
     this.searchEngine.addIndex('title');

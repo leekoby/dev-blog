@@ -24,6 +24,7 @@
     "gray-matter": "^4.0.3",
     "js-search": "^2.0.1",
     "next": "13.4.7",
+    "porter-stemmer": "^0.9.1",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
