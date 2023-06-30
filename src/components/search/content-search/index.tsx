@@ -1,7 +1,7 @@
 import contentIndexer from '@/lib/client/content-indexer';
 import { SearchContent } from '@/types/markdown';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import { useEffect } from 'react';
+import { KeyboardEventHandler, useEffect } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
 import { ChangeEventHandler } from 'react';
@@ -33,11 +33,20 @@ const ContentSearch = () => {
         handleClickOutSide();
       }
     };
+
+    const escapeKeyCallback = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && results.length > 0) {
+        handleClickOutSide();
+      }
+    };
+
     document.addEventListener('click', callback);
+    document.addEventListener('keydown', escapeKeyCallback);
 
     //cleanup function
     return () => {
       document.removeEventListener('click', callback);
+      document.addEventListener('keydown', escapeKeyCallback);
     };
   }, [results.length]);
 
