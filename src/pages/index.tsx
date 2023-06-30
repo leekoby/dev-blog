@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { BlogList } from '@/components/blogs';
 import { PortfolioList } from '@/components/portfoilo';
 import { BaseLayout } from '@/components/layouts';
-import { BLOG_DIR, getDir, getFileNames, getItemInPath } from '@/lib/md';
+import { getBlogFileNames, getBlog } from '@/lib/md';
 import { join } from 'path';
 
 /** 2023/06/30 - 메인페이지 - by leekoby */
@@ -38,10 +38,12 @@ const Home: NextPage = () => {
 
 /** 2023/06/30 - 메인페이지 StaticProps - by leekoby */
 export const getStaticProps: GetStaticProps = () => {
-  const blogFileNames = getFileNames(BLOG_DIR);
+  // 블로그 파일 이름 가져오기
+  const blogFileNames = getBlogFileNames();
 
+  // 블로그 내용 가져오기
   blogFileNames.forEach((blogFileName) => {
-    const blogContent = getItemInPath(join(BLOG_DIR, blogFileName));
+    const blogContent = getBlog(blogFileName);
     console.log(blogContent);
   });
 
