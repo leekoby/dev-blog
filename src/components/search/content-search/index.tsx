@@ -1,7 +1,19 @@
+import contentIndexer from '@/lib/client/content-indexer';
+import { SearchContent } from '@/types/markdown';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { useState } from 'react';
+import { ChangeEventHandler } from 'react';
 
 /** 2023/06/30 - 검색창 레이아웃 - by leekoby */
 const ContentSearch = () => {
+  const [results, setResults] = useState<SearchContent[]>([]);
+
+  const performSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { value } = event.target;
+    const results = contentIndexer.search(value);
+    setResults(results);
+  };
+
   return (
     <>
       <label htmlFor='search' className='sr-only'>
@@ -12,6 +24,7 @@ const ContentSearch = () => {
           <MagnifyingGlassIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
         </div>
         <input
+          onChange={performSearch}
           id='search-input'
           autoComplete='off'
           type='text'
@@ -19,26 +32,24 @@ const ContentSearch = () => {
           placeholder='Search for anything'
         />
       </div>
-      <ul
-        className='w-80 border-solid border rounded-md z-10 bg-white max-h-80 overflow-auto absolute select is-multiple'
-        role='listbox'>
-        <li
-          onClick={() => {}}
-          className={`hover:bg-indigo-600 hover:text-white p-3 relative cursor-pointer`}>
-          <div className='font-bold text-sm truncate'>Blog Title 1</div>
-          <p className='truncate text-sm'>Blog Desc 1</p>
-          <span className='mt-2 text-xs text-white bg-gray-800 px-2 py-1 rounded-xl'>blogs</span>
-        </li>
-        <li
-          onClick={() => {}}
-          className={`hover:bg-indigo-600 hover:text-white p-3 relative cursor-pointer`}>
-          <div className='font-bold text-sm truncate'>Blog Title 2</div>
-          <p className='truncate text-sm'>Blog Desc 2</p>
-          <span className='mt-2 text-xs text-white bg-gray-800 px-2 py-1 rounded-xl'>
-            portfolios
-          </span>
-        </li>
-      </ul>
+      {results.length > 0 && (
+        <ul
+          className='w-80 border-solid border rounded-md z-10 bg-white max-h-80 overflow-auto absolute select is-multiple'
+          role='listbox'>
+          {results.map((result) => (
+            <li
+              key={result.slug}
+              onClick={() => {}}
+              className={`hover:bg-indigo-600 hover:text-white p-3 relative cursor-pointer`}>
+              <div className='font-bold text-sm truncate'>{result.title}</div>
+              <p className='truncate text-sm'>{result.description}</p>
+              <span className='mt-2 text-xs text-white bg-gray-800 px-2 py-1 rounded-xl'>
+                {result.category}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 };
