@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { BlogList } from '@/components/blogs';
 import { PortfolioList } from '@/components/portfoilo';
 import { BaseLayout } from '@/components/layouts';
-import { getBlogs } from '@/lib/md';
+import { getBlogs } from '@/lib/blogs';
 
 /** 2023/06/30 - 메인페이지 - by leekoby */
 const Home: NextPage = () => {
