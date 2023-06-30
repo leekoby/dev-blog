@@ -1,18 +1,45 @@
 import contentIndexer from '@/lib/client/content-indexer';
 import { SearchContent } from '@/types/markdown';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 import { useState } from 'react';
 import { ChangeEventHandler } from 'react';
 
 /** 2023/06/30 - 검색창 레이아웃 - by leekoby */
 const ContentSearch = () => {
   const [results, setResults] = useState<SearchContent[]>([]);
+  const ref = useRef<HTMLInputElement>(null);
+  const [query, setQuery] = useState('');
 
+  /** 2023/06/30 - 검색 기능 수행 함수 - by leekoby */
   const performSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
+
     const results = contentIndexer.search(value);
     setResults(results);
+    setQuery(value);
   };
+
+  /** 2023/06/30 - 검색창 외부 클릭 시 검색 초기화 함수 - by leekoby */
+  const handleClickOutSide = () => {
+    setResults([]);
+    setQuery('');
+  };
+
+  useEffect(() => {
+    const callback = (event: MouseEvent) => {
+      if (results.length > 0 && ref.current && !ref.current.contains(event.target as Node)) {
+        handleClickOutSide();
+      }
+    };
+    document.addEventListener('click', callback);
+
+    //cleanup function
+    return () => {
+      document.removeEventListener('click', callback);
+    };
+  }, [results.length]);
 
   return (
     <>
@@ -24,6 +51,8 @@ const ContentSearch = () => {
           <MagnifyingGlassIcon className='h-5 w-5 text-gray-400' aria-hidden='true' />
         </div>
         <input
+          ref={ref}
+          value={query}
           onChange={performSearch}
           id='search-input'
           autoComplete='off'
