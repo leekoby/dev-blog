@@ -10,7 +10,7 @@ const BlogItem: React.FC<Props> = ({ blog }): JSX.Element => {
   return (
     <div key={blog.slug} className='group'>
       <div className='h-80 aspect-w-1 aspect-h-1 w-full rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-40'>
-        <Link legacyBehavior href={`/blogs/${blog.slug}`}>
+        <Link href={`/blogs/${blog.slug}`}>
           <div className='relative h-80 aspect-w-1 aspect-h-1 w-full rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-40'>
             <Image
               priority
@@ -32,8 +32,8 @@ const BlogItem: React.FC<Props> = ({ blog }): JSX.Element => {
           <p className='mt-1 text-sm text-gray-500'>{blog.description}</p>
         </div>
       </div>
-      <Link legacyBehavior href={`/blogs/${blog.slug}`}>
-        <a className='text-sm font-bold text-gray-700'>Read More</a>
+      <Link href={`/blogs/${blog.slug}`} className='text-sm font-bold text-gray-700'>
+        Read More
       </Link>
     </div>
   );

@@ -16,10 +16,12 @@ const Home: NextPage<Props> = ({ blogs }) => {
   return (
     <BaseLayout>
       <h2 className='text-2xl font-bold tracking-tight text-gray-900'>
-        Newest Blogs
-        <Link legacyBehavior href='/blogs'>
-          <a className='text-sm ml-1 text-indigo-600'>(See All)</a>
-        </Link>
+        <>
+          Newest Blogs
+          <Link href='/blogs' className='text-sm ml-1 text-indigo-600'>
+            (See All)
+          </Link>
+        </>
       </h2>
 
       {/* Blog List  */}
@@ -28,10 +30,12 @@ const Home: NextPage<Props> = ({ blogs }) => {
       <br></br>
 
       <h2 className='text-2xl font-bold tracking-tight text-gray-900'>
-        Portfolios
-        <Link legacyBehavior href='/portfolios'>
-          <a className='text-sm ml-1 text-indigo-600'>(See All)</a>
-        </Link>
+        <>
+          Portfolios
+          <Link href='/portfolios' className='text-sm ml-1 text-indigo-600'>
+            (See All)
+          </Link>
+        </>
       </h2>
 
       {/* Portfolio List */}

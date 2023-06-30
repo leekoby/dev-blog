@@ -39,10 +39,7 @@ const Footer: React.FC<Props> = (props): JSX.Element => {
         <nav className='-mx-5 -my-2 flex flex-wrap justify-center' aria-label='Footer'>
           {navigation.map((item) => (
             <div key={item.name} className='px-5 py-2'>
-              <Link
-                legacyBehavior
-                href={item.href}
-                className='text-base text-gray-400 hover:text-gray-500'>
+              <Link href={item.href} className='text-base text-gray-400 hover:text-gray-500'>
                 {item.name}
               </Link>
             </div>

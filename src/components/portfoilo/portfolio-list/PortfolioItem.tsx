@@ -17,7 +17,7 @@ const PortfolioItem: React.FC<Props> = ({ portfolio }): JSX.Element => {
         />
       </div>
       <h3 className='mt-6 text-sm text-gray-500'>
-        <Link legacyBehavior href={`/portfolios/${portfolio.slug}`}>
+        <Link href={`/portfolios/${portfolio.slug}`}>
           <>
             <span className='absolute inset-0' />
             {portfolio.title}
