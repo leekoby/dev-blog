@@ -5,9 +5,14 @@ import { BlogList } from '@/components/blogs';
 import { PortfolioList } from '@/components/portfoilo';
 import { BaseLayout } from '@/components/layouts';
 import { getBlogs } from '@/lib/blogs';
+import { Blog } from '@/types/blog';
+
+interface Props {
+  blogs: Blog[];
+}
 
 /** 2023/06/30 - 메인페이지 - by leekoby */
-const Home: NextPage = () => {
+const Home: NextPage<Props> = ({ blogs }) => {
   return (
     <BaseLayout>
       <h2 className='text-2xl font-bold tracking-tight text-gray-900'>
@@ -18,7 +23,7 @@ const Home: NextPage = () => {
       </h2>
 
       {/* Blog List  */}
-      <BlogList />
+      <BlogList blogs={blogs} />
 
       <br></br>
 
@@ -38,10 +43,9 @@ const Home: NextPage = () => {
 /** 2023/06/30 - 메인페이지 StaticProps - by leekoby */
 export const getStaticProps: GetStaticProps = () => {
   const blogs = getBlogs();
-  console.log(blogs);
 
   return {
-    props: {},
+    props: { blogs },
   };
 };
 

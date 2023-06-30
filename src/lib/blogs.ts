@@ -12,6 +12,7 @@ const getBlogFileNames = () => {
 /** 2023/06/30 - 인자로 주어진 파일명에 해당하는 블로그 게시물의 내용을 가져오는 함수 - by leekoby */
 const getBlog = (filename: string): Blog => {
   const blog = getItemInPath(join(BLOG_DIR, filename)) as Blog;
+  blog.slug = filename.replace(/.md$/, '');
   return blog;
 };
 

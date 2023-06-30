@@ -1,8 +1,9 @@
+import { Blog } from '@/types/blog';
 import Image from 'next/image';
 import Link from 'next/link';
 
 interface Props {
-  blog: any;
+  blog: Blog;
 }
 /** 2023/06/30 - 블로그 게시글 아이템 - by leekoby */
 const BlogItem: React.FC<Props> = ({ blog }): JSX.Element => {
