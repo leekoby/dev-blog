@@ -1,5 +1,8 @@
 import { join } from 'path';
 import fs from 'fs';
+import matter from 'gray-matter';
+import { Blog } from '@/types/blog';
+import { MarkDownItem } from '@/types/markdown';
 
 /** 2023/06/30 - 입력으로 받은 상대경로의 절대경로를 반환 - by leekoby */
 const getDir = (path: string) => join(process.cwd(), path);
@@ -17,14 +20,15 @@ const getBlogFileNames = () => {
 };
 
 /** 2023/06/30 - 파일경로에서 파일 내용을 가져와서 문자열 형태로 반환, 'utf-8' 인코딩- by leekoby */
-const getItemInPath = (filePath: string): string => {
+const getItemInPath = (filePath: string): MarkDownItem => {
   const fileContent = fs.readFileSync(filePath, 'utf-8');
-  return fileContent;
+  const { data, content } = matter(fileContent);
+  return { ...data, content } as MarkDownItem;
 };
 
 /** 2023/06/30 - 인자로 주어진 파일명에 해당하는 블로그 게시물의 내용을 가져오는 함수 - by leekoby */
-const getBlog = (filename: string) => {
-  const blog = getItemInPath(join(BLOG_DIR, filename));
+const getBlog = (filename: string): Blog => {
+  const blog = getItemInPath(join(BLOG_DIR, filename)) as Blog;
   return blog;
 };
 export { getBlogFileNames, getBlog };

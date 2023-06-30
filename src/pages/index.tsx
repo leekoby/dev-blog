@@ -43,8 +43,8 @@ export const getStaticProps: GetStaticProps = () => {
 
   // 블로그 내용 가져오기
   blogFileNames.forEach((blogFileName) => {
-    const blogContent = getBlog(blogFileName);
-    console.log(blogContent);
+    const blog = getBlog(blogFileName);
+    console.log(blog);
   });
 
   return {
