@@ -34,7 +34,7 @@ const markdwonToHtml = async (markdown: string) => {
   return result.toString();
 };
 
-/** 2023/06/31 - 검색에 필요한 데이터 JSON에 저장하는 함수 - by leekoby */
+/** 2023/07/01 - 검색에 필요한 데이터 JSON에 저장하는 함수 - by leekoby */
 const saveSearchData = (blogs: Blog[]) => {
   const searchFile = getDir('/src/content/search/index.json');
   const searchItemList: SearchContent[] = [];

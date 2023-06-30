@@ -2,6 +2,7 @@ import { join } from 'path';
 import { Blog } from '@/types/blog';
 import { getAllItems, getDir, getFileNames, getItemInPath, markdwonToHtml } from './md';
 
+/** 2023/06/30 - 블로그 경로 - by leekoby */
 const BLOG_DIR = getDir('/src/content/blogs');
 
 /** 2023/06/30 - BLOG_DIR 디렉토리에 위치한 모든 블로그 게시물의 파일 이름을 가져오기 / getFileNames 함수를 호출 - by leekoby */
