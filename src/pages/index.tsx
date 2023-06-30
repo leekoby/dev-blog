@@ -4,8 +4,7 @@ import Link from 'next/link';
 import { BlogList } from '@/components/blogs';
 import { PortfolioList } from '@/components/portfoilo';
 import { BaseLayout } from '@/components/layouts';
-import { getBlogFileNames, getBlog } from '@/lib/md';
-import { join } from 'path';
+import { getBlogs } from '@/lib/md';
 
 /** 2023/06/30 - 메인페이지 - by leekoby */
 const Home: NextPage = () => {
@@ -38,14 +37,8 @@ const Home: NextPage = () => {
 
 /** 2023/06/30 - 메인페이지 StaticProps - by leekoby */
 export const getStaticProps: GetStaticProps = () => {
-  // 블로그 파일 이름 가져오기
-  const blogFileNames = getBlogFileNames();
-
-  // 블로그 내용 가져오기
-  blogFileNames.forEach((blogFileName) => {
-    const blog = getBlog(blogFileName);
-    console.log(blog);
-  });
+  const blogs = getBlogs();
+  console.log(blogs);
 
   return {
     props: {},
