@@ -1,14 +1,11 @@
 import Head from 'next/head';
-import Image from 'next/legacy/image';
 
 import { Footer, Header, NavBar } from '@/components/common';
-import { ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
+import Image from 'next/image';
 
-interface Props {
-  children: ReactNode;
-}
 /** 2023/06/30 - 기본 레이아웃 구성 - by leekoby */
-const BaseLayout: React.FC<Props> = ({ children }): JSX.Element => {
+const BaseLayout: React.FC<PropsWithChildren> = ({ children }): JSX.Element => {
   return (
     <>
       <div className='mx-auto max-w-7xl px-4 space-y-8 sm:px-6 lg:px-8'>
