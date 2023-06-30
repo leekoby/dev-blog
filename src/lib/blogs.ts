@@ -9,6 +9,17 @@ const getBlogFileNames = () => {
   return getFileNames(BLOG_DIR);
 };
 
+/** 2023/06/30 - getBlogFileNames을 호출해서 모든 게시물의 이름을 가져온 후 slug만 배열 가공해서 리턴하는 함수 - by leekoby */
+const getBlogsSlugs = () => {
+  return getBlogFileNames().map((fileName) => fileName.replace(/.md$/, ''));
+};
+
+/** 2023/06/30 - slug를 통해 블로그 글을 가져오도록 하는 함수 - by leekoby */
+const getBlogBySlug = (slug: string) => {
+  const fileName = slug + '.md';
+  return getBlog(fileName);
+};
+
 /** 2023/06/30 - 인자로 주어진 파일명에 해당하는 블로그 게시물의 내용을 가져오는 함수 - by leekoby */
 const getBlog = (filename: string): Blog => {
   const blog = getItemInPath(join(BLOG_DIR, filename)) as Blog;
@@ -22,4 +33,4 @@ const getBlogs = (): Blog[] => {
   return getAllItems(names, getBlog) as Blog[];
 };
 
-export { getBlogFileNames, getBlog, getBlogs };
+export { getBlogFileNames, getBlog, getBlogs, getBlogsSlugs, getBlogBySlug };
