@@ -24,7 +24,7 @@ const getItemInPath = (filePath: string): MarkdownItem => {
 
 /** 2023/06/30 -모든 파일 이름에 대해 해당하는 블로그 게시물 내용들을 가져오기  - by leekoby */
 const getAllItems = (fileNames: string[], get: (name: string) => MarkdownItem) => {
-  const items = fileNames.map((name) => get(name));
+  const items = fileNames.map((name) => get(name)).sort((a, b) => (a.date > b.date ? -1 : 1));
   return items;
 };
 
