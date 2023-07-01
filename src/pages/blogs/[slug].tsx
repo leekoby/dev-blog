@@ -51,9 +51,6 @@ export const getStaticPaths: GetStaticPaths = () => {
   const slugs = getBlogsSlugs();
   const paths = slugs.map((slug) => ({ params: { slug } }));
 
-  console.log('---paths----');
-  console.log(paths);
-
   return {
     paths,
     fallback: false,
