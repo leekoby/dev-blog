@@ -1,11 +1,17 @@
 import { join } from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
-import { Blog } from '@/types/blog';
+
 import { ContentItemName, MarkdownContent, MarkdownItem, SearchContent } from '@/types/markdown';
-import { remark } from 'remark';
-import remarkGfm from 'remark-gfm';
-import html from 'remark-html';
+
+import { unified } from 'unified';
+import markdown from 'remark-parse';
+import gfm from 'remark-gfm';
+import remark2rehype from 'remark-rehype';
+import raw from 'rehype-raw';
+import highlight from 'rehype-highlight';
+import sanitize from 'rehype-sanitize';
+import html from 'rehype-stringify';
 
 /** 2023/06/30 - 입력으로 받은 상대경로의 절대경로를 반환 - by leekoby */
 const getDir = (path: string) => join(process.cwd(), path);
@@ -29,8 +35,17 @@ const getAllItems = (fileNames: string[], get: (name: string) => MarkdownItem) =
 };
 
 /** 2023/06/30 -markdown문법 html로 변경해주는 함수  - by leekoby */
-const markdwonToHtml = async (markdown: string) => {
-  const result = await remark().use(html).use(remarkGfm).process(markdown);
+const markdwonToHtml = async (md: string) => {
+  // const result = await remark().use(html).use(remarkGfm).process(markdown);
+  const result = await unified()
+    .use(markdown)
+    .use(gfm) // Tables 지원 및 GitHub flavored markdown
+    .use(remark2rehype, { allowDangerousHtml: true }) // Dangerous html 옵션, 마크다운 -> HTML
+    .use(raw)
+    .use(highlight) // 코드블럭 강조
+    .use(sanitize) // 일부 HTML 태그 제거
+    .use(html)
+    .process(md);
   return result.toString();
 };
 

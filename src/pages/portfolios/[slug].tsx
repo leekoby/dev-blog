@@ -5,7 +5,6 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import PortfolioHeader from '@/components/portfoilo/portfolio-header';
 
-
 interface Props {
   portfolio: Portfolio;
 }
