@@ -7,8 +7,7 @@ import { BaseLayout } from '@/components/layouts';
 import { getBlogs } from '@/lib/blogs';
 import { Blog } from '@/types/blog';
 import { saveSearchData } from '@/lib/md';
-
-
+import { getPortfolios } from '@/lib/portfolio';
 
 interface Props {
   blogs: Blog[];
@@ -50,6 +49,9 @@ const Home: NextPage<Props> = ({ blogs }) => {
 /** 2023/06/30 - 메인페이지 StaticProps - by leekoby */
 export const getStaticProps: GetStaticProps = () => {
   const blogs = getBlogs();
+  const portfolios = getPortfolios();
+
+  console.log(portfolios);
 
   saveSearchData(blogs);
 
