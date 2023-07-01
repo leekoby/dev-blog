@@ -8,13 +8,15 @@ import { getBlogs } from '@/lib/blogs';
 import { Blog } from '@/types/blog';
 import { saveSearchData } from '@/lib/md';
 import { getPortfolios } from '@/lib/portfolio';
+import { Portfolio } from '@/types/portfolio';
 
 interface Props {
   blogs: Blog[];
+  portfolios: Portfolio[];
 }
 
 /** 2023/06/30 - 메인페이지 - by leekoby */
-const Home: NextPage<Props> = ({ blogs }) => {
+const Home: NextPage<Props> = ({ blogs, portfolios }) => {
   return (
     <BaseLayout>
       <h2 className='text-2xl font-bold tracking-tight text-gray-900'>
@@ -41,7 +43,7 @@ const Home: NextPage<Props> = ({ blogs }) => {
       </h2>
 
       {/* Portfolio List */}
-      <PortfolioList />
+      <PortfolioList portfolios={portfolios} />
     </BaseLayout>
   );
 };
@@ -51,12 +53,10 @@ export const getStaticProps: GetStaticProps = () => {
   const blogs = getBlogs();
   const portfolios = getPortfolios();
 
-  console.log(portfolios);
-
   saveSearchData(blogs);
 
   return {
-    props: { blogs },
+    props: { blogs, portfolios },
   };
 };
 

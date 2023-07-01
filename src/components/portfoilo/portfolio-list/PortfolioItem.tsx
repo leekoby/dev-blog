@@ -1,8 +1,9 @@
+import { Portfolio } from '@/types/portfolio';
 import Image from 'next/image';
 import Link from 'next/link';
 
 interface Props {
-  portfolio: any;
+  portfolio: Portfolio;
 }
 /** 2023/06/30 - 포트폴리오  아이템 - by leekoby */
 const PortfolioItem: React.FC<Props> = ({ portfolio }): JSX.Element => {
