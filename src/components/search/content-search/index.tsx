@@ -1,15 +1,17 @@
 import contentIndexer from '@/lib/client/content-indexer';
 import { SearchContent } from '@/types/markdown';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import { KeyboardEventHandler, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react';
 import { ChangeEventHandler } from 'react';
 
 /** 2023/06/30 - 검색창 레이아웃 - by leekoby */
 const ContentSearch = () => {
-  const [results, setResults] = useState<SearchContent[]>([]);
   const ref = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+  const [results, setResults] = useState<SearchContent[]>([]);
   const [query, setQuery] = useState('');
 
   /** 2023/06/30 - 검색 기능 수행 함수 - by leekoby */
@@ -77,7 +79,7 @@ const ContentSearch = () => {
           {results.map((result) => (
             <li
               key={result.slug}
-              onClick={() => {}}
+              onClick={() => router.push(`/${result.category}/${result.slug}`)}
               className={`hover:bg-indigo-600 hover:text-white p-3 relative cursor-pointer`}>
               <div className='font-bold text-sm truncate'>{result.title}</div>
               <p className='truncate text-sm'>{result.description}</p>
