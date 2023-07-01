@@ -8,7 +8,7 @@ interface Props {
 /** 2023/07/01 - 포트폴리오 게시글 상세 페이지 헤더 영역  - by leekoby */
 const PortfolioHeader: React.FC<Props> = ({ portfolio }): JSX.Element => {
   return (
-    <div className='blog-detail-header'>
+    <div className='portfolio-detail-header'>
       <div className='flex flex-row justify-between mb-2'>
         <div className='flex items-center'>
           <div className='flex-shrink-0'></div>
