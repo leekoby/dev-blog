@@ -2,7 +2,7 @@ import { join } from 'path';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { Blog } from '@/types/blog';
-import { MarkdownItem, SearchContent } from '@/types/markdown';
+import { ContentItemName, MarkdownContent, MarkdownItem, SearchContent } from '@/types/markdown';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import html from 'remark-html';
@@ -35,19 +35,23 @@ const markdwonToHtml = async (markdown: string) => {
 };
 
 /** 2023/07/01 - 검색에 필요한 데이터 JSON에 저장하는 함수 - by leekoby */
-const saveSearchData = (blogs: Blog[]) => {
+const saveSearchData = (content: MarkdownContent) => {
   const searchFile = getDir('/src/content/search/index.json');
   const searchItemList: SearchContent[] = [];
 
-  blogs.forEach((blog) => {
-    const searchItem = {
-      slug: blog.slug,
-      title: blog.title,
-      description: blog.description,
-      category: 'blogs',
-    };
+  Object.keys(content).forEach((dataSource) => {
+    const contentName = dataSource as ContentItemName;
 
-    searchItemList.push(searchItem);
+    content[contentName].forEach((data) => {
+      const searchItem: SearchContent = {
+        slug: data.slug,
+        title: data.title,
+        description: data.description,
+        category: contentName,
+      };
+
+      searchItemList.push(searchItem);
+    });
   });
 
   fs.writeFileSync(searchFile, JSON.stringify(searchItemList, null, 2)); // (함수, 대체 함수, 들여쓰기)
