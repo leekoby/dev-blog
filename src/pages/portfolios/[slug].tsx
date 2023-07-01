@@ -4,8 +4,7 @@ import { Portfolio } from '@/types/portfolio';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import PortfolioHeader from '@/components/portfoilo/portfolio-header';
-import SyntaxHighlighter from 'react-syntax-highlighter/dist/esm/default-highlight';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
 
 interface Props {
   portfolio: Portfolio;
