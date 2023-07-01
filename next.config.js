@@ -1,13 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   images: {
-    domains: ['images.unsplash.com', 'res.cloudinary.com', 'images.pexels.com', 'avatars.githubusercontent.com']
-  },
-  experimental: {
-    appDir: false,
-  },
+    dangerouslyAllowSVG: true,
+    domains: ["tailwindui.com", "images.unsplash.com", "eincode.com", "thrangra.sirv.com", "avatars.githubusercontent.com"]
+  }
 };
 
 module.exports = nextConfig;

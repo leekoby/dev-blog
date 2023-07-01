@@ -1,36 +1,38 @@
-## koby dev blogs
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-+ ⏱️ 프로젝트 기간: `2023/06/02 ~ `
-+ ✏️ 한줄 소개: 개인 블로그 및 기술적용 연습용 놀이터 
-+ ⛓️ 배포 링크: [프로젝트 결과물](https://kobyblog.vercel.app/)
+## Getting Started
 
+First, run the development server:
 
-## 🧑‍💻 구현 기능 (V1)
-1. OAuth ( github )
-2. 게시글 CRUD 
-3. 댓글 & 답글 CRUD
-4. 좋아요
-5. 검색 (제목 기반)
-6. 관련 게시글 
-7. 관리자 페이지 (게시글, 댓글, 유저 모아보기)
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
 
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-## 🧑‍💻 구현 예정 (V2)
-1. 포트폴리오 페이지 
-2. UI 개선 
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-<br />
+## Learn More
 
-## 🧑‍💻 Tech Stack
+To learn more about Next.js, take a look at the following resources:
 
-<br />
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-| TypeScript | React | Next.js |  TailwindCss | Vercel |
-|:---:|:---:|:---:|:---:|:---:|
-| <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="icon" width="75" height="75" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://camo.githubusercontent.com/cbb0ed4ed73eb0bdf880019fe4fd13e0e0b0812435f11ac0d920c8f523a8d8d0/68747470733a2f2f74656368737461636b2d67656e657261746f722e76657263656c2e6170702f72656163742d69636f6e2e737667" alt="icon" width="75" height="75" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://github.com/1-blue/1-blue.github.io/assets/63289318/0072f3a5-bf9d-4d9a-9015-4b2653ea1d02" alt="icon" width="75" height="75" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://avatars.githubusercontent.com/u/67109815?s=280&v=4" alt="icon" width="75" height="75" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://www.svgrepo.com/show/327408/logo-vercel.svg" alt="icon" width="75" height="75" /></div> |
+## Deploy on Vercel
 
-<br />
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
