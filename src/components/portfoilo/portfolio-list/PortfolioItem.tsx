@@ -1,4 +1,5 @@
 import { Portfolio } from '@/types/portfolio';
+import { shortify } from '@/utils/shortify';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -21,11 +22,11 @@ const PortfolioItem: React.FC<Props> = ({ portfolio }): JSX.Element => {
         <Link href={`/portfolios/${portfolio.slug}`}>
           <>
             <span className='absolute inset-0' />
-            {portfolio.title}
+            {shortify(portfolio.title)}
           </>
         </Link>
       </h3>
-      <p className='text-base font-semibold text-gray-900'>{portfolio.description}</p>
+      <p className='text-base font-semibold text-gray-900'>{shortify(portfolio.description)}</p>
     </div>
   );
 };
