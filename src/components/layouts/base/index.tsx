@@ -12,7 +12,7 @@ const BaseLayout: React.FC<PropsWithChildren> = ({ children }): JSX.Element => {
         <Head>
           <title>Koby - Blog & Portfolio</title>
           <meta name='description' content='이호승의 블로그' />
-          <link rel='icon' href='/favicon.ico' />
+          <link rel='icon' href='/koby-favicon.ico' />
         </Head>
 
         <div className='relative'>
@@ -27,8 +27,8 @@ const BaseLayout: React.FC<PropsWithChildren> = ({ children }): JSX.Element => {
           {/* main image */}
           <div className='relative lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2'>
             <Image
-              priority
-              layout='fill'
+              width={500}
+              height={500}
               alt=''
               className='h-56 w-full object-cover sm:h-72 md:h-96 lg:h-full lg:w-full'
               src='https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1369&q=60'
