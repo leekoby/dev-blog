@@ -44,6 +44,7 @@ const CustomReactMarkdown: React.FC<Props> = ({ data }): JSX.Element => {
             {children}
           </a>
         ),
+        blockquote: (props) => <blockquote className='blockquote'>{props.children}</blockquote>,
       }}>
       {data.content}
     </ReactMarkdown>
