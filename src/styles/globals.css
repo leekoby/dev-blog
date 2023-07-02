@@ -65,3 +65,8 @@
   background-color: #f0f8ff;
   border-color: #40e0d0;
 }
+
+::before,
+::after {
+  display: none;
+}
