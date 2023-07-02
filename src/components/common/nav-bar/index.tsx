@@ -55,7 +55,7 @@ const NavBar: React.FC<Props> = (props): JSX.Element => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className='font-medium text-gray-500 hover:text-gray-900'>
+                  className='font-bold text-gray-500 hover:text-gray-900'>
                   {item.name}
                 </Link>
               ))}
