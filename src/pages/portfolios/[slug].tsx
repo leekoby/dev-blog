@@ -1,9 +1,16 @@
+import classess from '@/styles/markdown.module.css';
 import { PageLayout } from '@/components/layouts';
 import { getPortfolioBySlugWithMarkdown, getPortfolioSlugs } from '@/lib/portfolio';
 import { Portfolio } from '@/types/portfolio';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import PortfolioHeader from '@/components/portfoilo/portfolio-header';
+
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dark, dracula, prism, materialDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import gfm from 'remark-gfm';
+import CustomReactMarkdown from '@/components/common/custom-react-markdown';
 
 interface Props {
   portfolio: Portfolio;
@@ -12,16 +19,16 @@ interface Props {
 const PortfolioDetail: NextPage<Props> = ({ portfolio }) => {
   return (
     <PageLayout pageTitle={portfolio.title}>
-      <div className='w-2/3 m-auto'>
+      <div className='m-auto '>
         <PortfolioHeader portfolio={portfolio} />
-        {/* highlight */}
-        <div className='my-10'>
-          <h3 className='text-sm font-medium text-gray-900'>Highlights</h3>
 
-          <div className='mt-4'>
-            <ul role='list' className='list-disc space-y-2 pl-4 text-sm'>
+        {/* highlight */}
+        <div className='my-10 '>
+          <h3 className='text-3xl font-semibold text-gray-900'>Highlights</h3>
+          <div className='mt-7 '>
+            <ul role='list' className='list-disc space-y-5 pl-4 text-2xl'>
               {portfolio.highlights.map((highlight) => (
-                <li key={highlight} className='text-gray-400'>
+                <li key={highlight} className='text-gray-700'>
                   <span className='text-gray-600'>{highlight}</span>
                 </li>
               ))}
@@ -30,13 +37,9 @@ const PortfolioDetail: NextPage<Props> = ({ portfolio }) => {
         </div>
         <hr />
         {/* content */}
-        <div className='mt-10'>
-          <div className='mt-4 space-y-6'>
-            <article className='prose lg:prose-lg text-sm text-gray-600'>
-              <div dangerouslySetInnerHTML={{ __html: portfolio.content }} />
-            </article>
-          </div>
-        </div>
+        <article className='prose md:prose-lg lg:prose-xl dark:prose-invert max-w-none my-10'>
+          <CustomReactMarkdown data={portfolio} />
+        </article>
       </div>
     </PageLayout>
   );

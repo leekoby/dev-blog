@@ -27,6 +27,9 @@ const PortfolioItem: React.FC<Props> = ({ portfolio }): JSX.Element => {
         </Link>
       </h3>
       <p className='text-base font-semibold text-gray-900'>{shortify(portfolio.description)}</p>
+      <Link href={`/portfolios/${portfolio.slug}`} className='text-sm font-bold text-gray-700'>
+        Read More
+      </Link>
     </div>
   );
 };

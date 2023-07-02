@@ -6,6 +6,7 @@ import { PageLayout } from '@/components/layouts';
 import { getBlogBySlugWithMarkdown, getBlogsSlugs } from '@/lib/blogs';
 
 import { Blog } from '@/types/blog';
+import CustomReactMarkdown from '@/components/common/custom-react-markdown';
 
 interface Props {
   blog: Blog;
@@ -16,13 +17,15 @@ const BlogDetail: NextPage<Props> = ({ blog }) => {
   return (
     <>
       <PageLayout pageTitle={blog.title}>
-        <div className='w-2/3 m-auto'>
+        <div className=' m-auto'>
           {/* Blog Header Starts */}
           <BlogHeader blog={blog} />
           {/* Blog Header Ends */}
-          <article className='prose lg:prose-lg markdown-image-50'>
+         
+
+          <article className='prose md:prose-lg lg:prose-xl dark:prose-invert max-w-none my-10'>
             {/* Blog Content Here */}
-            <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+            <CustomReactMarkdown data={blog} />
           </article>
         </div>
       </PageLayout>

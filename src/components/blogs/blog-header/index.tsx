@@ -8,7 +8,7 @@ interface Props {
 /** 2023/06/30 - 블로그 게시글 상세 페이지 헤더 영역  - by leekoby */
 const BlogHeader: React.FC<Props> = ({ blog }): JSX.Element => {
   return (
-    <div className='blog-detail-header'>
+    <div className='blog-detail-header space-y-10'>
       <div className='flex flex-row justify-between mb-2'>
         <div className='flex items-center'>
           <div className='flex-shrink-0'>

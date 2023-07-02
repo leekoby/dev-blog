@@ -2,12 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .markdown-image-50 img {
-    max-width: 50%;
-    margin: auto;
-  }
-}
 .page-layout {
   min-height: calc(100vh - 232px);
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  background-color: transparent;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+  background-color: #f8f9fa;
+  font-weight: 500;
+}
+
+.table tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive table */
+@media only screen and (max-width: 768px) {
+  .table-responsive-sm {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Inline code style */
+.inline-code {
+  background-color: rgba(108 133 161 / 0.15);
+  border-radius: 4px;
+  font-size: 110%;
+  font-weight: bold;
+  color: crimson;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  padding: 0.15em 0.4em;
+  border: 1px solid rgb(218, 218, 218);
 }
