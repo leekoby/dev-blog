@@ -6,6 +6,12 @@
     "category": "blogs"
   },
   {
+    "slug": "230331-git-environment-setting",
+    "title": "GIT 환경설정",
+    "description": "GIT 초기 환경설정하는 방법에 대해 알아봅시다.",
+    "category": "blogs"
+  },
+  {
     "slug": "markdown-full-example",
     "title": "Markdown Example",
     "description": "Learn how to write markdown",
