@@ -9,8 +9,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        main: ["BMJUA"],
-        special: ["TTWanjudaedunsancheB"],
+        sans: ['NEXON Lv1 Gothic OTF',], // 기본 sans 항목을 변경
       },
 
     },
@@ -20,3 +19,5 @@ module.exports = {
     require('@tailwindcss/typography')
   ],
 };
+
+
