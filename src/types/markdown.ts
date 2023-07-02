@@ -7,6 +7,7 @@ export interface MarkdownItem {
   description: string;
   content: string;
   slug: string;
+  tags: string[];
   date: string;
 }
 
