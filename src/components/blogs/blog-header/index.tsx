@@ -16,8 +16,8 @@ const BlogHeader: React.FC<Props> = ({ blog }): JSX.Element => {
               <span className='sr-only'>{blog.author}</span>
               <div className='relative h-10 w-10 !mb-0'>
                 <Image
-                  priority
-                  layout='fill'
+                  width={500}
+                  height={500}
                   objectFit='cover'
                   className='rounded-full'
                   src={blog.authorImage}
@@ -44,8 +44,8 @@ const BlogHeader: React.FC<Props> = ({ blog }): JSX.Element => {
       </div>
       <h1 className='font-bold text-5xl mb-1'>{blog.title}</h1>
       <h2 className='blog-detail-header-subtitle mb-2 text-xl text-gray-600'>{blog.description}</h2>
-      <div className='h-96 bg-black mx-auto w-full relative'>
-        <Image priority layout='fill' objectFit='cover' src={blog.coverImage} alt='' />
+      <div className='h-96 bg-transparent mx-auto w-full relative'>
+        <Image width={500} height={500} objectFit='cover' src={blog.coverImage} alt='' />
       </div>
     </div>
   );

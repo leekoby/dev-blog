@@ -13,10 +13,10 @@ const PortfolioHeader: React.FC<Props> = ({ portfolio }): JSX.Element => {
       <h2 className='blog-detail-header-subtitle mb-2 text-2xl text-gray-700'>
         {portfolio.description}
       </h2>
-      <div className='h-96 bg-black mx-auto w-full relative'>
+      <div className='h-96 bg-transparent mx-auto w-full relative'>
         <Image
-          priority
-          layout='fill'
+          width={500}
+          height={500}
           objectFit='cover'
           src={portfolio.coverImage}
           alt={portfolio.description}
