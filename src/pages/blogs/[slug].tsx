@@ -17,13 +17,12 @@ const BlogDetail: NextPage<Props> = ({ blog }) => {
   return (
     <>
       <PageLayout pageTitle={blog.title}>
-        <div className=' m-auto'>
+        <div className=' m-auto md:w-4/5'>
           {/* Blog Header Starts */}
           <BlogHeader blog={blog} />
           {/* Blog Header Ends */}
-         
 
-          <article className='prose md:prose-lg lg:prose-xl dark:prose-invert max-w-none my-10'>
+          <article className='prose md:prose-base  dark:prose-invert max-w-none my-10'>
             {/* Blog Content Here */}
             <CustomReactMarkdown data={blog} />
           </article>

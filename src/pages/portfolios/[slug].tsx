@@ -19,14 +19,14 @@ interface Props {
 const PortfolioDetail: NextPage<Props> = ({ portfolio }) => {
   return (
     <PageLayout pageTitle={portfolio.title}>
-      <div className='m-auto '>
+      <div className='m-auto md:w-4/5'>
         <PortfolioHeader portfolio={portfolio} />
 
         {/* highlight */}
         <div className='my-10 '>
-          <h3 className='text-3xl font-semibold text-gray-900'>Highlights</h3>
+          <h3 className='text-3xl md:text-4xl font-semibold text-gray-900'>Highlights</h3>
           <div className='mt-7 '>
-            <ul role='list' className='list-disc space-y-5 pl-4 text-2xl'>
+            <ul role='list' className='list-disc space-y-5 pl-4 text-xl md:text-2xl'>
               {portfolio.highlights.map((highlight) => (
                 <li key={highlight} className='text-gray-700'>
                   <span className='text-gray-600'>{highlight}</span>
@@ -37,7 +37,7 @@ const PortfolioDetail: NextPage<Props> = ({ portfolio }) => {
         </div>
         <hr />
         {/* content */}
-        <article className='prose md:prose-lg lg:prose-xl dark:prose-invert max-w-none my-10'>
+        <article className='prose md:prose-base  dark:prose-invert max-w-none my-10'>
           <CustomReactMarkdown data={portfolio} />
         </article>
       </div>

@@ -42,7 +42,7 @@ const BlogHeader: React.FC<Props> = ({ blog }): JSX.Element => {
           {blog.tags.length > 0 && blog.tags.map((tag) => <div key={tag}>#{tag}</div>)}
         </div>
       </div>
-      <h1 className='font-bold text-4xl mb-1'>{blog.title}</h1>
+      <h1 className='font-bold text-5xl mb-1'>{blog.title}</h1>
       <h2 className='blog-detail-header-subtitle mb-2 text-xl text-gray-600'>{blog.description}</h2>
       <div className='h-96 bg-black mx-auto w-full relative'>
         <Image priority layout='fill' objectFit='cover' src={blog.coverImage} alt='' />
