@@ -14,7 +14,7 @@ const PortfolioItem: React.FC<Props> = ({ portfolio }): JSX.Element => {
         <Image
           layout='fill'
           src={portfolio.coverImage}
-          alt={''}
+          alt={portfolio.slug + 'image'}
           className='h-full w-full object-cover object-center'
         />
       </div>

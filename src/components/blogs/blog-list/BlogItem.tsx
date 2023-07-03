@@ -16,12 +16,10 @@ const BlogItem: React.FC<Props> = ({ blog }): JSX.Element => {
         <Link href={`/blogs/${blog.slug}`}>
           <div className='relative h-80 aspect-w-1 aspect-h-1 w-full rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-40'>
             <Image
-              width={500}
-              height={500}
-              objectFit='cover'
+              layout='fill'
               src={blog.coverImage}
-              className='rounded-lg hover:cursor-pointer'
-              alt={''}
+              className='rounded-lg hover:cursor-pointer object-cover object-center'
+              alt={blog.slug + 'image'}
             />
           </div>
         </Link>
